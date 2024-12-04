@@ -27,6 +27,7 @@ export default defineConfig({
         },
       },
       external: ['jquery'],
+      external: ['@barba/core']
     },
   },
 })
