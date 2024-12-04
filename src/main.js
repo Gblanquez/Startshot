@@ -690,7 +690,4 @@ document.querySelectorAll('.team-content').forEach((teamContent) => {
 
 
 
-//Animation Team End //
-
-
 
