@@ -4,7 +4,6 @@ import gsap from 'gsap'
 import barba from '@barba/core';
 import transition from './transition';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import JourneyPath from './JourneyPath';
 
 gsap.registerPlugin(ScrollTrigger);
 
