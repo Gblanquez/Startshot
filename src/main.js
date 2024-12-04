@@ -690,4 +690,157 @@ document.querySelectorAll('.team-content').forEach((teamContent) => {
 
 
 
+//Mobile Animation Team Card //
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Check if the device is mobile
+  if (window.matchMedia("(max-width: 479px)").matches) {
+    // Select all team member wrap elements
+    const teamWraps = document.querySelectorAll('.team-c-m-container');
+
+    teamWraps.forEach((wrap) => {
+      let isActive = false; // State to track if the wrap is active
+
+      wrap.addEventListener('click', () => {
+        if (isActive) {
+          // If active, execute the reverse animation
+          reverseAnimation(wrap);
+        } else {
+          // If not active, execute the initial animation
+          animateTeamWrap(wrap);
+        }
+        isActive = !isActive; // Toggle the active state
+      });
+    });
+  }
+});
+
+function animateTeamWrap(wrap) {
+  // Add active class to the clicked wrap
+  wrap.classList.add('active');
+
+
+  // Set initial states
+  const teamImg = wrap.querySelector('.team-img-m');
+  const textElements = wrap.querySelectorAll('.h-l.team-m, .caption-n.team-m');
+  const arrowDiv = wrap.querySelector('.m-arrow-div');
+  const bodyText = wrap.querySelector('.body-s.m-team');
+  const teamDescription = new SplitType(bodyText, { types: 'lines, words, chars' });
+  const teamDAbDiv = wrap.querySelector('.team-d-ab-div');
+  const arrowBDiv = wrap.querySelector('.arrow-b-div');
+
+
+  const initialTimeline = gsap.timeline();
+
+  initialTimeline.to(teamImg,{
+    x: '120%',
+    duration: 1.4,
+    ease: 'expo.out',
+  })
+
+  initialTimeline.to(arrowDiv,{
+    x: '110%',
+    opacity: 0,
+    duration: 0.5,
+    ease: 'expo.out',
+  }, '<')
+
+  initialTimeline.to(textElements,{
+    y: '120%',
+    opacity: 0,
+    duration: 1.4,
+    stagger: 0.01,
+    ease: 'expo.out',
+  }, '<')
+
+
+  teamDAbDiv.classList.add('active');
+
+  initialTimeline.fromTo(arrowBDiv,{
+    x: '-110%',
+    opacity: 0,
+  },{
+    x: '0%',
+    opacity: 1,
+    duration: 1.1,
+    ease: 'expo.out',
+  }, '-=0.5')
+
+  initialTimeline.from(teamDescription.words,{
+    y: '120%',
+    opacity: 0,
+    duration: 1.2,
+    stagger: 0.01,
+    ease: 'expo.out',
+  }, '<')
+  
+}
+
+function reverseAnimation(wrap) {
+  const reverseTimeline = gsap.timeline({onComplete: () => {
+    wrap.classList.remove('active');
+    teamDAbDiv.classList.remove('active');
+  }});
+
+  // Set initial states
+  const teamImg = wrap.querySelector('.team-img-m');
+  const textElements = wrap.querySelectorAll('.h-l.team-m, .caption-n.team-m');
+  const arrowDiv = wrap.querySelector('.m-arrow-div');
+  const bodyText = wrap.querySelector('.body-s.m-team');
+  const teamDescription = new SplitType(bodyText, { types: 'lines, words, chars  ' });
+  const arrowBDiv = wrap.querySelector('.arrow-b-div');
+  const teamDAbDiv = wrap.querySelector('.team-d-ab-div');
+
+  reverseTimeline.to(teamDescription.words,{
+    y: '120%',
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.01,
+    ease: 'expo.out',
+  }, '<')
+
+  reverseTimeline.fromTo(arrowBDiv,{
+    x: '0%',
+    opacity: 1,
+  },{
+    x: '-110%',
+    opacity: 0,
+    duration: 1.1,
+    ease: 'expo.out',
+  }, '-=0.5')
+
+  reverseTimeline.fromTo(arrowDiv,{
+    x: '110%',
+    opacity: 0,
+  },{
+    x: '0%',
+    opacity: 1,
+    duration: 1.1,
+    ease: 'expo.out',
+  }, '-=0.5')
+
+  reverseTimeline.fromTo(textElements,{
+    y: '120%',
+    opacity: 0,
+  },{
+    y: '0%',
+    opacity: 1,
+    duration: 1,
+    stagger: 0.01,
+    ease: 'expo.out',
+  }, '<')
+
+  reverseTimeline.fromTo(teamImg,{
+    x: '120%',
+  },{
+    x: '0%',
+    duration: 1.4,
+    ease: 'expo.out',
+  }, '<')
+
+  
+}
+ 
+
+
 
