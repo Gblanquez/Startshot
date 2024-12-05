@@ -78,51 +78,51 @@
 
 /*Mobile Sizes */
 
-@media (max-width: 479px) {
+/* @media (max-width: 479px) {
   :root {
-      --mvw: 0.01vw; /* Adjust this if necessary */
+      --mvw: 0.01vw; 
   }
 
   .h-xxl {
-      font-size: calc(var(--mvw) * 4.79); /* 64px / 479px */
+      font-size: calc(var(--mvw) * 4.79); 
   }
 
   .h-xl {
-      font-size: calc(var(--mvw) * 2.66); /* 32px / 479px */
+      font-size: calc(var(--mvw) * 2.66); 
   }
 
   .h-l {
-      font-size: calc(var(--mvw) * 1.17); /* 14px / 479px */
+      font-size: calc(var(--mvw) * 1.17); 
   }
 
   .body-m {
-      font-size: calc(var(--mvw) * 1.33); /* 16px / 479px */
+      font-size: calc(var(--mvw) * 1.33); 
   }
 
   .body-s {
-      font-size: calc(var(--mvw) * 1.00); /* 12px / 479px */
+      font-size: calc(var(--mvw) * 1.00);
   }
 
   .caption-n {
-      font-size: calc(var(--mvw) * 0.92); /* 11px / 479px */
+      font-size: calc(var(--mvw) * 0.92);
   }
 
   .caption-w {
-      font-size: calc(var(--mvw) * 0.75); /* 9px / 479px */
+      font-size: calc(var(--mvw) * 0.75); 
   }
 
   .d-cta {
-      font-size: calc(var(--mvw) * 1.00); /* 12px / 479px */
+      font-size: calc(var(--mvw) * 1.00); 
   }
 
   .d-nav {
-      font-size: calc(var(--mvw) * 1.25); /* 15px / 479px */
+      font-size: calc(var(--mvw) * 1.25);
   }
 
   .f-nav {
-      font-size: calc(var(--mvw) * 1.00); /* 12px / 479px */
+      font-size: calc(var(--mvw) * 1.00); 
   }
-}
+} */
 
 /*Mobile Sizes End */
 
