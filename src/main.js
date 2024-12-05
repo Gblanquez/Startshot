@@ -701,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
     teamWraps.forEach((wrap) => {
       let isActive = false; // State to track if the wrap is active
 
-      wrap.addEventListener('click', () => {
+      wrap.addEventListener('touchstart', () => {
         if (isActive) {
           // If active, execute the reverse animation
           reverseAnimation(wrap);
