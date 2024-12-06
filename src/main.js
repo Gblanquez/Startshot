@@ -329,7 +329,7 @@ const setVw = () => {
     document.documentElement.style.setProperty('--vw', `${window.innerWidth / 100}px`);
 
         // Set --mvw to 1% of the current viewport width in pixels for mobile
-        // document.documentElement.style.setProperty('--mvw', `${window.innerWidth / 100}px`);
+        document.documentElement.style.setProperty('--mvw', `${window.innerWidth / 100}px`);
 };
 
 // Set the initial value of --vw
@@ -479,147 +479,147 @@ document.addEventListener('DOMContentLoaded', () => {
 //Button Hover End
 
 
-function initScrollAnimations() {
-  const storyGridWrap = document.querySelector('.story-grid-wrap');
-  const contentChildren = document.querySelectorAll('.story-content-child');
-  const launchImages = document.querySelectorAll('.launch-img');
-  const launchImgWrap = document.querySelector('.launch-img-wrap');
+// function initScrollAnimations() {
+//   const storyGridWrap = document.querySelector('.story-grid-wrap');
+//   const contentChildren = document.querySelectorAll('.story-content-child');
+//   const launchImages = document.querySelectorAll('.launch-img');
+//   const launchImgWrap = document.querySelector('.launch-img-wrap');
 
-  if (!storyGridWrap || contentChildren.length === 0 || launchImages.length === 0 || !launchImgWrap) {
-    console.error('Required elements not found!');
-    return;
-  }
+//   if (!storyGridWrap || contentChildren.length === 0 || launchImages.length === 0 || !launchImgWrap) {
+//     console.error('Required elements not found!');
+//     return;
+//   }
 
-  // Make all images initially hidden
-  gsap.set(launchImages, { opacity: 1, zIndex: -1, y: '110%' });
+//   // Make all images initially hidden
+//   gsap.set(launchImages, { opacity: 1, zIndex: -1, y: '110%' });
 
-  // Add active class to the first image and content child
-  launchImages[0].classList.add('active');
-  contentChildren[0].classList.add('active');
+//   // Add active class to the first image and content child
+//   launchImages[0].classList.add('active');
+//   contentChildren[0].classList.add('active');
 
-  // Ensure the first image is visible and in position
-  gsap.set(launchImages[0], { opacity: 1, zIndex: 1, y: '0%' });
+//   // Ensure the first image is visible and in position
+//   gsap.set(launchImages[0], { opacity: 1, zIndex: 1, y: '0%' });
 
-  // ScrollTrigger for each content-child
-  contentChildren.forEach((content, index) => {
-    ScrollTrigger.create({
-      trigger: content,
-      start: "top 65%", // Adjust for when the content reaches the center of the viewport
-      end: "bottom top",
-      onEnter: () => activateImage(index),
-      onLeaveBack: () => activateImage(index - 1),
-      onLeave: () => deactivateImage(index),
-    });
-  });
+//   // ScrollTrigger for each content-child
+//   contentChildren.forEach((content, index) => {
+//     ScrollTrigger.create({
+//       trigger: content,
+//       start: "top 65%", // Adjust for when the content reaches the center of the viewport
+//       end: "bottom top",
+//       onEnter: () => activateImage(index),
+//       onLeaveBack: () => activateImage(index - 1),
+//       onLeave: () => deactivateImage(index),
+//     });
+//   });
 
-  // Function to activate an image
-  function activateImage(index) {
-    if (index < 0 || index >= launchImages.length) return;
+//   // Function to activate an image
+//   function activateImage(index) {
+//     if (index < 0 || index >= launchImages.length) return;
 
-    gsap.to(launchImages[index], {
-      opacity: 1,
-      zIndex: 1,
-      y: '0%', // Bring the image to the default position
-      duration: 1,
-      ease: 'expo.out',
-    });
+//     gsap.to(launchImages[index], {
+//       opacity: 1,
+//       zIndex: 1,
+//       y: '0%', // Bring the image to the default position
+//       duration: 1,
+//       ease: 'expo.out',
+//     });
 
-    // Deactivate other images
-    launchImages.forEach((img, imgIndex) => {
-      if (imgIndex !== index) {
-        gsap.to(img, {
-          opacity: 1,
-          zIndex: -1,
-          y: '110%', // Move the image back down
-          duration: 1,
-          ease: 'expo.out',
-        });
-      }
-    });
-  }
+//     // Deactivate other images
+//     launchImages.forEach((img, imgIndex) => {
+//       if (imgIndex !== index) {
+//         gsap.to(img, {
+//           opacity: 1,
+//           zIndex: -1,
+//           y: '110%', // Move the image back down
+//           duration: 1,
+//           ease: 'expo.out',
+//         });
+//       }
+//     });
+//   }
 
-  // Function to deactivate an image (when leaving its section)
-  function deactivateImage(index) {
-    if (index < 0 || index >= launchImages.length) return;
+//   // Function to deactivate an image (when leaving its section)
+//   function deactivateImage(index) {
+//     if (index < 0 || index >= launchImages.length) return;
 
-    gsap.to(launchImages[index], {
-      opacity: 0,
-      zIndex: -1,
-      y: '110%',
-      duration: 1,
-      ease: 'expo.out',
-    });
-  }
+//     gsap.to(launchImages[index], {
+//       opacity: 0,
+//       zIndex: -1,
+//       y: '110%',
+//       duration: 1,
+//       ease: 'expo.out',
+//     });
+//   }
 
-  // Animate the launch-img-wrap on the Y-axis across the entire story-grid-wrap
-  gsap.to(launchImgWrap, {
-    y: '144vw', // Move from 0% to 100%
-    scrollTrigger: {
-      trigger: storyGridWrap,
-      start: "top top", // Start animation when storyGridWrap reaches the top of the viewport
-      end: "bottom top", // End animation when storyGridWrap reaches the bottom
-      scrub: true, // Smooth scrolling effect
-    },
-  });
-}
+//   // Animate the launch-img-wrap on the Y-axis across the entire story-grid-wrap
+//   gsap.to(launchImgWrap, {
+//     y: '144vw', // Move from 0% to 100%
+//     scrollTrigger: {
+//       trigger: storyGridWrap,
+//       start: "top top", // Start animation when storyGridWrap reaches the top of the viewport
+//       end: "bottom top", // End animation when storyGridWrap reaches the bottom
+//       scrub: true, // Smooth scrolling effect
+//     },
+//   });
+// }
 
-// Initialize the animation
-document.addEventListener('DOMContentLoaded', () => {
-  initScrollAnimations();
-});
+// // Initialize the animation
+// document.addEventListener('DOMContentLoaded', () => {
+//   initScrollAnimations();
+// });
 
 
 
-//Animation Venture 
+// //Animation Venture 
 
-document.addEventListener('DOMContentLoaded', () => {
-  const vWrap = document.querySelector('.v-wrap');
-  const ventures = document.querySelectorAll('.h-xl.venture');
-  const vPWrap = document.querySelector('.v-p-wrap');
+// document.addEventListener('DOMContentLoaded', () => {
+//   const vWrap = document.querySelector('.v-wrap');
+//   const ventures = document.querySelectorAll('.h-xl.venture');
+//   const vPWrap = document.querySelector('.v-p-wrap');
 
-  if (!vWrap || ventures.length < 2 || !vPWrap) {
-    console.error('Required elements not found!');
-    return;
-  }
+//   if (!vWrap || ventures.length < 2 || !vPWrap) {
+//     console.error('Required elements not found!');
+//     return;
+//   }
 
-  // Create a GSAP timeline
-  const timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: vWrap,
-      start: "top 58%", // Start when .v-wrap reaches the top of the viewport
-      end: "bottom top", // End when .v-wrap leaves the viewport
-      scrub: true, // Smooth scrolling effect
-    }
-  });
+//   // Create a GSAP timeline
+//   const timeline = gsap.timeline({
+//     scrollTrigger: {
+//       trigger: vWrap,
+//       start: "top 58%", // Start when .v-wrap reaches the top of the viewport
+//       end: "bottom top", // End when .v-wrap leaves the viewport
+//       scrub: true, // Smooth scrolling effect
+//     }
+//   });
 
-  // Animate the first .h-xl.venture
-  const splitText1 = new SplitType(ventures[0], { types: 'chars' });
-  timeline.fromTo(splitText1.chars, 
-    { opacity: 0, filter: 'blur(5px)' }, 
-    { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'power2.out' }
-  );
+//   // Animate the first .h-xl.venture
+//   const splitText1 = new SplitType(ventures[0], { types: 'chars' });
+//   timeline.fromTo(splitText1.chars, 
+//     { opacity: 0, filter: 'blur(5px)' }, 
+//     { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'power2.out' }
+//   );
 
-  // Animate the .v-p-wrap and fade out/blur the first .h-xl.venture simultaneously
-  timeline.to(splitText1.chars, 
-    { opacity: 0, filter: 'blur(5px)', duration: 1, stagger: 0.05, ease: 'power2.out' },
+//   // Animate the .v-p-wrap and fade out/blur the first .h-xl.venture simultaneously
+//   timeline.to(splitText1.chars, 
+//     { opacity: 0, filter: 'blur(5px)', duration: 1, stagger: 0.05, ease: 'power2.out' },
      
-  );
-  timeline.fromTo(vPWrap, 
-    { y: '50vw' }, 
-    { y: '-50vw', duration: 10, ease: 'power2.out' },
-    '<'
+//   );
+//   timeline.fromTo(vPWrap, 
+//     { y: '50vw' }, 
+//     { y: '-50vw', duration: 10, ease: 'power2.out' },
+//     '<'
     
-  );
+//   );
 
-  // Animate the second .h-xl.venture
-  const splitText2 = new SplitType(ventures[1], { types: 'chars' });
-  timeline.fromTo(splitText2.chars, 
-    { opacity: 0, filter: 'blur(5px)' }, 
-    { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'power2.out' },
-    '-=8'
+//   // Animate the second .h-xl.venture
+//   const splitText2 = new SplitType(ventures[1], { types: 'chars' });
+//   timeline.fromTo(splitText2.chars, 
+//     { opacity: 0, filter: 'blur(5px)' }, 
+//     { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'power2.out' },
+//     '-=8'
     
-  );
-});
+//   );
+// });
 
 
 
@@ -696,14 +696,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check if the device is mobile
   if (window.matchMedia("(max-width: 479px)").matches) {
     // Select all team member wrap elements
+
+  
+
     const teamWraps = document.querySelectorAll('.team-c-m-container');
 
     teamWraps.forEach((wrap) => {
       let isActive = false; // State to track if the wrap is active
 
-      wrap.addEventListener('touchstart', () => {
+      wrap.addEventListener('click', () => {
         if (isActive) {
           // If active, execute the reverse animation
+          console.log('click an');
+          
           reverseAnimation(wrap);
         } else {
           // If not active, execute the initial animation
@@ -841,6 +846,19 @@ function reverseAnimation(wrap) {
   
 }
  
+
+// document.addEventListener('DOMContentLoaded', () => {
+//   if (window.matchMedia("(max-width: 479px)").matches) {
+//     const teamWraps = document.querySelectorAll('.team-c-m-container');
+
+//     teamWraps.forEach((wrap) => {
+//       wrap.addEventListener('click', () => {
+//         console.log('Wrapper clicked:', wrap);
+//         // Toggle animation state or call animation functions here
+//       });
+//     });
+//   }
+// });
 
 
 

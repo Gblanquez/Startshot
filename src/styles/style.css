@@ -78,51 +78,51 @@
 
 /*Mobile Sizes */
 
-/* @media (max-width: 479px) {
+@media (max-width: 479px) {
   :root {
-      --mvw: 0.01vw; 
+      --mvw: 0.0209vw; /* 1% of 479px is approximately 0.0209vw */
   }
 
   .h-xxl {
-      font-size: calc(var(--mvw) * 4.79); 
+      font-size: calc(64 / 479 * 100 * var(--mvw)); /* 64px at 479px */
   }
 
   .h-xl {
-      font-size: calc(var(--mvw) * 2.66); 
+      font-size: calc(32 / 479 * 100 * var(--mvw)); /* 32px at 479px */
   }
 
   .h-l {
-      font-size: calc(var(--mvw) * 1.17); 
+      font-size: calc(14 / 479 * 100 * var(--mvw)); /* 14px at 479px */
   }
 
   .body-m {
-      font-size: calc(var(--mvw) * 1.33); 
+      font-size: calc(16 / 479 * 100 * var(--mvw)); /* 16px at 479px */
   }
 
   .body-s {
-      font-size: calc(var(--mvw) * 1.00);
+      font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
 
   .caption-n {
-      font-size: calc(var(--mvw) * 0.92);
+      font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
   }
 
   .caption-w {
-      font-size: calc(var(--mvw) * 0.75); 
+      font-size: calc(9 / 479 * 100 * var(--mvw)); /* 9px at 479px */
   }
 
   .d-cta {
-      font-size: calc(var(--mvw) * 1.00); 
+      font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
 
   .d-nav {
-      font-size: calc(var(--mvw) * 1.25);
+      font-size: calc(15 / 479 * 100 * var(--mvw)); /* 15px at 479px */
   }
 
   .f-nav {
-      font-size: calc(var(--mvw) * 1.00); 
+      font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
-} */
+}
 
 /*Mobile Sizes End */
 
