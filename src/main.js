@@ -847,18 +847,6 @@ function reverseAnimation(wrap) {
 }
  
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   if (window.matchMedia("(max-width: 479px)").matches) {
-//     const teamWraps = document.querySelectorAll('.team-c-m-container');
-
-//     teamWraps.forEach((wrap) => {
-//       wrap.addEventListener('click', () => {
-//         console.log('Wrapper clicked:', wrap);
-//         // Toggle animation state or call animation functions here
-//       });
-//     });
-//   }
-// });
 
 
 
