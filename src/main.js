@@ -411,7 +411,6 @@ startAboutAnimations();
 //Team Page//
 startTeamAnimations();
 
-// const transitions = new transition()
 
 
 
