@@ -32,7 +32,7 @@
 
   :root {
     --vw: 0.01vw; /* 1% of the viewport width */
-    --mvw: 0.01vw;
+    /* --mvw: 0.01vw; */
 }
 
 .h-xxl {
@@ -91,6 +91,10 @@
       font-size: calc(32 / 479 * 100 * var(--mvw)); /* 32px at 479px */
   }
 
+  .h-xl.opacity-reduce.about {
+    font-size: calc(16 / 479 * 100 * var(--mvw)); /* 32px at 479px */
+}
+
   .h-l {
       font-size: calc(14 / 479 * 100 * var(--mvw)); /* 14px at 479px */
   }
@@ -121,6 +125,52 @@
 
   .f-nav {
       font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+  }
+
+  .f-label{
+    font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
+  }
+  
+  .logo-wrap{
+    width: calc(137 / 479 * 100 * var(--mvw));
+  }
+
+  .g-button{
+    width: calc(220 / 479 * 100 * var(--mvw));
+    height: calc(40 / 479 * 100 * var(--mvw));
+  }
+
+  .g-a-wrap{
+    width: calc(24 / 479 * 100 * var(--mvw));
+    height: calc(24 / 479 * 100 * var(--mvw));
+  }
+
+
+  .c-t-field{
+    width: calc(208 / 479 * 100 * var(--mvw));
+    height: calc(44 / 479 * 100 * var(--mvw));
+    font-size: calc(11 / 479 * 100 * var(--mvw));
+  }
+
+  .c-t-field.email{
+    width: calc(420 / 479 * 100 * var(--mvw));
+    height: calc(44 / 479 * 100 * var(--mvw));
+  }
+
+  .c-t-field.message{
+    width: calc(420 / 479 * 100 * var(--mvw));
+    height: calc(137 / 479 * 100 * var(--mvw));
+    padding-bottom: calc(92 / 479 * 100 * var(--mvw));
+  }
+
+  .g-button.form{
+    width: calc(106 / 479 * 100 * var(--mvw));
+    height: calc(30 / 479 * 100 * var(--mvw));
+  }
+
+  .g-a-wrap.form{
+    width: calc(22 / 479 * 100 * var(--mvw));
+    height: calc(22 / 479 * 100 * var(--mvw));
   }
 }
 
