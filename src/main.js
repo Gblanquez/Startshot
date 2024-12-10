@@ -243,7 +243,7 @@ footerLinks.forEach(footerLink => {
 //Footer Links Hover Effect End
 
 
-const transitions = new transition()
+
 
 const setVw = () => {
     // Set --vw to 1% of the current viewport width in pixels
@@ -396,6 +396,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+const transitions = new transition()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
