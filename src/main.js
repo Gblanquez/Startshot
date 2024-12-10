@@ -2,7 +2,7 @@ import './styles/style.css'
 import SplitType from 'split-type'
 import gsap from 'gsap'
 import barba from '@barba/core';
-import transition from './transition';
+import transition from './transition.js';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
