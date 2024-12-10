@@ -1,5 +1,8 @@
-//Slider Animations
+import gsap from 'gsap'
+import SplitType from 'split-type'
 
+
+//Slider Animations
 
 //Swiper Carrousels
 // DOM Elements
@@ -203,13 +206,6 @@ function previousMobileSlide() {
   }
 }
 
-// Initialize everything
-initializeCarousel();
-
-
-
-
-
 //Invest Carrousel
 
 // DOM Elements
@@ -343,6 +339,17 @@ dotsInvest.forEach((dot, index) => {
     autoplayTimer = setInterval(nextInvestSlide, autoplayInterval); // Restart autoplay
   });
 });
+
+// Export functions to initialize and stop animations
+export function initializeAllAnimations() {
+  initializeCarousel();
+  initializeInvestSlider();
+}
+
+export function stopAllAnimations() {
+  stopInvestSlider();
+  // Add any additional stop logic for other animations if needed
+}
 
 // Initialize the slider immediately
 initializeInvestSlider();
