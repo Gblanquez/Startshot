@@ -407,9 +407,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 initializeAllAnimations();
 //About Page//
-startAboutAnimations();
+if (window.location.href === 'https://starshot-ventures.webflow.io/about') {
+  //About Page//
+  startAboutAnimations();
+}
 //Team Page//
-startTeamAnimations();
+if (window.location.href === 'https://starshot-ventures.webflow.io/team') {
+  //About Page//
+  startTeamAnimations();
+}
+
 
 
 
