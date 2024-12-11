@@ -130,6 +130,10 @@
   .f-label{
     font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
   }
+
+  .c-label{
+    font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+  }
   
   .logo-wrap{
     width: calc(137 / 479 * 100 * var(--mvw));
@@ -172,6 +176,14 @@
     width: calc(22 / 479 * 100 * var(--mvw));
     height: calc(22 / 479 * 100 * var(--mvw));
   }
+
+  .h-l-wrap.max-logo-w{
+    width: calc(254 / 479 * 100 * var(--mvw));
+    height: calc(22 / 479 * 100 * var(--mvw));
+    max-width: calc(254 / 479 * 100 * var(--mvw));
+  }
+
+
 }
 
 /*Mobile Sizes End */
