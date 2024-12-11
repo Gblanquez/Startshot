@@ -418,7 +418,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //About Page//
 
-startAboutAnimations();
+// startAboutAnimations();
+
+startTeamAnimations();
 
 
 
