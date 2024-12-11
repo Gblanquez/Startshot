@@ -414,7 +414,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // const transitions = new transition()
 
 //Home Page//
-initializeAllAnimations();
+// initializeAllAnimations();
+
+//About Page//
+
+startAboutAnimations();
 
 
 
