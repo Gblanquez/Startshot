@@ -117,7 +117,7 @@ export function startAboutAnimations() {
 //   initAnimations();
   setTimeout(() => {
     initAnimations();
-  }, 1000);
+  }, 1200);
 
 }
 
