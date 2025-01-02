@@ -183,12 +183,18 @@ export default class Transition {
                     },
                 },
             ],
+            hooks: {
+                beforeEnter: () => {
+                    restartWebflow();
+                    console.log('restarting webflow');
+                }
+            }
         });
     }
+
+    
+    
 }
 
-barba.hooks.beforeEnter((data) => {
-    restartWebflow();
-    console.log('restarting webflow');
-  });
+
 
