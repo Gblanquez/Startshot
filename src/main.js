@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initializeAllAnimations, stopAllAnimations } from './home.js';
 import { startAboutAnimations, stopAboutAnimations } from './about.js';
 import { startTeamAnimations, stopTeamAnimations } from './team.js';
-
+import { initializeLaunchpadCarousel } from './launchdpad.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //Team Page//
 
-// const transitions = new transition()
+const transitions = new transition()
 
 //Home Page//
 // initializeAllAnimations();
@@ -420,7 +420,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // startAboutAnimations();
 
-startTeamAnimations();
+// startTeamAnimations();
+
+//Launchpad Page//
+
+// initializeLaunchpadCarousel();
 
 
 

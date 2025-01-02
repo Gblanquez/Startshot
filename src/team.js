@@ -3,6 +3,9 @@ import gsap from 'gsap';
 
 // Function to initialize and start all animations
 export function startTeamAnimations() {
+
+  
+  
   document.querySelectorAll('.team-content').forEach((teamContent) => {
     const teamCContent = teamContent.querySelector('.team-c-content');
     const teamImg = teamContent.querySelector('.team-img');

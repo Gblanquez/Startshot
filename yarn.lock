@@ -10,6 +10,11 @@
     is-promise "^4.0.0"
     path-to-regexp "^6.2.2"
 
+"@finsweet/ts-utils@^0.40.0":
+  version "0.40.0"
+  resolved "https://registry.npmjs.org/@finsweet/ts-utils/-/ts-utils-0.40.0.tgz"
+  integrity sha512-Q24YkkvVxZOA7OGpgC7FsYakHBZWKSiZoV68F1HlhGcqqi5v+9mTHVxV8fSiPJawsTDrjwK44jhYk+GovPWT3w==
+
 "@rollup/pluginutils@^4.1.2":
   version "4.1.2"
   resolved "https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-4.1.2.tgz"
@@ -141,6 +146,11 @@ jquery@^3.6.0:
   version "3.6.0"
   resolved "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
   integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
+
+lenis@^1.1.18:
+  version "1.1.18"
+  resolved "https://registry.npmjs.org/lenis/-/lenis-1.1.18.tgz"
+  integrity sha512-hBJVN0o7ZWt6DqyLoCkYKLffgCqywX0Gf/ZWhWC8Ths1zN/lZHoAMC3faFjaTxnOEKokeV0q1Mlyu1aUr18xFQ==
 
 minimatch@^3.0.4:
   version "3.1.2"
