@@ -190,6 +190,5 @@ export default class Transition {
 barba.hooks.beforeEnter((data) => {
     restartWebflow();
     console.log('restarting webflow');
-    console.log(data.next.namespace);
   });
 

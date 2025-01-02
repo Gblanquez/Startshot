@@ -413,19 +413,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const transitions = new transition()
 
-//Home Page//
-// initializeAllAnimations();
-
-//About Page//
-
-// startAboutAnimations();
-
-// startTeamAnimations();
-
-//Launchpad Page//
-
-// initializeLaunchpadCarousel();
-
 
 
 
