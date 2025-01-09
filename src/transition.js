@@ -8,6 +8,7 @@ import { startTeamAnimations, stopTeamAnimations } from './team.js';
 import { initializeLaunchpadCarousel } from './launchdpad.js';
 import { startLaunchPageAnimations } from './launchpage.js';
 
+
 export default class Transition {
     constructor(options) {
 

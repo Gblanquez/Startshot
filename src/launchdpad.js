@@ -284,7 +284,6 @@ export function initializeLaunchpadCarousel() {
   if (slider && slides.length && sliderWrapper) {
     if (!window.matchMedia("(max-width: 479px)").matches) {
       initializeDesktopCarousel();
-    //   startLaunchPageAnimations();
     }
   }
 

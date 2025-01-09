@@ -358,5 +358,4 @@ export function initializeAllAnimations() {
 
 export function stopAllAnimations() {
   stopInvestSlider();
-  // Add any additional stop logic for other animations if needed
 }
