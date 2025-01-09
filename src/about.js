@@ -21,10 +21,10 @@ export function startAboutAnimations() {
     }
 
     // Initialize scroll animations
-    gsap.set(launchImages, { opacity: 1, zIndex: -1, y: '110%' });
+    gsap.set(launchImages, { opacity: 1, zIndex: -1, filter: 'blur(40px)' });
     launchImages[0].classList.add('active');
     contentChildren[0].classList.add('active');
-    gsap.set(launchImages[0], { opacity: 1, zIndex: 1, y: '0%' });
+    gsap.set(launchImages[0], { opacity: 1, zIndex: 1, filter: 'blur(0px)' });
 
     contentChildren.forEach((content, index) => {
       ScrollTrigger.create({
@@ -42,8 +42,8 @@ export function startAboutAnimations() {
       gsap.to(launchImages[index], {
         opacity: 1,
         zIndex: 1,
-        y: '0%',
-        duration: 1,
+        filter: 'blur(0px)',
+        duration: 1.4,
         ease: 'expo.out',
       });
       launchImages.forEach((img, imgIndex) => {
@@ -51,8 +51,8 @@ export function startAboutAnimations() {
           gsap.to(img, {
             opacity: 1,
             zIndex: -1,
-            y: '110%',
-            duration: 1,
+            filter: 'blur(40px)',
+            duration: 1.4,
             ease: 'expo.out',
           });
         }
@@ -64,8 +64,8 @@ export function startAboutAnimations() {
       gsap.to(launchImages[index], {
         opacity: 0,
         zIndex: -1,
-        y: '110%',
-        duration: 1,
+        filter: 'blur(40px)',
+        duration: 1.4,
         ease: 'expo.out',
       });
     }
@@ -80,6 +80,9 @@ export function startAboutAnimations() {
       },
     });
 
+
+    
+
     // Initialize venture animations
     const timeline = gsap.timeline({
       scrollTrigger: {
@@ -90,7 +93,7 @@ export function startAboutAnimations() {
       }
     });
 
-    const splitText1 = new SplitType(ventures[0], { types: 'chars' });
+    const splitText1 = new SplitType(ventures[0], { types: 'words, chars' });
     timeline.fromTo(splitText1.chars, 
       { opacity: 0, filter: 'blur(5px)' }, 
       { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'power2.out' }
@@ -105,7 +108,7 @@ export function startAboutAnimations() {
       '<'
     );
 
-    const splitText2 = new SplitType(ventures[1], { types: 'chars' });
+    const splitText2 = new SplitType(ventures[1], { types: 'words, chars' });
     timeline.fromTo(splitText2.chars, 
       { opacity: 0, filter: 'blur(5px)' }, 
       { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'power2.out' },

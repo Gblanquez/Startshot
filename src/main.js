@@ -9,9 +9,14 @@ import { startAboutAnimations, stopAboutAnimations } from './about.js';
 import { startTeamAnimations, stopTeamAnimations } from './team.js';
 import { initializeLaunchpadCarousel } from './launchdpad.js';
 
+
+
 gsap.registerPlugin(ScrollTrigger);
 
-
+// Register the Paint Worklet
+if (CSS && 'paintWorklet' in CSS) {
+  CSS.paintWorklet.addModule('https://unpkg.com/smooth-corners');
+}
 
 //Navbar Hover Open Effect
 
@@ -401,15 +406,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-
-
-
-//About Page//
-
-
-
-//Team Page//
 
 const transitions = new transition()
 

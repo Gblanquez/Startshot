@@ -1,5 +1,6 @@
 import gsap from 'gsap';
 import SplitType from 'split-type';
+import { startLaunchPageAnimations } from './launchpage.js';
 
 export function initializeLaunchpadCarousel() {
   // DOM Elements
@@ -279,11 +280,11 @@ export function initializeLaunchpadCarousel() {
     });
   }
 
-  console.log('meant to be the sliders', sliderWrapper);
   // Initialize desktop functionality immediately
   if (slider && slides.length && sliderWrapper) {
     if (!window.matchMedia("(max-width: 479px)").matches) {
       initializeDesktopCarousel();
+    //   startLaunchPageAnimations();
     }
   }
 

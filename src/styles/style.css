@@ -75,10 +75,7 @@
     font-size: calc(var(--vw) * 0.93); /* 16px / 1728px */
 }
 
-/* .g-a-wrap {
-  width: calc(12 / 1728 * 100 * var(--vw));
-  height: calc(12 / 1728 * 100 * var(--vw)); 
-} */
+
 
 
 /*Mobile Sizes */
@@ -243,5 +240,23 @@
 
 .swiper-wrapper.hero-launchdpad {
   transform: translateX(calc(-50% + 50vw)); 
+}
+
+[data-a="rounded"]{
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+  --smooth-corners: 10;
+}
+
+[data-a="rounded-l"]{
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+  --smooth-corners: 34;
+}
+
+[data-a="rounded-m"]{
+  mask-image: paint(smooth-corners);
+  -webkit-mask-image: paint(smooth-corners);
+  --smooth-corners: 24;
 }
 

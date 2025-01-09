@@ -6,6 +6,7 @@ import { initializeAllAnimations, stopAllAnimations } from './home.js';
 import { startAboutAnimations, stopAboutAnimations } from './about.js';
 import { startTeamAnimations, stopTeamAnimations } from './team.js';
 import { initializeLaunchpadCarousel } from './launchdpad.js';
+import { startLaunchPageAnimations } from './launchpage.js';
 
 export default class Transition {
     constructor(options) {
@@ -45,67 +46,54 @@ export default class Transition {
                     namespace: 'home',
                     beforeEnter(data) {
                         initializeAllAnimations();
-                        enableScroll();
                     },
                     beforeLeave(data) {
                         stopAllAnimations();
-                        disableScroll();
                     }
                 },
                 {
                     namespace: 'about',
                     beforeEnter(data) {
                         startAboutAnimations();
-                        enableScroll();
 
                     },
                     beforeLeave(data) {
                         stopAboutAnimations();
-                        disableScroll();
                     }
                 },
                 {
                     namespace: 'team',
                     beforeEnter(data) {
                         startTeamAnimations();
-                        enableScroll();
                        
                     },
                     beforeLeave(data) {
                         stopTeamAnimations();
-                        disableScroll();
                     },
 
                 },
                 {
                     namespace: 'launchpad',
                     beforeEnter(data) {
-                        enableScroll();
                         initializeLaunchpadCarousel();
-                        console.log('this is an test on launchdpad');
-                        const wrapper = document.querySelectorAll('.swiper-slide.is-launchdpad');
-                        console.log(wrapper);
+                        startLaunchPageAnimations();
                     },
                     beforeLeave(data) {
-                        disableScroll();
                     }
                 },
                 {
                     namespace: 'contact',
                     afterEnter(data) {
-                        enableScroll();
+
                     },
                     beforeLeave(data) {
-                        disableScroll();
                     }
                 },
                 {
                     namespace: 'portfolio',
                     afterEnter(data) {
-                        enableScroll();
                     },
                     beforeLeave(data) {
-                        disableScroll();
                     }
                 }
             ],
@@ -119,7 +107,7 @@ export default class Transition {
                     leave({ current }) {
                         // console.log(`Leaving ${current.namespace}`);
 
-                        disableScroll();
+                        // disableScroll();
     
                         const currentContainer = current.container;
     
@@ -130,7 +118,7 @@ export default class Transition {
                             left: '0',
                             width: '100%',
                             zIndex: -1,
-                            opacity: 0.7,
+                            opacity: 0.6,
                         });
     
                         // Animate the opacity fade out for a smoother transition
@@ -148,10 +136,10 @@ export default class Transition {
                     enter({ next }) {
                         // console.log(`Entering ${next.namespace}`);
 
-                        enableScroll();
+                        // enableScroll();
                         
-                        window.scrollTo(0, 0);
-                        lenis.scrollTo(0, { immediate: true });
+                        // window.scrollTo(0, 0);
+                        lenis.scrollTo(0);
 
 
     

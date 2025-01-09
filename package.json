@@ -18,6 +18,7 @@
     "@finsweet/ts-utils": "^0.40.0",
     "gsap": "^3.9.1",
     "lenis": "^1.1.18",
+    "smooth-corners": "^1.0.8",
     "split-type": "^0.3.4",
     "swiper": "^11.1.15"
   }
