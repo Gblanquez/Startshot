@@ -2,7 +2,7 @@ import './styles/style.css'
 import SplitType from 'split-type'
 import gsap from 'gsap'
 import barba from '@barba/core';
-import transition from './transition.js';
+import Transition from './transition.js';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 
@@ -403,17 +403,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  try {
-    const transitions = new transition();
-    if (typeof transitions.init !== 'function') {
-      throw new Error('init method is not defined on transition instance');
-    }
-    transitions.init();
-  } catch (error) {
-    console.error('Error initializing transitions:', error);
-  }
-});
+document.addEventListener('DOMContentLoaded', () => { 
+  const transitions = new Transition()
+  transitions.init()
+})
 
 
 
