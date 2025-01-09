@@ -41,7 +41,6 @@ export default class Transition {
         const lenis = this.lenis;
 
         barba.init({
-            // debug: true,
             views: [
                 {
                     namespace: 'home',

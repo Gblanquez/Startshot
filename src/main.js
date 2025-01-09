@@ -4,10 +4,6 @@ import gsap from 'gsap'
 import barba from '@barba/core';
 import transition from './transition.js';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { initializeAllAnimations, stopAllAnimations } from './home.js';
-import { startAboutAnimations, stopAboutAnimations } from './about.js';
-import { startTeamAnimations, stopTeamAnimations } from './team.js';
-import { initializeLaunchpadCarousel } from './launchdpad.js';
 
 
 
@@ -407,7 +403,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-const transitions = new transition()
+document.addEventListener('DOMContentLoaded', () => { 
+  const transitions = new transition()
+  transitions.init()
+})
 
 
 
