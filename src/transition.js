@@ -1,4 +1,4 @@
-import barba from '@barba/core';
+import barba from '@barba/core/dist/barba.umd.js';
 import gsap from 'gsap'
 import Lenis from 'lenis'
 import { restartWebflow } from '@finsweet/ts-utils';
@@ -40,7 +40,10 @@ export default class Transition {
         const enableScroll = this.enableScroll;
         const lenis = this.lenis;
 
-
+        if (!barba || typeof barba.init !== 'function') {
+            console.error('Barba.js not properly initialized');
+            return;
+        }
 
             barba.init({
                 views: [
