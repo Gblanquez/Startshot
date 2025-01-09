@@ -76,7 +76,7 @@ export default class Transition {
                     namespace: 'launchpad',
                     beforeEnter(data) {
                         initializeLaunchpadCarousel();
-                        startLaunchPageAnimations();
+                        // startLaunchPageAnimations();
                     },
                     beforeLeave(data) {
                     }
@@ -174,7 +174,13 @@ export default class Transition {
             hooks: {
                 beforeEnter: () => {
                     restartWebflow();
+                    enableScroll();
                     console.log('restarting webflow');
+                },
+                beforeLeave: () => {
+                    disableScroll();
+                    console.log('global hook leaving');
+                    
                 }
             }
         });
