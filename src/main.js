@@ -403,10 +403,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => { 
-  const transitions = new transition()
-  transitions.init()
-})
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const transitions = new transition();
+    if (typeof transitions.init !== 'function') {
+      throw new Error('init method is not defined on transition instance');
+    }
+    transitions.init();
+  } catch (error) {
+    console.error('Error initializing transitions:', error);
+  }
+});
 
 
 
