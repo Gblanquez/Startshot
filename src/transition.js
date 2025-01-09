@@ -42,152 +42,150 @@ export default class Transition {
 
 
 
-       document.addEventListener('DOMContentLoaded', () => {
-        barba.init({
-            views: [
+            barba.init({
+                views: [
+                    {
+                    namespace: 'home',
+                    beforeEnter(data) {
+                        initializeAllAnimations();
+                    },
+                    beforeLeave(data) {
+                        stopAllAnimations();
+                    }
+                },
                 {
-                namespace: 'home',
-                beforeEnter(data) {
-                    initializeAllAnimations();
+                    namespace: 'about',
+                    beforeEnter(data) {
+                        startAboutAnimations();
+
+                    },
+                    beforeLeave(data) {
+                        stopAboutAnimations();
+                    }
                 },
-                beforeLeave(data) {
-                    stopAllAnimations();
+                {
+                    namespace: 'team',
+                    beforeEnter(data) {
+                        startTeamAnimations();
+                       
+                    },
+                    beforeLeave(data) {
+                        stopTeamAnimations();
+                    },
+
+                },
+                {
+                    namespace: 'launchpad',
+                    beforeEnter(data) {
+                        initializeLaunchpadCarousel();
+                        // startLaunchPageAnimations();
+                    },
+                    beforeLeave(data) {
+                    }
+                },
+                {
+                    namespace: 'contact',
+                    afterEnter(data) {
+
+                    },
+                    beforeLeave(data) {
+                    }
+                },
+                {
+                    namespace: 'portfolio',
+                    afterEnter(data) {
+                    },
+                    beforeLeave(data) {
+                    }
                 }
-            },
-            {
-                namespace: 'about',
-                beforeEnter(data) {
-                    startAboutAnimations();
+            ],
+            transitions: [
+                {
+                    name: 'Starshot Default Transition',
+                    sync: true,
+                    once({ next }) {
+                        // console.log('First load');
+                    },
+                    leave({ current }) {
+                        // console.log(`Leaving ${current.namespace}`);
 
-                },
-                beforeLeave(data) {
-                    stopAboutAnimations();
-                }
-            },
-            {
-                namespace: 'team',
-                beforeEnter(data) {
-                    startTeamAnimations();
-                   
-                },
-                beforeLeave(data) {
-                    stopTeamAnimations();
-                },
+                        // disableScroll();
+    
+                        const currentContainer = current.container;
+    
+                        // Set current container to absolute with z-index and reduced opacity
+                        gsap.set(currentContainer, {
+                            position: 'absolute',
+                            top: '0',
+                            left: '0',
+                            width: '100%',
+                            zIndex: -1,
+                            opacity: 0.6,
+                        });
+    
+                        // Animate the opacity fade out for a smoother transition
+                        return gsap.to(currentContainer, {
+                            opacity: 0.3,
+                            y: '-12%',
+                            scale: 0.98,
+                            duration: 2,
+                            ease: 'expo.out',
+                            onComplete: () => {
+                                // console.log('Leave animation complete');
+                            },
+                        });
+                    },
+                    enter({ next }) {
+                        // console.log(`Entering ${next.namespace}`);
 
-            },
-            {
-                namespace: 'launchpad',
-                beforeEnter(data) {
-                    initializeLaunchpadCarousel();
-                    // startLaunchPageAnimations();
+                        // enableScroll();
+                        
+                        // window.scrollTo(0, 0);
+                        lenis.scrollTo(0);
+
+
+    
+                        const nextContainer = next.container;
+
+    
+                        // Set initial position for the next container
+                        gsap.set(nextContainer, {
+                            position: 'fixed',
+                            top: '120%',
+                            left: '0',
+                            width: '100%',
+                        });
+    
+                        // Animate the next container to slide into view
+                        return gsap.to(nextContainer, {
+                            top: '0%',
+                            duration: 1.4,
+                            ease: 'expo.out',
+                            onComplete: () => {
+                                // Reset next container to static after animation
+                                gsap.set(nextContainer, {
+                                    position: 'relative',
+                                    top: '0',
+                                });
+
+                            },
+                        });
+                    },
                 },
-                beforeLeave(data) {
-                }
-            },
-            {
-                namespace: 'contact',
-                afterEnter(data) {
-
+            ],
+            hooks: {
+                beforeEnter: () => {
+                    restartWebflow();
+                    enableScroll();
+                    console.log('restarting webflow');
                 },
-                beforeLeave(data) {
-                }
-            },
-            {
-                namespace: 'portfolio',
-                afterEnter(data) {
-                },
-                beforeLeave(data) {
-                }
-            }
-        ],
-        transitions: [
-            {
-                name: 'Starshot Default Transition',
-                sync: true,
-                once({ next }) {
-                    // console.log('First load');
-                },
-                leave({ current }) {
-                    // console.log(`Leaving ${current.namespace}`);
-
-                    // disableScroll();
-
-                    const currentContainer = current.container;
-
-                    // Set current container to absolute with z-index and reduced opacity
-                    gsap.set(currentContainer, {
-                        position: 'absolute',
-                        top: '0',
-                        left: '0',
-                        width: '100%',
-                        zIndex: -1,
-                        opacity: 0.6,
-                    });
-
-                    // Animate the opacity fade out for a smoother transition
-                    return gsap.to(currentContainer, {
-                        opacity: 0.3,
-                        y: '-12%',
-                        scale: 0.98,
-                        duration: 2,
-                        ease: 'expo.out',
-                        onComplete: () => {
-                            // console.log('Leave animation complete');
-                        },
-                    });
-                },
-                enter({ next }) {
-                    // console.log(`Entering ${next.namespace}`);
-
-                    // enableScroll();
+                beforeLeave: () => {
+                    disableScroll();
+                    console.log('global hook leaving');
                     
-                    // window.scrollTo(0, 0);
-                    lenis.scrollTo(0);
-
-
-
-                    const nextContainer = next.container;
-
-
-                    // Set initial position for the next container
-                    gsap.set(nextContainer, {
-                        position: 'fixed',
-                        top: '120%',
-                        left: '0',
-                        width: '100%',
-                    });
-
-                    // Animate the next container to slide into view
-                    return gsap.to(nextContainer, {
-                        top: '0%',
-                        duration: 1.4,
-                        ease: 'expo.out',
-                        onComplete: () => {
-                            // Reset next container to static after animation
-                            gsap.set(nextContainer, {
-                                position: 'relative',
-                                top: '0',
-                            });
-
-                        },
-                    });
-                },
-            },
-        ],
-        hooks: {
-            beforeEnter: () => {
-                restartWebflow();
-                enableScroll();
-                console.log('restarting webflow');
-            },
-            beforeLeave: () => {
-                disableScroll();
-                console.log('global hook leaving');
-                
+                }
             }
-        }
-    });
-       })
+        });
     }
 
     
