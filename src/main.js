@@ -2,8 +2,11 @@ import './styles/style.css'
 import SplitType from 'split-type'
 import gsap from 'gsap'
 import barba from '@barba/core';
+import Lenis from 'lenis'
 import Transition from './transition.js';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const lenis = new Lenis()
 
 
 
@@ -403,8 +406,109 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  const isMobile = () => window.innerWidth <= 478;
+  if (!isMobile()) return;
+
+  // Select elements
+  const mobileIcon = document.querySelector('.mobile_icon');
+  const mobileNavbar = document.querySelector('.mobile_navbar');
+  const menuBg = document.querySelector('.mobile_menu_bg');
+  const linksList = document.querySelector('.mobile_links_list_wrap');
+  const logoWrap = document.querySelector('.mobile_logo_wrap');
+
+  // Set initial states
+  gsap.set(mobileNavbar, { width: '100%', height: 'auto' });
+  gsap.set(menuBg, { width: '18vw', height: '12vw', borderRadius: '100rem' });
+  gsap.set([linksList, logoWrap], { display: 'none', opacity: 0 });
+
+  const openTimeline = gsap.timeline({ 
+    paused: true,
+    onStart: () => {
+      lenis.stop();
+    },
+    onReverseComplete: () => {
+      openTimeline.pause(0);
+      lenis.start();
+    }
+  });
+  
+  const closeTimeline = gsap.timeline({ 
+    paused: true,
+    onComplete: () => {
+      lenis.start();
+      closeTimeline.pause(0);
+    }
+  });
+
+  // Open animation (existing)
+  openTimeline
+    .fromTo(mobileNavbar, 
+      { height: 'auto', width: '100%' },
+      { width: '100%', height: '118vw', duration: 0, ease: 'expo.out' }
+    )
+    .fromTo(menuBg,
+      { width: '18vw', height: '12vw', borderRadius: '100rem' },
+      { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.6, ease: 'expo.out' },
+      '+=0.1'
+    )
+    .set([linksList, logoWrap], { display: 'flex' })
+    .fromTo([linksList, logoWrap],
+      { opacity: 0, y: '2vw' },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'expo.out' },
+      '+=0.04'
+    );
+
+  // Close animation (reverse order)
+  closeTimeline
+    .to([linksList, logoWrap],
+      { 
+        opacity: 0, 
+        y: '2vw', 
+        duration: 0.4,
+        ease: 'power2.out'
+      }
+    )
+    .set([linksList, logoWrap], { display: 'none' })
+    .to(menuBg,
+      { 
+        width: '18vw', 
+        height: '12vw', 
+        borderRadius: '100rem', 
+        duration: 0.6,
+        ease: 'expo.out' 
+      },
+      '-=0.2'
+    )
+    .to(mobileNavbar,
+      { 
+        height: 'auto', 
+        duration: 0.4,
+        ease: 'expo.out' 
+      },
+      '-=0.3'
+    );
+
+  // Toggle state
+  let isOpen = false;
+
+  // Click event listener
+  mobileIcon.addEventListener('click', () => {
+    if (!isOpen) {
+      closeTimeline.pause(0); 
+      openTimeline.play();
+    } else {
+      openTimeline.pause(0); 
+      closeTimeline.play();
+    }
+    isOpen = !isOpen;
+  });
+});
+
+
 document.addEventListener('DOMContentLoaded', () => { 
   const transitions = new Transition()
+
 })
 
 

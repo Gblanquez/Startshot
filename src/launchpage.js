@@ -77,7 +77,7 @@ export function startLaunchPageAnimations() {
 
 
 
-    startLaunchPageAnimations();
+    // startLaunchPageAnimations();
 
 }
 

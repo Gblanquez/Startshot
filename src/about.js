@@ -13,7 +13,6 @@ export function startAboutAnimations() {
     const ventures = document.querySelectorAll('.h-xl.venture');
     const vPWrap = document.querySelector('.v-p-wrap');
 
-    console.log(storyGridWrap, contentChildren);
 
     if (!storyGridWrap || contentChildren.length === 0 || launchImages.length === 0 || !launchImgWrap || !vWrap || ventures.length < 2 || !vPWrap) {
       console.error('Required elements not found!');

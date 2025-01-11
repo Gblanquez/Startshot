@@ -6,7 +6,7 @@ import { initializeAllAnimations, stopAllAnimations } from './home.js';
 import { startAboutAnimations, stopAboutAnimations } from './about.js';
 import { startTeamAnimations, stopTeamAnimations } from './team.js';
 import { initializeLaunchpadCarousel } from './launchdpad.js';
-import { startLaunchPageAnimations } from './launchpage.js';
+import { startLaunchPageAnimations} from './launchpage.js';
 
 
 export default class Transition {
@@ -81,22 +81,24 @@ export default class Transition {
                     namespace: 'launchpad',
                     beforeEnter(data) {
                         initializeLaunchpadCarousel();
-                        // startLaunchPageAnimations();
+                        startLaunchPageAnimations();
                     },
                     beforeLeave(data) {
                     }
                 },
                 {
                     namespace: 'contact',
-                    afterEnter(data) {
+                    beforeEnter(data) {
+                        
 
                     },
                     beforeLeave(data) {
+                     
                     }
                 },
                 {
                     namespace: 'portfolio',
-                    afterEnter(data) {
+                    beforeEnter(data) {
                     },
                     beforeLeave(data) {
                     }
@@ -110,9 +112,7 @@ export default class Transition {
                         // console.log('First load');
                     },
                     leave({ current }) {
-                        // console.log(`Leaving ${current.namespace}`);
 
-                        // disableScroll();
     
                         const currentContainer = current.container;
     
@@ -139,11 +139,8 @@ export default class Transition {
                         });
                     },
                     enter({ next }) {
-                        // console.log(`Entering ${next.namespace}`);
 
-                        // enableScroll();
-                        
-                        // window.scrollTo(0, 0);
+                        window.scrollTo(0, 0);
                         lenis.scrollTo(0);
 
 
@@ -176,20 +173,21 @@ export default class Transition {
                     },
                 },
             ],
-            hooks: {
-                beforeEnter: () => {
-                    restartWebflow();
-                    enableScroll();
-                    console.log('restarting webflow');
-                },
-                beforeLeave: () => {
-                    disableScroll();
-                    console.log('global hook leaving');
-                    
-                }
-            }
         });
+
+        barba.hooks.enter((data) => {
+            enableScroll();
+            restartWebflow();
+            // console.log('restarting webflow', restartWebflow);
+          });
+
+        barba.hooks.leave((data) => {
+            disableScroll();
+            // console.log('global hook leaving', lenis);
+          });
     }
+
+
 
     
     
