@@ -416,20 +416,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuBg = document.querySelector('.mobile_menu_bg');
   const linksList = document.querySelector('.mobile_links_list_wrap');
   const logoWrap = document.querySelector('.mobile_logo_wrap');
-
-  // Set initial states
+  const mobileTexts = document.querySelectorAll('.mobile_text');
+  
+  // Split texts and store references
+  const splitTexts = Array.from(mobileTexts).map(text => 
+    new SplitType(text, { types: 'chars' })
+  );
+  
+  // Initial states
   gsap.set(mobileNavbar, { width: '100%', height: 'auto' });
   gsap.set(menuBg, { width: '18vw', height: '12vw', borderRadius: '100rem' });
   gsap.set([linksList, logoWrap], { display: 'none', opacity: 0 });
+  splitTexts.forEach(split => {
+    gsap.set(split.chars, { opacity: 0 });
+  });
 
   const openTimeline = gsap.timeline({ 
     paused: true,
     onStart: () => {
       lenis.stop();
-    },
-    onReverseComplete: () => {
-      openTimeline.pause(0);
-      lenis.start();
     }
   });
   
@@ -437,57 +442,68 @@ document.addEventListener('DOMContentLoaded', () => {
     paused: true,
     onComplete: () => {
       lenis.start();
-      closeTimeline.pause(0);
+      // Reset elements for next open
+      gsap.set([linksList, logoWrap], { display: 'none' });
     }
   });
 
-  // Open animation (existing)
+  // Open animation
   openTimeline
     .fromTo(mobileNavbar, 
       { height: 'auto', width: '100%' },
-      { width: '100%', height: '118vw', duration: 0, ease: 'expo.out' }
+      { width: '100%', height: '118vw', duration: 0 }
     )
     .fromTo(menuBg,
       { width: '18vw', height: '12vw', borderRadius: '100rem' },
-      { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.6, ease: 'expo.out' },
-      '+=0.1'
+      { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.8, ease: 'expo.out' }
     )
     .set([linksList, logoWrap], { display: 'flex' })
     .fromTo([linksList, logoWrap],
       { opacity: 0, y: '2vw' },
-      { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'expo.out' },
-      '+=0.04'
-    );
-
-  // Close animation (reverse order)
-  closeTimeline
-    .to([linksList, logoWrap],
-      { 
-        opacity: 0, 
-        y: '2vw', 
-        duration: 0.4,
-        ease: 'power2.out'
-      }
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'expo.out' }
     )
-    .set([linksList, logoWrap], { display: 'none' })
-    .to(menuBg,
+    .fromTo(splitTexts.map(split => split.chars), 
+      { opacity: 0 },
       { 
-        width: '18vw', 
-        height: '12vw', 
-        borderRadius: '100rem', 
-        duration: 0.6,
-        ease: 'expo.out' 
-      },
-      '-=0.2'
-    )
-    .to(mobileNavbar,
-      { 
-        height: 'auto', 
-        duration: 0.4,
-        ease: 'expo.out' 
+        opacity: 1,
+        duration: 0.8,
+        stagger: {
+          each: 0.02,
+          from: "random"
+        },
+        ease: "power2.out"
       },
       '-=0.3'
     );
+
+  // Close animation (faster and smoother)
+  closeTimeline
+    .to(splitTexts.map(split => split.chars), {
+      opacity: 0,
+      duration: 0.2,
+      stagger: {
+        each: 0.01,
+        from: "random"
+      },
+      ease: "expo.out"
+    })
+    .to([linksList, logoWrap], {
+      opacity: 0,
+      y: '1vw',
+      duration: 0.3,
+      ease: 'expo.out'
+    }, '-=0.2')
+    .to(menuBg, {
+      width: '18vw',
+      height: '12vw',
+      borderRadius: '100rem',
+      duration: 0.4,
+      ease: 'expo.out'
+    }, '-=0.1')
+    .to(mobileNavbar, {
+      height: 'auto',
+      duration: 0.1
+    });
 
   // Toggle state
   let isOpen = false;
@@ -495,11 +511,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Click event listener
   mobileIcon.addEventListener('click', () => {
     if (!isOpen) {
-      closeTimeline.pause(0); 
-      openTimeline.play();
+      // Reset closeTimeline and play openTimeline
+      closeTimeline.pause(0);
+      openTimeline.play(0);
     } else {
-      openTimeline.pause(0); 
-      closeTimeline.play();
+      // Reset openTimeline and play closeTimeline
+      openTimeline.pause();
+      closeTimeline.play(0);
     }
     isOpen = !isOpen;
   });

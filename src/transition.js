@@ -111,7 +111,45 @@ export default class Transition {
                     once({ next }) {
                         // console.log('First load');
                     },
-                    leave({ current }) {
+                    async leave({ current }) {
+
+                        const isMobile = window.innerWidth <= 478;
+    
+                        if (isMobile) {
+                            // Always run close animation on mobile during transition
+                            const closeTimeline = gsap.timeline();
+                            
+                            closeTimeline
+                                .to('.mobile_text .char', {
+                                    opacity: 0,
+                                    duration: 0.2,
+                                    stagger: {
+                                        each: 0.01,
+                                        from: "random"
+                                    },
+                                    ease: "expo.out"
+                                })
+                                .to(['.mobile_links_list_wrap', '.mobile_logo_wrap'], {
+                                    opacity: 0,
+                                    y: '1vw',
+                                    duration: 0.2,
+                                    ease: 'expo.out'
+                                }, '-=0.2')
+                                .to('.mobile_menu_bg', {
+                                    width: '18vw',
+                                    height: '12vw',
+                                    borderRadius: '100rem',
+                                    duration: 0.2,
+                                    ease: 'expo.out'
+                                }, '-=0.1')
+                                .to('.mobile_navbar', {
+                                    height: 'auto',
+                                    duration: 0.1
+                                });
+                    
+                            // Wait for menu close animation to complete
+                            await closeTimeline;
+                        }
 
     
                         const currentContainer = current.container;
