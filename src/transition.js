@@ -7,7 +7,7 @@ import { startAboutAnimations, stopAboutAnimations } from './about.js';
 import { startTeamAnimations, stopTeamAnimations } from './team.js';
 import { initializeLaunchpadCarousel } from './launchdpad.js';
 import { startLaunchPageAnimations} from './launchpage.js';
-
+import { initializePortfolioCarousels } from './portfolio.js';
 
 export default class Transition {
     constructor(options) {
@@ -99,8 +99,10 @@ export default class Transition {
                 {
                     namespace: 'portfolio',
                     beforeEnter(data) {
+                        initializePortfolioCarousels();
                     },
                     beforeLeave(data) {
+                        stopPortfolioCarousel();
                     }
                 }
             ],
@@ -216,7 +218,7 @@ export default class Transition {
         barba.hooks.enter((data) => {
             enableScroll();
             restartWebflow();
-            // console.log('restarting webflow', restartWebflow);
+            // console.log('restarting webflow', restartWebflow, lenis);
           });
 
         barba.hooks.leave((data) => {

@@ -122,6 +122,10 @@
       font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
 
+  .body-s.launchdpad {
+    font-size: calc(10 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+}
+
   .d-nav {
       font-size: calc(15 / 479 * 100 * var(--mvw)); /* 15px at 479px */
   }
@@ -259,4 +263,7 @@
   -webkit-mask-image: paint(smooth-corners);
   --smooth-corners: 24;
 }
+
+
+
 
