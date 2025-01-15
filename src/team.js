@@ -41,7 +41,8 @@ export function startTeamAnimations() {
   });
 
   document.addEventListener('DOMContentLoaded', () => {
-    if (window.matchMedia("(max-width: 479px)").matches) {
+    const maxMobileWidth = 479;
+    if (window.innerWidth <= maxMobileWidth) {
       const teamWraps = document.querySelectorAll('.team-c-m-container');
       let activeWrap = null;
   
