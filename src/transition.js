@@ -119,7 +119,11 @@ export default class Transition {
     
                         if (isMobile) {
                             // Always run close animation on mobile during transition
-                            const closeTimeline = gsap.timeline();
+                            const closeTimeline = gsap.timeline({
+                                onComplete: () => {
+                                    lenis.start();
+                                }
+                            });
                             
                             closeTimeline
                                 .to('.mobile_text .char', {
