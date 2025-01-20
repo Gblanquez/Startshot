@@ -43,11 +43,14 @@ export function startTeamAnimations() {
   document.addEventListener('DOMContentLoaded', () => {
     const maxMobileWidth = 479;
     if (window.innerWidth <= maxMobileWidth) {
+      console.log('Mobile view detected');
       const teamWraps = document.querySelectorAll('.team-c-m-container');
       let activeWrap = null;
   
       teamWraps.forEach((wrap) => {
+        console.log('Wrap found:', wrap);
         wrap.addEventListener('click', () => {
+          console.log('Wrap clicked:', wrap);
           if (wrap === activeWrap) {
             reverseAnimation(wrap);
             activeWrap = null;
@@ -60,6 +63,8 @@ export function startTeamAnimations() {
           }
         });
       });
+    } else {
+      console.log('Not in mobile view');
     }
   });
 }
