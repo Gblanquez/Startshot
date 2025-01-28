@@ -9,11 +9,11 @@ export function initializeAllAnimations() {
   const arrowForward = document.querySelector('.arrow-forward');
   const arrowBackward = document.querySelector('.arrow-backward');
   const paginationDots = document.querySelectorAll('.pag-dot');
-
+  
   const slidesInvest = document.querySelectorAll('.swiper-slide.is-invest');
   const dotsInvest = document.querySelectorAll('.invest-swiper-dot');
   const investSection = document.querySelector('.invest-section');
-
+  
   // Desktop Variables
   let currentIndex = Math.floor(slides.length / 2);
   const spaceBetweenVW = 1;
@@ -21,17 +21,42 @@ export function initializeAllAnimations() {
   const activeWidthVW = 30;
   const activeMarginVW = 5;
   const offsetEdgeVW = 0.5;
-
+  
   // Mobile Variables
   let mobileCurrentIndex = Math.floor(slides.length / 2);
   const mobileSlideWidthVW = 100;
   const mobileSlideHeightVW = 120;
-
+  
   // Invest Variables
   let currentInvestIndex = 0;
   const autoplayInterval = 7000;
   let autoplayTimer;
-
+  
+  // Function to reset the carousel state
+  function resetCarouselState() {
+    currentIndex = Math.floor(slides.length / 2);
+    mobileCurrentIndex = Math.floor(slides.length / 2);
+  }
+  
+  // Function to clean up event listeners
+  function cleanupEventListeners() {
+    arrowForward.removeEventListener('click', nextSlide);
+    arrowBackward.removeEventListener('click', previousSlide);
+    arrowForward.removeEventListener('click', nextMobileSlide);
+    arrowBackward.removeEventListener('click', previousMobileSlide);
+  
+    paginationDots.forEach((dot, index) => {
+      dot.removeEventListener('click', () => {
+        currentIndex = index;
+        updatePosition();
+      });
+      dot.removeEventListener('click', () => {
+        mobileCurrentIndex = index;
+        updateMobilePosition();
+      });
+    });
+  }
+  
   // Initialize Carousel
   function initializeCarousel() {
     if (window.matchMedia("(max-width: 479px)").matches) {
@@ -39,25 +64,18 @@ export function initializeAllAnimations() {
     } else {
       initializeDesktopCarousel();
     }
-
-    window.addEventListener('resize', () => {
-      if (window.matchMedia("(max-width: 479px)").matches) {
-        initializeMobileCarousel();
-      } else {
-        initializeDesktopCarousel();
-      }
-    });
   }
-
+  
   // Initialize Desktop Carousel
   function initializeDesktopCarousel() {
+    cleanupEventListeners();
     setSlideSizes();
     updatePosition();
     setActiveSlide();
-
+  
     arrowForward.addEventListener('click', nextSlide);
     arrowBackward.addEventListener('click', previousSlide);
-
+  
     paginationDots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         currentIndex = index;
@@ -65,16 +83,17 @@ export function initializeAllAnimations() {
       });
     });
   }
-
+  
   // Initialize Mobile Carousel
   function initializeMobileCarousel() {
+    cleanupEventListeners();
     setMobileSlideSizes();
     updateMobilePosition();
     setActiveSlide();
-
+  
     arrowForward.addEventListener('click', nextMobileSlide);
     arrowBackward.addEventListener('click', previousMobileSlide);
-
+  
     paginationDots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
         mobileCurrentIndex = index;
@@ -82,7 +101,7 @@ export function initializeAllAnimations() {
       });
     });
   }
-
+  
   // Set sizes dynamically for slides (Desktop)
   function setSlideSizes() {
     slides.forEach((slide, index) => {
@@ -96,13 +115,13 @@ export function initializeAllAnimations() {
       }
       slide.style.marginRight = `${spaceBetweenVW}vw`;
     });
-
+  
     const totalOffsetVW = 2 * offsetEdgeVW;
     const totalWrapperWidthVW =
       slides.length * inactiveWidthVW + totalOffsetVW + slides.length * spaceBetweenVW;
     sliderWrapper.style.width = `calc(${totalWrapperWidthVW}vw)`;
   }
-
+  
   // Set sizes dynamically for slides (Mobile)
   function setMobileSlideSizes() {
     slides.forEach((slide) => {
@@ -114,10 +133,10 @@ export function initializeAllAnimations() {
       }
       slide.style.marginRight = '0';
     });
-
+  
     sliderWrapper.style.width = `${slides.length * mobileSlideWidthVW}vw`;
   }
-
+  
   // Update the position of the carousel (Desktop)
   function updatePosition() {
     const spaceBetween = window.innerWidth * (spaceBetweenVW / 100);
@@ -125,17 +144,17 @@ export function initializeAllAnimations() {
     const activeWidth = window.innerWidth * (activeWidthVW / 100);
     const activeMargin = window.innerWidth * (activeMarginVW / 100);
     const offsetEdge = window.innerWidth * (offsetEdgeVW / 100);
-
+  
     const offset =
       -(inactiveWidth + spaceBetween) * currentIndex +
       slider.offsetWidth / 2 -
       (activeWidth + 2 * activeMargin) / 2;
-
+  
     sliderWrapper.style.transform = `translateX(${offset}px)`;
     sliderWrapper.style.transition = 'transform 0.5s ease-in-out';
     setActiveSlide();
   }
-
+  
   // Update the position of the carousel (Mobile)
   function updateMobilePosition() {
     const offset = -mobileCurrentIndex * window.innerWidth;
@@ -143,7 +162,7 @@ export function initializeAllAnimations() {
     sliderWrapper.style.transition = 'transform 0.5s ease-in-out';
     setActiveSlide();
   }
-
+  
   // Highlight the active slide and update pagination dots
   function setActiveSlide() {
     slides.forEach((slide, index) => {
@@ -151,13 +170,13 @@ export function initializeAllAnimations() {
       const content = slide.querySelector('.c-h-content');
       const innovatorText = slide.querySelector('.h-l.innovator-t');
       const buttonWrapper = slide.querySelector('.c-h-b-wrap.h-button');
-
+  
       if (contentWrapper) {
         const isActive = index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex);
         contentWrapper.classList.toggle('is-active', isActive);
-
+  
         const timeline = gsap.timeline();
-
+  
         if (window.matchMedia("(max-width: 479px)").matches) {
           timeline.to(contentWrapper, {
             width: `${mobileSlideWidthVW}vw`,
@@ -185,11 +204,11 @@ export function initializeAllAnimations() {
             });
           }
         }
-
+  
         if (innovatorText) {
           const splitText = new SplitType(innovatorText, { types: 'words' });
           gsap.set(splitText.words, { y: '120%', opacity: 0 });
-
+  
           if (isActive) {
             timeline.to(splitText.words, {
               y: '0%',
@@ -198,7 +217,7 @@ export function initializeAllAnimations() {
               ease: 'expo.out',
               stagger: 0.02
             }, 0.66);
-
+  
             if (buttonWrapper) {
               timeline.to(buttonWrapper,
                 { y: '0%', opacity: 1, duration: 1.2, ease: 'expo.out' },
@@ -212,18 +231,18 @@ export function initializeAllAnimations() {
             }
           }
         }
-
+  
         if (content) {
           content.classList.toggle('is-active', isActive);
         }
       }
     });
-
+  
     paginationDots.forEach((dot, index) => {
       dot.classList.toggle('active', index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex));
     });
   }
-
+  
   // Move to the next slide (Desktop)
   function nextSlide() {
     if (currentIndex < slides.length - 1) {
@@ -231,7 +250,7 @@ export function initializeAllAnimations() {
       updatePosition();
     }
   }
-
+  
   // Move to the previous slide (Desktop)
   function previousSlide() {
     if (currentIndex > 0) {
@@ -239,7 +258,7 @@ export function initializeAllAnimations() {
       updatePosition();
     }
   }
-
+  
   // Move to the next slide (Mobile)
   function nextMobileSlide() {
     if (mobileCurrentIndex < slides.length - 1) {
@@ -247,7 +266,7 @@ export function initializeAllAnimations() {
       updateMobilePosition();
     }
   }
-
+  
   // Move to the previous slide (Mobile)
   function previousMobileSlide() {
     if (mobileCurrentIndex > 0) {
@@ -255,6 +274,15 @@ export function initializeAllAnimations() {
       updateMobilePosition();
     }
   }
+  
+  // Handle resize events
+  window.addEventListener('resize', () => {
+    resetCarouselState();
+    initializeCarousel();
+  });
+  
+  // Initialize the carousel on page load
+  initializeCarousel();
 
   // Initialize the GSAP autoplay slider
   function initializeInvestSlider() {

@@ -40,32 +40,61 @@ export function startTeamAnimations() {
     });
   });
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const maxMobileWidth = 479;
-    if (window.innerWidth <= maxMobileWidth) {
-      console.log('Mobile view detected');
-      const teamWraps = document.querySelectorAll('.team-c-m-container');
-      let activeWrap = null;
-  
-      teamWraps.forEach((wrap) => {
-        console.log('Wrap found:', wrap);
-        wrap.addEventListener('click', () => {
-          console.log('Wrap clicked:', wrap);
-          if (wrap === activeWrap) {
-            reverseAnimation(wrap);
-            activeWrap = null;
-          } else {
-            if (activeWrap) {
-              reverseAnimation(activeWrap);
-            }
-            animateTeamWrap(wrap);
-            activeWrap = wrap;
-          }
-        });
-      });
-    } else {
-      console.log('Not in mobile view');
+  const maxMobileWidth = 479;
+  let teamWraps = [];
+  let activeWrap = null;
+
+  // Function to initialize team card functionality
+  function initializeTeamCards() {
+    if (window.innerWidth > maxMobileWidth) return;
+
+    // console.log('Mobile view detected');
+    teamWraps = document.querySelectorAll('.team-c-m-container');
+
+    teamWraps.forEach((wrap) => {
+    //   console.log('Wrap found:', wrap);
+      wrap.addEventListener('click', handleTeamWrapClick);
+    });
+  }
+
+  // Function to reset team card state
+  function resetTeamCards() {
+    if (activeWrap) {
+      reverseAnimation(activeWrap);
+      activeWrap = null;
     }
+
+    teamWraps.forEach((wrap) => {
+      wrap.removeEventListener('click', handleTeamWrapClick);
+    });
+
+    teamWraps = [];
+  }
+
+  // Function to handle team wrap click
+  function handleTeamWrapClick() {
+    if (this === activeWrap) {
+      reverseAnimation(this);
+      activeWrap = null;
+    } else {
+      if (activeWrap) {
+        reverseAnimation(activeWrap);
+      }
+      animateTeamWrap(this);
+      activeWrap = this;
+    }
+  }
+
+  // Initialize team cards on page load
+  document.addEventListener('DOMContentLoaded', initializeTeamCards);
+
+  // Call initializeTeamCards immediately to handle initial mobile viewport
+  initializeTeamCards();
+
+  // Handle resize events
+  window.addEventListener('resize', () => {
+    resetTeamCards();
+    initializeTeamCards();
   });
 }
 

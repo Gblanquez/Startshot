@@ -90,6 +90,7 @@ export default class Transition {
                     },
                     beforeLeave(data) {
                         stopTeamAnimations();
+                    
                     },
 
                 },
