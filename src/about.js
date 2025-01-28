@@ -12,7 +12,7 @@ export function startAboutAnimations() {
     const vWrap = document.querySelector('.v-wrap');
     const ventures = document.querySelectorAll('.h-xl.venture');
     const vPWrap = document.querySelector('.v-p-wrap');
-
+    const svgPath = document.querySelector('.story-line-path');
 
     if (!storyGridWrap || contentChildren.length === 0 || launchImages.length === 0 || !launchImgWrap || !vWrap || ventures.length < 2 || !vPWrap) {
       console.error('Required elements not found!');
@@ -69,18 +69,29 @@ export function startAboutAnimations() {
       });
     }
 
-    gsap.to(launchImgWrap, {
-      y: '144vw',
+    // Initialize the SVG path
+    gsap.set(svgPath, {
+      strokeDasharray: svgPath.getTotalLength(),
+      strokeDashoffset: svgPath.getTotalLength(),
+      filter: 'blur(0px)'
+    });
+
+    // Create a timeline for synchronized animations
+    gsap.timeline({
       scrollTrigger: {
         trigger: storyGridWrap,
         start: "top top",
         end: "bottom top",
         scrub: true,
-      },
-    });
+      }
+    })
+    .to(launchImgWrap, {
+      y: '144vw',
+    }, 0.018)
+    .to(svgPath, {
+      strokeDashoffset: 0,
+    }, 0)
 
-
-    
 
     // Initialize venture animations
     const timeline = gsap.timeline({

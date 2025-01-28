@@ -38,44 +38,32 @@ export function initializePortfolioCarousels() {
             let currentIndex = 0;
             const slides = Array.from(list.children);
             let slideWidth = slides[0].offsetWidth;
-            const slidesToClone = 8;
-
-            slides.slice(-slidesToClone).forEach(slide => 
-                list.insertBefore(slide.cloneNode(true), slides[0])
-            );
-            slides.slice(0, slidesToClone).forEach(slide => 
-                list.appendChild(slide.cloneNode(true))
-            );
-
-            gsap.set(list, { x: -slideWidth * slidesToClone });
+            const visibleSlides = 4;
+            const maxIndex = Math.max(0, slides.length - visibleSlides); // Stop at last 4 items
 
             function goToSlide(index) {
+                // Ensure index stays within bounds
+                currentIndex = Math.max(0, Math.min(index, maxIndex));
+                
                 gsap.to(list, {
-                    x: -slideWidth * (slidesToClone + index),
+                    x: -slideWidth * currentIndex,
                     duration: 0.8,
-                    ease: 'expo.out',
-                    onComplete: () => {
-                        if (index >= slides.length) {
-                            currentIndex = 0;
-                            gsap.set(list, { x: -slideWidth * slidesToClone });
-                        } else if (index < 0) {
-                            currentIndex = slides.length - 1;
-                            gsap.set(list, { x: -slideWidth * (slidesToClone + slides.length - 1) });
-                        }
-                    }
+                    ease: 'expo.out'
                 });
             }
 
             nextButton.addEventListener('click', () => {
-                console.log('Next clicked');
-                currentIndex++;
-                goToSlide(currentIndex);
+                if (currentIndex < maxIndex) {
+                    currentIndex++;
+                    goToSlide(currentIndex);
+                }
             });
 
             prevButton.addEventListener('click', () => {
-                console.log('Prev clicked');
-                currentIndex--;
-                goToSlide(currentIndex);
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    goToSlide(currentIndex);
+                }
             });
 
             // Touch controls
@@ -90,7 +78,11 @@ export function initializePortfolioCarousels() {
             wrapper.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
                 const diff = e.touches[0].clientX - startX;
-                gsap.set(list, { x: currentX + diff });
+                const newX = currentX + diff;
+                // Add bounds to prevent overscrolling
+                const maxX = 0;
+                const minX = -slideWidth * maxIndex;
+                gsap.set(list, { x: Math.max(minX, Math.min(maxX, newX)) });
             });
 
             wrapper.addEventListener('touchend', (e) => {
@@ -108,7 +100,7 @@ export function initializePortfolioCarousels() {
             // Handle resize
             window.addEventListener('resize', () => {
                 slideWidth = slides[0].offsetWidth;
-                gsap.set(list, { x: -slideWidth * (slidesToClone + currentIndex) });
+                gsap.set(list, { x: -slideWidth * currentIndex });
             });
         }
     }

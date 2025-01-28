@@ -1,6 +1,8 @@
 import barba from '@barba/core/dist/barba.umd.js';
 import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import { restartWebflow } from '@finsweet/ts-utils';
 import { initializeAllAnimations, stopAllAnimations } from './home.js';
 import { startAboutAnimations, stopAboutAnimations } from './about.js';
@@ -8,6 +10,11 @@ import { startTeamAnimations, stopTeamAnimations } from './team.js';
 import { initializeLaunchpadCarousel } from './launchdpad.js';
 import { startLaunchPageAnimations} from './launchpage.js';
 import { initializePortfolioCarousels } from './portfolio.js';
+import { initializeButtonAnimations } from './button.js';
+import { initFooterAnimation } from './footer.js';
+import { initializeMenuAnimations } from './menu.js';
+
+
 
 export default class Transition {
     constructor(options) {
@@ -27,11 +34,17 @@ export default class Transition {
     }
 
     initLenis() {
-        function raf(time) {
-            this.lenis.raf(time)
-            requestAnimationFrame(raf.bind(this))
-        }
-        requestAnimationFrame(raf.bind(this))
+        this.lenis = new Lenis({
+            autoRaf: false,
+        });
+
+        this.lenis.on('scroll', ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+            this.lenis.raf(time * 1000);
+        });
+
+        gsap.ticker.lagSmoothing(0);
     }
 
     barba() {
@@ -59,8 +72,11 @@ export default class Transition {
                 {
                     namespace: 'about',
                     beforeEnter(data) {
-                        startAboutAnimations();
+                        // startAboutAnimations();
 
+                    },
+                    afterEnter(data) {
+                        startAboutAnimations();
                     },
                     beforeLeave(data) {
                         stopAboutAnimations();
@@ -81,6 +97,8 @@ export default class Transition {
                     namespace: 'launchpad',
                     beforeEnter(data) {
                         initializeLaunchpadCarousel();
+                    },
+                    afterEnter(data) {
                         startLaunchPageAnimations();
                     },
                     beforeLeave(data) {
@@ -111,7 +129,72 @@ export default class Transition {
                     name: 'Starshot Default Transition',
                     sync: true,
                     once({ next }) {
-                        // console.log('First load');
+                        console.log('First load');
+                        
+                        // Initial states
+                        gsap.set(next.container, {
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            y: '120%',
+                            scale: 0.2,
+                        });
+                        gsap.set('.load-nmb-wrap', {
+                            display: 'block'
+                        });
+                        // Add initial state for nav wrapper
+                        gsap.set('.g-nav-wrapper', {
+                            opacity: 0,
+                            filter: 'blur(30px)'
+                        });
+
+                        // Create counter animation
+                        let counter = { value: 0 };
+                        const loadingTimeline = gsap.timeline({
+                            onComplete: () => {
+                                gsap.set('.load-nmb-wrap', {
+                                    display: 'none'
+                                });
+                                gsap.set(next.container, {
+                                    position: 'relative',
+                                    clearProps: 'transform,opacity'
+                                });
+                            }
+                        });
+
+                        loadingTimeline
+                            // Animate counter from 0 to 100
+                            .to(counter, {
+                                value: 100,
+                                duration: 1,
+                                ease: 'power1.inOut',
+                                onUpdate: () => {
+                                    document.querySelector('.numb-load').textContent = Math.round(counter.value);
+                                }
+                            })
+                            // Move loading wrapper up
+                            .to('.ln-wrap', {
+                                y: '-110%',
+                                duration: 1,
+                                ease: 'expo.out'
+                            })
+                            // Move container into view with scale and opacity
+                            .to(next.container, {
+                                y: '0%',
+                                scale: 1,
+                                duration: 1.4,
+                                ease: 'expo.out'
+                            }, '-=0.7')
+                            // Add nav wrapper animation
+                            .to('.g-nav-wrapper', {
+                                opacity: 1,
+                                filter: 'blur(0px)',
+                                duration: 1,
+                                ease: 'power2.out'
+                            }, '-=1'); // Start slightly before the container animation finishes
+
+                        return loadingTimeline;
                     },
                     async leave({ current }) {
 
@@ -159,6 +242,9 @@ export default class Transition {
 
     
                         const currentContainer = current.container;
+                        
+
+                        disableScroll();
     
                         // Set current container to absolute with z-index and reduced opacity
                         gsap.set(currentContainer, {
@@ -186,8 +272,6 @@ export default class Transition {
 
                         window.scrollTo(0, 0);
                         lenis.scrollTo(0);
-
-
     
                         const nextContainer = next.container;
 
@@ -215,18 +299,23 @@ export default class Transition {
                             },
                         });
                     },
+                    afterEnter(data) {
+                        enableScroll();
+                    }
                 },
             ],
         });
 
         barba.hooks.enter((data) => {
-            enableScroll();
             restartWebflow();
+            initializeButtonAnimations();
+            initFooterAnimation();
+            initializeMenuAnimations();
+            console.log('button animations initialized');
             // console.log('restarting webflow', restartWebflow, lenis);
           });
 
         barba.hooks.leave((data) => {
-            disableScroll();
             // console.log('global hook leaving', lenis);
           });
     }

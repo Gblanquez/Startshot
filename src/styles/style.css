@@ -17,22 +17,21 @@
     pointer-events: none;
   }
 
-/* 
-  .i-embed-c w-embed,
-  .i-embed-c mask w-embed{
-    pointer-events: none;
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
   }
-
-  .i-embed-c,
-  .i-embed-c mask{
-    pointer-events: none;
-  } */
+  
+  html,
+  body {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
 
 
 
   :root {
-    --vw: 0.01vw; /* 1% of the viewport width */
-    /* --mvw: 0.01vw; */
+    --vw: 0.01vw;
 }
 
 .h-xxl {
@@ -196,6 +195,8 @@
 
 
 }
+
+
 
 /*Mobile Sizes End */
 

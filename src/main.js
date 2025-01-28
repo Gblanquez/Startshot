@@ -18,53 +18,53 @@ import { initializePortfolioCarousels } from './portfolio.js';
 
 
 
-function initializePageAnimations() {
-  const currentURL = window.location.href;
+// function initializePageAnimations() {
+//   const currentURL = window.location.href;
   
-  // Clear any existing animations/timelines
-  gsap.globalTimeline.clear();
+//   // Clear any existing animations/timelines
+//   gsap.globalTimeline.clear();
 
-  console.log('Current URL:', currentURL); // Debug log
+//   console.log('Current URL:', currentURL); // Debug log
 
-  if (currentURL.includes('starshot-ventures.webflow.io/about')) {
-    console.log('Initializing About animations');
-    startAboutAnimations();
-  }
-  else if (currentURL.includes('starshot-ventures.webflow.io/team')) {
-    console.log('Initializing Team animations');
-    startTeamAnimations();
-  }
-  else if (currentURL.includes('starshot-ventures.webflow.io/launchpad')) {
-    console.log('Initializing Launchpad animations');
-    initializeLaunchpadCarousel();
-    startLaunchPageAnimations();
-  }
-  else if (currentURL.includes('starshot-ventures.webflow.io/portfolio')) {
-    console.log('Initializing Portfolio animations');
-    initializePortfolioCarousels();
-  }
-  // Home page could be either the root or have some specific path
-  else if (currentURL.includes('starshot-ventures.webflow.io') && 
-           !currentURL.includes('/about') && 
-           !currentURL.includes('/team') && 
-           !currentURL.includes('/launchpad') && 
-           !currentURL.includes('/portfolio')) {
-    console.log('Initializing Home animations');
-    initializeAllAnimations();
-  }
-  else {
-    console.log('No specific animations for this page');
-  }
-}
+//   if (currentURL.includes('starshot-ventures.webflow.io/about')) {
+//     console.log('Initializing About animations');
+//     startAboutAnimations();
+//   }
+//   else if (currentURL.includes('starshot-ventures.webflow.io/team')) {
+//     console.log('Initializing Team animations');
+//     startTeamAnimations();
+//   }
+//   else if (currentURL.includes('starshot-ventures.webflow.io/launchpad')) {
+//     console.log('Initializing Launchpad animations');
+//     initializeLaunchpadCarousel();
+//     startLaunchPageAnimations();
+//   }
+//   else if (currentURL.includes('starshot-ventures.webflow.io/portfolio')) {
+//     console.log('Initializing Portfolio animations');
+//     initializePortfolioCarousels();
+//   }
+//   // Home page could be either the root or have some specific path
+//   else if (currentURL.includes('starshot-ventures.webflow.io') && 
+//            !currentURL.includes('/about') && 
+//            !currentURL.includes('/team') && 
+//            !currentURL.includes('/launchpad') && 
+//            !currentURL.includes('/portfolio')) {
+//     console.log('Initializing Home animations');
+//     initializeAllAnimations();
+//   }
+//   else {
+//     console.log('No specific animations for this page');
+//   }
+// }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initializePageAnimations();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   initializePageAnimations();
+// });
 
 
-const lenis = new Lenis({
-  autoRaf: true,
-});
+// const lenis = new Lenis({
+//   autoRaf: true,
+// });
 
 
 
@@ -101,23 +101,155 @@ const menuWrap = document.querySelector('.menu-l-wrap');
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Select necessary elements
   const menuWraps = document.querySelectorAll('.menu-l-wrap');
-  const bgElements = document.querySelectorAll('.g-n-bg'); // Multiple background elements
+  const bgElements = document.querySelectorAll('.g-n-bg');
   const splitInstances = []; // To store SplitType instances
+  let hoverEnabled = false;
 
   if (!menuWraps.length || !bgElements.length) {
     console.error('Required elements not found!');
     return;
   }
 
-  // GSAP setup for initial states
+  // Modified initial states - start with menu open
   menuWraps.forEach((menuWrap) => {
-    gsap.set(menuWrap, { width: '3.5vw' }); // Initial width for each menuWrap
+    gsap.set(menuWrap, { width: 'auto' });
   });
 
   bgElements.forEach((bgElement) => {
-    gsap.set(bgElement, { width: '0vw', height: '100%' }); // Initial state for each g-n-bg
+    gsap.set(bgElement, { width: '41vw', height: '100%' });
+  });
+
+  // Function to open all menus
+  const openAllMenus = () => {
+    hoverEnabled = false; // Disable hover when menu is forced open
+    menuWraps.forEach((menuWrap, index) => {
+      const bgElement = bgElements[index];
+      
+      gsap.to(menuWrap, {
+        width: 'auto',
+        duration: 1.2,
+        ease: 'expo.out'
+      });
+      
+      gsap.to(bgElement, {
+        width: '41vw',
+        duration: 1.2,
+        ease: 'expo.out'
+      });
+
+      // Fade in text
+      const textElements = menuWrap.querySelectorAll('.d-nav');
+      textElements.forEach((textElement) => {
+        const splitText = splitInstances.find(
+          (instance) => instance.elements[0] === textElement
+        );
+        if (splitText?.chars) {
+          gsap.to(splitText.chars, {
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.05,
+            ease: 'power2.out'
+          });
+        }
+      });
+    });
+  };
+
+  // Function to close all menus
+  const closeAllMenus = () => {
+    hoverEnabled = true; // Enable hover after initial close
+    menuWraps.forEach((menuWrap, index) => {
+      const bgElement = bgElements[index];
+      
+      gsap.to(menuWrap, {
+        width: '3.5vw',
+        duration: 1.2,
+        ease: 'expo.out'
+      });
+      
+      gsap.to(bgElement, {
+        width: '0vw',
+        duration: 1.2,
+        ease: 'expo.out'
+      });
+
+      // Fade out text
+      const textElements = menuWrap.querySelectorAll('.d-nav');
+      textElements.forEach((textElement) => {
+        const splitText = splitInstances.find(
+          (instance) => instance.elements[0] === textElement
+        );
+        if (splitText?.chars) {
+          gsap.to(splitText.chars, {
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+          });
+        }
+      });
+    });
+  };
+
+  // Create hover animations for each menu
+  menuWraps.forEach((menuWrap, index) => {
+    const bgElement = bgElements[index];
+    
+    // Split text for all d-nav elements in this menuWrap
+    const textElements = menuWrap.querySelectorAll('.d-nav');
+    textElements.forEach((textElement) => {
+      const splitText = new SplitType(textElement, { types: 'chars' });
+      splitInstances.push(splitText);
+      // Initially hide text chars when hover is enabled
+      gsap.set(splitText.chars, { opacity: 0 });
+    });
+    
+    const menuHoverTimeline = gsap.timeline({ paused: true });
+    
+    // Setup hover timeline animations
+    menuHoverTimeline
+      .to(bgElement, {
+        width: '41vw',
+        duration: 1.2,
+        ease: 'expo.out'
+      })
+      .to(menuWrap, {
+        width: 'auto',
+        duration: 1.2,
+        ease: 'expo.out'
+      }, '<')
+      // Add text animation for this specific menuWrap
+      .to(menuWrap.querySelectorAll('.d-nav').forEach(nav => {
+        const splitText = splitInstances.find(
+          instance => instance.elements[0] === nav
+        );
+        return splitText?.chars || [];
+      }), {
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.05,
+        ease: 'power2.out'
+      }, '-=0.8'); // Slightly overlap with the width animations
+
+    // Modified hover event listeners
+    menuWrap.addEventListener('mouseenter', () => {
+      if (hoverEnabled) {
+        menuHoverTimeline.play();
+      }
+    });
+
+    menuWrap.addEventListener('mouseleave', () => {
+      if (hoverEnabled) {
+        menuHoverTimeline.reverse();
+      }
+    });
+  });
+
+  // Create a ScrollTrigger for both close and open animations
+  ScrollTrigger.create({
+    start: '10% top',
+    onEnter: closeAllMenus,    // Close menus and enable hover
+    onLeaveBack: openAllMenus, // Open menus and disable hover
   });
 
   // Split text for all d-nav elements once and attach hover listeners for links
@@ -126,19 +258,23 @@ document.addEventListener('DOMContentLoaded', () => {
     splitInstances.push(splitText);
 
     const chars = splitText.chars;
+    
+    // Set initial opacity for all chars to 1
+    gsap.set(chars, { opacity: 1 });
 
     // Hover effect for individual links
     chars.forEach((char, index) => {
       char.addEventListener('mouseenter', () => {
         const targets = [
+          chars[index - 2], // Two letters before
           chars[index - 1], // Previous letter
-          char, // Current letter
+          char,             // Current letter
           chars[index + 1], // Next letter
-        ].filter(Boolean); // Filter out undefined entries
+        ].filter(Boolean);
 
         gsap.to(targets, {
-          opacity: 1,
-          backgroundImage: "linear-gradient(90deg, #316194, #7399C0)", // Optional gradient for hover
+          opacity: 0.6, // Reduce opacity on hover
+          backgroundImage: "linear-gradient(90deg, #316194, #7399C0)",
           duration: 0.3,
           ease: 'power2.out',
           stagger: 0.05,
@@ -153,14 +289,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
       char.addEventListener('mouseleave', () => {
         const targets = [
+          chars[index - 2],
           chars[index - 1],
           char,
           chars[index + 1],
         ].filter(Boolean);
 
         gsap.to(targets, {
-          opacity: 0.8,
-          backgroundImage: "linear-gradient(90deg, #ffffff, #ffffff)", // Restore original gradient
+          opacity: 1, // Return to full opacity
+          backgroundImage: "linear-gradient(90deg, #ffffff, #ffffff)",
           duration: 0.3,
           ease: 'power2.inOut',
           stagger: 0.05,
@@ -172,66 +309,6 @@ document.addEventListener('DOMContentLoaded', () => {
           },
         });
       });
-    });
-  });
-
-  // Menu animations with hover
-  menuWraps.forEach((menuWrap, index) => {
-    const bgElement = bgElements[index]; // Match the g-n-bg with the menuWrap by index
-    if (!bgElement) {
-      console.warn(`No matching g-n-bg found for menuWrap at index ${index}`);
-      return;
-    }
-
-    // Create a GSAP timeline for hover effects
-    const menuHoverTimeline = gsap.timeline({ paused: true });
-
-    // Animate the background width for the current bgElement
-    menuHoverTimeline.to(bgElement, {
-      width: '38vw', // Expand to 38vw
-      duration: 1.2, // Animation duration
-      ease: 'expo.out', // Smooth easing
-    });
-
-    // Animate the menu width for the current menuWrap
-    menuHoverTimeline.to(
-      menuWrap,
-      {
-        width: 'auto', // Expand to auto
-        duration: 1.2,
-        ease: 'expo.out',
-      },
-      '<' // Start with background animation
-    );
-
-    // Handle text animation for all `.d-nav` inside the current `menuWrap`
-    const textElements = menuWrap.querySelectorAll('.d-nav'); // Target all d-nav in the current menuWrap
-    textElements.forEach((textElement) => {
-      const splitText = splitInstances.find(
-        (instance) => instance.elements[0] === textElement
-      ); // Reuse existing SplitType
-      const chars = splitText.chars;
-
-      menuHoverTimeline.fromTo(
-        chars,
-        { opacity: 0 }, // Start invisible
-        {
-          opacity: 1, // Fade in
-          duration: 0.8, // Animation duration
-          stagger: 0.05, // Stagger effect
-          ease: 'power2.out',
-        },
-        '<' // Start alongside other animations
-      );
-    });
-
-    // Attach hover event listeners for menu
-    menuWrap.addEventListener('mouseenter', () => {
-      menuHoverTimeline.play(); // Play the hover-in animation
-    });
-
-    menuWrap.addEventListener('mouseleave', () => {
-      menuHoverTimeline.reverse(); // Reverse the animation on hover-out
     });
   });
 });
@@ -343,137 +420,139 @@ window.addEventListener('resize', setVw);
 
 //Button Hover
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Select all buttons with the class "g-button"
-  const buttons = document.querySelectorAll('.g-button');
+// document.addEventListener('DOMContentLoaded', () => {
+//   // Select all buttons with the class "g-button"
+//   const buttons = document.querySelectorAll('.g-button');
 
-  if (!buttons.length) {
-    console.error('No buttons with class .g-button found!');
-    return;
-  }
+//   if (!buttons.length) {
+//     console.error('No buttons with class .g-button found!');
+//     return;
+//   }
 
-  // Loop through each button and attach hover animations
-  buttons.forEach((button) => {
-    // Target the SVGs and their paths
-    const svg1 = button.querySelector('.bttn-arrow');
-    const svg2 = button.querySelector('.bttn-arrow-2');
-    const path1 = svg1?.querySelector('path');
-    const path2 = svg2?.querySelector('path');
+//   // Loop through each button and attach hover animations
+//   buttons.forEach((button) => {
+//     // Target the SVGs and their paths
+//     const svg1 = button.querySelector('.bttn-arrow');
+//     const svg2 = button.querySelector('.bttn-arrow-2');
+//     const path1 = svg1?.querySelector('path');
+//     const path2 = svg2?.querySelector('path');
 
-    if (!svg1 || !path1 || !svg2 || !path2) {
-      console.warn('SVGs or paths not found inside g-button:', button);
-      return;
-    }
+//     if (!svg1 || !path1 || !svg2 || !path2) {
+//       console.warn('SVGs or paths not found inside g-button:', button);
+//       return;
+//     }
 
-    // Mouse enter animation
-    button.addEventListener('mouseenter', () => {
-      const timeline = gsap.timeline();
+//     // Mouse enter animation
+//     button.addEventListener('mouseenter', () => {
+//       const timeline = gsap.timeline();
 
-      // First SVG - Shrink all lines and move from -3vw to 3vw
-      timeline
-        .to(path1, {
-          attr: {
-            d: `M11 6L11 6M11 6L11 6M11 6H11`, // All lines shrink to the center
-          },
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-        .fromTo(
-          svg1,
-          { x: '-3vw' }, // Start from -3vw
-          { x: '3vw', duration: 0.5, ease: 'power2.out' },
-          '-=0.4' // Slight overlap for smooth transition
-        );
+//       // First SVG - Shrink all lines and move from -3vw to 3vw
+//       timeline
+//         .to(path1, {
+//           attr: {
+//             d: `M11 6L11 6M11 6L11 6M11 6H11`, // All lines shrink to the center
+//           },
+//           duration: 0.5,
+//           ease: 'power2.out',
+//         })
+//         .fromTo(
+//           svg1,
+//           { x: '-3vw' }, // Start from -3vw
+//           { x: '3vw', duration: 0.5, ease: 'power2.out' },
+//           '-=0.4' // Slight overlap for smooth transition
+//         );
 
-      // Second SVG - Start from -3vw, grow lines
-      timeline.fromTo(
-        svg2,
-        { x: '-3vw' }, // Start from -3vw
-        { x: '0vw', duration: 0.5, ease: 'power2.out' },
-        '-=0.3' // Start slightly after the first SVG moves
-      );
+//       // Second SVG - Start from -3vw, grow lines
+//       timeline.fromTo(
+//         svg2,
+//         { x: '-3vw' }, // Start from -3vw
+//         { x: '0vw', duration: 0.5, ease: 'power2.out' },
+//         '-=0.3' // Start slightly after the first SVG moves
+//       );
 
-      // Second SVG - Grow the horizontal line first, then the diagonal lines
-      timeline.to(
-        path2,
-        {
-          attr: {
-            d: `M11 6L11 6M11 6L11 6M11 6H1`, // Grow horizontal line first
-          },
-          duration: 0.3,
-          ease: 'power2.out',
-        },
-        '<' // Start immediately after the second SVG moves
-      );
+//       // Second SVG - Grow the horizontal line first, then the diagonal lines
+//       timeline.to(
+//         path2,
+//         {
+//           attr: {
+//             d: `M11 6L11 6M11 6L11 6M11 6H1`, // Grow horizontal line first
+//           },
+//           duration: 0.3,
+//           ease: 'power2.out',
+//         },
+//         '<' // Start immediately after the second SVG moves
+//       );
 
-      timeline.to(
-        path2,
-        {
-          attr: {
-            d: 'M11 6L6.2381 1M11 6L6.2381 11M11 6H1', // Grow diagonal lines
-          },
-          duration: 0.3,
-          ease: 'power2.out',
-        },
-        '-=0.2' // Slight overlap with the horizontal line animation
-      );
-    });
+//       timeline.to(
+//         path2,
+//         {
+//           attr: {
+//             d: 'M11 6L6.2381 1M11 6L6.2381 11M11 6H1', // Grow diagonal lines
+//           },
+//           duration: 0.3,
+//           ease: 'power2.out',
+//         },
+//         '-=0.2' // Slight overlap with the horizontal line animation
+//       );
+//     });
 
-    // Mouse leave animation
-    button.addEventListener('mouseleave', () => {
-      const timeline = gsap.timeline();
+//     // Mouse leave animation
+//     button.addEventListener('mouseleave', () => {
+//       const timeline = gsap.timeline();
 
-      // Second SVG - Shrink all lines and move to 3vw
-      timeline
-        .to(path2, {
-          attr: {
-            d: `M11 6L11 6M11 6L11 6M11 6H11`, // Shrink all lines to the center
-          },
-          duration: 0.5,
-          ease: 'power2.out',
-        })
-        .fromTo(
-          svg2,
-          { x: '0vw' }, // Start from 0vw
-          { x: '3vw', duration: 0.5, ease: 'power2.out' },
-          '-=0.4' // Slight overlap for smooth transition
-        );
+//       // Second SVG - Shrink all lines and move to 3vw
+//       timeline
+//         .to(path2, {
+//           attr: {
+//             d: `M11 6L11 6M11 6L11 6M11 6H11`, // Shrink all lines to the center
+//           },
+//           duration: 0.5,
+//           ease: 'power2.out',
+//         })
+//         .fromTo(
+//           svg2,
+//           { x: '0vw' }, // Start from 0vw
+//           { x: '3vw', duration: 0.5, ease: 'power2.out' },
+//           '-=0.4' // Slight overlap for smooth transition
+//         );
 
-      // First SVG - Move from -3vw, grow lines
-      timeline.fromTo(
-        svg1,
-        { x: '-3vw' }, // Start from -3vw
-        { x: '0vw', duration: 0.5, ease: 'power2.out' },
-        '-=0.3' // Start slightly after the second SVG moves
-      );
+//       // First SVG - Move from -3vw, grow lines
+//       timeline.fromTo(
+//         svg1,
+//         { x: '-3vw' }, // Start from -3vw
+//         { x: '0vw', duration: 0.5, ease: 'power2.out' },
+//         '-=0.3' // Start slightly after the second SVG moves
+//       );
 
-      // First SVG - Grow the horizontal line first, then the diagonal lines
-      timeline.to(
-        path1,
-        {
-          attr: {
-            d: `M11 6L11 6M11 6L11 6M11 6H1`, // Grow horizontal line first
-          },
-          duration: 0.3,
-          ease: 'power2.out',
-        },
-        '<' // Start immediately after the first SVG moves
-      );
+//       // First SVG - Grow the horizontal line first, then the diagonal lines
+//       timeline.to(
+//         path1,
+//         {
+//           attr: {
+//             d: `M11 6L11 6M11 6L11 6M11 6H1`, // Grow horizontal line first
+//           },
+//           duration: 0.3,
+//           ease: 'power2.out',
+//         },
+//         '<' // Start immediately after the first SVG moves
+//       );
 
-      timeline.to(
-        path1,
-        {
-          attr: {
-            d: 'M11 6L6.2381 1M11 6L6.2381 11M11 6H1', // Grow diagonal lines
-          },
-          duration: 0.3,
-          ease: 'power2.out',
-        },
-        '-=0.2' // Slight overlap with the horizontal line animation
-      );
-    });
-  });
-});
+//       timeline.to(
+//         path1,
+//         {
+//           attr: {
+//             d: 'M11 6L6.2381 1M11 6L6.2381 11M11 6H1', // Grow diagonal lines
+//           },
+//           duration: 0.3,
+//           ease: 'power2.out',
+//         },
+//         '-=0.2' // Slight overlap with the horizontal line animation
+//       );
+//     });
+//   });
+// });
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -593,6 +672,11 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+
+document.addEventListener('DOMContentLoaded', () => { 
+  const transitions = new Transition()
+
+})
 
 
 
