@@ -269,10 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// document.addEventListener('DOMContentLoaded', () => { 
-//   const transitions = new Transition()
-
-// })
 
 
 
