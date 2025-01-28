@@ -127,10 +127,10 @@ export function startAboutAnimations() {
   }
 
 //   document.addEventListener('DOMContentLoaded', initAnimations);
-//   initAnimations();
-  setTimeout(() => {
-    initAnimations();
-  }, 1200);
+  initAnimations();
+//   setTimeout(() => {
+//     initAnimations();
+//   }, 1200);
 
 }
 
