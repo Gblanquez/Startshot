@@ -17,6 +17,11 @@
     pointer-events: none;
   }
 
+  *{
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+  
   html::-webkit-scrollbar,
   body::-webkit-scrollbar {
     display: none;
@@ -29,50 +34,138 @@
   }
 
 
+  .w-embed {
+    line-height: 0;
+ }
 
-  :root {
-    --vw: 0.01vw;
+
+
+
+ :root {
+  --vw: 0.01vw; /* 1% of the viewport width */
 }
 
 .h-xxl {
-    font-size: calc(var(--vw) * 5.56); /* 96px / 1728px */
+  font-size: calc(96 / 1728 * 100 * var(--vw)); /* 96px at 1728px */
 }
 
 .h-xl {
-    font-size: calc(var(--vw) * 3.24); /* 56px / 1728px */
+  font-size: calc(56 / 1728 * 100 * var(--vw)); /* 56px at 1728px */
 }
 
 .h-l {
-    font-size: calc(var(--vw) * 1.16); /* 20px / 1728px */
+  font-size: calc(20 / 1728 * 100 * var(--vw)); /* 20px at 1728px */
 }
 
 .body-m {
-    font-size: calc(var(--vw) * 1.39); /* 24px / 1728px */
+  font-size: calc(24 / 1728 * 100 * var(--vw)); /* 24px at 1728px */
 }
 
 .body-s {
-    font-size: calc(var(--vw) * 0.93); /* 16px / 1728px */
+  font-size: calc(16 / 1728 * 100 * var(--vw)); /* 16px at 1728px */
 }
 
 .caption-n {
-    font-size: calc(var(--vw) * 0.75); /* 13px / 1728px */
+  font-size: calc(13 / 1728 * 100 * var(--vw)); /* 13px at 1728px */
 }
 
 .caption-w {
-    font-size: calc(var(--vw) * 0.75); /* 13px / 1728px */
+  font-size: calc(13 / 1728 * 100 * var(--vw)); /* 13px at 1728px */
 }
 
 .d-cta {
-    font-size: calc(var(--vw) * 0.69); /* 12px / 1728px */
+  font-size: calc(12 / 1728 * 100 * var(--vw)); /* 12px at 1728px */
 }
 
 .d-nav {
-    font-size: calc(var(--vw) * 0.75); /* 13px / 1728px */
+  font-size: calc(13 / 1728 * 100 * var(--vw)); /* 13px at 1728px */
 }
 
 .f-nav {
-    font-size: calc(var(--vw) * 0.93); /* 16px / 1728px */
+  font-size: calc(16 / 1728 * 100 * var(--vw)); /* 16px at 1728px */
 }
+
+
+/* Tablet Sizes */
+
+@media (max-width: 700px) {
+  :root {
+      --sm-vw: 0.0143vw; /* 1% of 700px is approximately 0.0143vw */
+  }
+
+  .h-xxl {
+      font-size: calc(64 / 700 * 100 * var(--sm-vw)); /* 64px at 700px */
+  }
+
+  .h-xl {
+      font-size: calc(26 / 700 * 100 * var(--sm-vw)); /* 32px at 700px */
+  }
+
+  .h-xl.opacity-reduce.about {
+    font-size: calc(16 / 700 * 100 * var(--sm-vw)); /* 16px at 700px */
+  }
+
+  .h-l {
+      font-size: calc(14 / 700 * 100 * var(--sm-vw)); /* 14px at 700px */
+  }
+
+  .body-m {
+      font-size: calc(18/ 700 * 100 * var(--sm-vw)); /* 16px at 700px */
+  }
+
+  .body-s {
+      font-size: calc(12 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
+  }
+
+  .caption-n {
+      font-size: calc(10 / 700 * 100 * var(--sm-vw)); /* 11px at 700px */
+  }
+
+  .caption-w {
+      font-size: calc(10 / 700 * 100 * var(--sm-vw)); /* 9px at 700px */
+  }
+
+  .d-cta {
+      font-size: calc( 12 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
+  }
+
+  .body-s.launchdpad {
+    font-size: calc(10 / 700 * 100 * var(--sm-vw)); /* 10px at 700px */
+  }
+
+  .d-nav {
+      font-size: calc(14 / 700 * 100 * var(--sm-vw)); /* 15px at 700px */
+  }
+
+  .f-nav {
+      font-size: calc(14 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
+  }
+
+  .f-label {
+    font-size: calc(12 / 700 * 100 * var(--sm-vw)); /* 11px at 700px */
+  }
+
+  .c-label {
+    font-size: calc(12 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
+  }
+
+  .h-xl.portfolio-text {
+    font-size: calc(16 / 700 * 100 * var(--sm-vw)); /* 16px at 700px */
+  }
+}
+
+[data-a="hero-txt"] {
+  overflow: hidden;
+}
+
+[data-a="hero-txt"] .word {
+  display: inline-block;
+}
+
+[data-a="hero-txt"] .line {
+  display: block;
+}
+
 
 
 

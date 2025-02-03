@@ -72,11 +72,7 @@ export function startLaunchPageAnimations() {
             "+=0.05"
         );
 
-
-
-
-
-    // startLaunchPageAnimations();
+   
 
 }
 

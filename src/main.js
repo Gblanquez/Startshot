@@ -91,8 +91,11 @@ const setVw = () => {
     // Set --vw to 1% of the current viewport width in pixels
     document.documentElement.style.setProperty('--vw', `${window.innerWidth / 100}px`);
 
-        // Set --mvw to 1% of the current viewport width in pixels for mobile
-        document.documentElement.style.setProperty('--mvw', `${window.innerWidth / 100}px`);
+     // Set --mvw to 1% of the current viewport width in pixels for mobile
+     document.documentElement.style.setProperty('--mvw', `${window.innerWidth / 100}px`);
+
+    // Set --mvw to 1% of the current viewport width in pixels for mobile
+    document.documentElement.style.setProperty('--sm-vw', `${window.innerWidth / 100}px`);
 };
 
 // Set the initial value of --vw
@@ -117,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const linksList = document.querySelector('.mobile_links_list_wrap');
   const logoWrap = document.querySelector('.mobile_logo_wrap');
   const mobileTexts = document.querySelectorAll('.mobile_text');
+
+  const lenis = new Lenis()
 
   let splitTexts = [];
   let openTimeline, closeTimeline;
@@ -271,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => { 
   const transitions = new Transition()
-
 })
 
 

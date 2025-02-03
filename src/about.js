@@ -85,9 +85,9 @@ export function startAboutAnimations() {
         scrub: true,
       }
     })
-    .to(launchImgWrap, {
-      y: '144vw',
-    }, 0.018)
+    // .to(launchImgWrap, {
+    //   y: '144vw',
+    // }, 0.018)
     .to(svgPath, {
       strokeDashoffset: 0,
     }, 0)

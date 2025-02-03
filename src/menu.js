@@ -266,7 +266,6 @@ function initializeWhenReady() {
   const navElements = document.querySelectorAll('.d-nav');
 
   if (!menuWraps.length || !bgElements.length || !navElements.length) {
-    // If elements aren't ready, try again in a short moment
     setTimeout(initializeWhenReady, 300);
     return;
   }
@@ -283,11 +282,10 @@ function initializeWhenReady() {
 
   // Initialize animations once everything is ready
   const cleanup = initializeMenuAnimations();
-    
-  // Force initial state
-  const scrollPosition = window.scrollY;
-  const threshold = window.innerHeight * 0.05;
-  resetAnimations(scrollPosition < threshold);
+  
+  // Force initial state by dispatching scroll event
+  const scrollEvent = new Event('scroll');
+  window.dispatchEvent(scrollEvent);
     
   // Clean up before reinitializing on page transitions
   document.addEventListener('beforeunload', cleanup);

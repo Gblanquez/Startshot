@@ -25,31 +25,7 @@ export function initializeLaunchpadCarousel() {
   const mobileSlideWidthVW = 100;
   const mobileSlideHeightVW = 120;
 
-  // Function to reset the carousel state
-  function resetCarouselState() {
-    currentIndex = Math.floor(slides.length / 2);
-    mobileCurrentIndex = Math.floor(slides.length / 2);
-  }
-
-  // Function to clean up event listeners
-  function cleanupEventListeners() {
-    arrowForward.removeEventListener('click', nextSlide);
-    arrowBackward.removeEventListener('click', previousSlide);
-    arrowForward.removeEventListener('click', nextMobileSlide);
-    arrowBackward.removeEventListener('click', previousMobileSlide);
-
-    paginationDots.forEach((dot, index) => {
-      dot.removeEventListener('click', () => {
-        animateToSlide(index);
-      });
-      dot.removeEventListener('click', () => {
-        animateToMobileSlide(index);
-      });
-    });
-  }
-
   function initializeDesktopCarousel() {
-    cleanupEventListeners();
     setSlideSizes();
     updatePosition();
     setActiveSlide();
@@ -65,7 +41,6 @@ export function initializeLaunchpadCarousel() {
   }
 
   function initializeMobileCarousel() {
-    cleanupEventListeners();
     setMobileSlideSizes();
     updateMobilePosition();
     setActiveSlide();
@@ -332,7 +307,6 @@ export function initializeLaunchpadCarousel() {
   // Handle resize events
   window.addEventListener('resize', () => {
     if (slider && slides.length && sliderWrapper) {
-      resetCarouselState();
       if (window.matchMedia("(max-width: 479px)").matches) {
         initializeMobileCarousel();
       } else {

@@ -13,8 +13,12 @@ import { initializePortfolioCarousels } from './portfolio.js';
 import { initializeButtonAnimations } from './button.js';
 import { initFooterAnimation } from './footer.js';
 import { initializeMenuAnimations } from './menu.js';
-
-
+import { teamLoadAnimation } from './animations/teamAnime.js';
+import { launchpadLoadAnimation } from './animations/launchPageAnime.js';
+import { aboutLoadAnimation } from './animations/aboutTeamAnime.js';
+import { portfolioLoadAnimation } from './animations/portfolioAnime.js';
+import { contactLoadAnimation } from './animations/contactAnime.js';
+import { homeLoadAnimation } from './animations/homeAnime.js';
 
 export default class Transition {
     constructor(options) {
@@ -59,23 +63,30 @@ export default class Transition {
         }
 
             barba.init({
+                debug: true,
                 views: [
                     {
                     namespace: 'home',
                     beforeEnter(data) {
+                        if (!data.next.html.includes('data-barba-once')) {
+                            homeLoadAnimation();
+                        }
                         initializeAllAnimations();
                     },
                     beforeLeave(data) {
-                        stopAllAnimations();
+                        // stopAllAnimations();
                     }
                 },
                 {
                     namespace: 'about',
                     beforeEnter(data) {
-                        // startAboutAnimations();
-
+                        if (!data.next.html.includes('data-barba-once')) {
+                            aboutLoadAnimation();
+                        }
+                        
                     },
                     afterEnter(data) {
+
                         startAboutAnimations();
                     },
                     beforeLeave(data) {
@@ -85,18 +96,23 @@ export default class Transition {
                 {
                     namespace: 'team',
                     beforeEnter(data) {
+                        if (!data.next.html.includes('data-barba-once')) {
+                            teamLoadAnimation();
+                        }
+                    },
+                    afterEnter(data) {
                         startTeamAnimations();
-                       
                     },
                     beforeLeave(data) {
                         stopTeamAnimations();
-                    
                     },
-
                 },
                 {
                     namespace: 'launchpad',
                     beforeEnter(data) {
+                        if (!data.next.html.includes('data-barba-once')) {
+                            launchpadLoadAnimation();
+                        }
                         initializeLaunchpadCarousel();
                     },
                     afterEnter(data) {
@@ -108,8 +124,10 @@ export default class Transition {
                 {
                     namespace: 'contact',
                     beforeEnter(data) {
+                        if (!data.next.html.includes('data-barba-once')) {
+                            contactLoadAnimation();
+                        }
                         
-
                     },
                     beforeLeave(data) {
                      
@@ -118,10 +136,13 @@ export default class Transition {
                 {
                     namespace: 'portfolio',
                     beforeEnter(data) {
+                        if (!data.next.html.includes('data-barba-once')) {
+                            portfolioLoadAnimation();
+                        }
                         initializePortfolioCarousels();
                     },
                     beforeLeave(data) {
-                        stopPortfolioCarousel();
+                        stopPortfolioCarusel();
                     }
                 }
             ],
@@ -130,79 +151,485 @@ export default class Transition {
                     name: 'Starshot Default Transition',
                     sync: true,
                     once({ next }) {
-                        console.log('First load');
+                        console.log('First load', next.container);
+                        let customEase = "M0,0,C0,0,0.13,0.34,0.238,0.442,0.305,0.506,0.322,0.514,0.396,0.54,0.478,0.568,0.468,0.56,0.522,0.584,0.572,0.606,0.61,0.719,0.714,0.826,0.798,0.912,1,1,1,1";
                         
-                        // Initial states
-                        gsap.set(next.container, {
-                            position: 'fixed',
-                            top: 0,
-                            left: 0,
-                            width: '100%',
-                            y: '120%',
-                            scale: 0.2,
-                        });
-                        gsap.set('.load-nmb-wrap', {
-                            display: 'block'
-                        });
-                        // Add initial state for nav wrapper
-                        gsap.set('.g-nav-wrapper', {
-                            opacity: 0,
-                            filter: 'blur(30px)'
-                        });
-
-                        // Create counter animation
-                        let counter = { value: 0 };
-                        const loadingTimeline = gsap.timeline({
-                            onComplete: () => {
-                                gsap.set('.load-nmb-wrap', {
-                                    display: 'none'
+                        return new Promise((resolve) => {
+                            // Handle team page specific animation
+                            if (next.namespace === 'team') {
+                                // Existing team page animation code
+                                gsap.set('.team-wrap', { opacity: 0 });
+                                
+                                const tl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.to('.team-wrap', {
+                                            opacity: 1,
+                                            duration: 0,
+                                            ease: 'expo.out',
+                                            onComplete: () => {
+                                                teamLoadAnimation();
+                                                resolve();
+                                            }
+                                        });
+                                    }
                                 });
+
+                                // Initial states
                                 gsap.set(next.container, {
+                                    position: 'fixed',
+                                    y: '110%',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    scale: 0.2,
+                                    transformOrigin: 'center center'
+                                });
+                                gsap.set('.load-nmb-wrap', { display: 'flex' });
+                                gsap.set('.star-name-load', { display: 'flex' });
+                                gsap.set('.g-nav-wrapper', {
+                                    opacity: 0,
+                                    filter: 'blur(30px)'
+                                });
+                                gsap.set('.numb-load', { innerText: '0' });
+
+
+                                tl.to('.numb-load', {
+                                    innerText: 100,
+                                    duration: 2,
+                                    ease: customEase,
+                                    snap: { innerText: 1 },
+                                    onUpdate: function() {
+                                        const value = Math.round(this.targets()[0].innerText);
+                                        this.targets()[0].innerText = value;
+                                    }
+                                })
+
+                                .to('.ln-wrap', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "+=0.1")
+                                .to('.star-name-div', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "<")
+                                .to(next.container, {
+                                    y: '0%',
+                                    width: '100%',
+                                    overflow: 'visible',
+                                    scale: 1,
+                                    duration: 1.4,
+                                    ease: 'expo.out'
+                                }, '-=0.7')
+                                .to('.g-nav-wrapper', {
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: 1,
+                                    ease: 'power2.out'
+                                }, '-=1')
+                                .to(next.container,{
                                     position: 'relative',
-                                    clearProps: 'transform,opacity'
+                                    top: '0',
+                                })
+                            } 
+                            // Handle home page
+                            else if (next.namespace === 'home') {
+                                // Initial states
+                                gsap.set('.hero-section', { opacity: 0 });
+                                
+                                const tl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.to('.hero-section', {
+                                            opacity: 1,
+                                            duration: 0,
+                                            ease: 'expo.out',
+                                            onComplete: () => {
+                                                homeLoadAnimation();
+                                                resolve();
+                                            }
+                                        });
+                                    }
+                                });
+
+                                // Initial states
+                                gsap.set(next.container, {
+                                    position: 'fixed',
+                                    y: '110%',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    scale: 0.2,
+                                    transformOrigin: 'center center'
+                                });
+                                gsap.set('.load-nmb-wrap', { display: 'flex' });
+                                gsap.set('.star-name-load', { display: 'flex' });
+                                gsap.set('.g-nav-wrapper', {
+                                    opacity: 0,
+                                    filter: 'blur(30px)'
+                                });
+                                gsap.set('.numb-load', { innerText: '0' });
+
+
+                                tl.to('.numb-load', {
+                                    innerText: 100,
+                                    duration: 2,
+                                    ease: customEase,
+                                    snap: { innerText: 1 },
+                                    onUpdate: function() {
+                                        const value = Math.round(this.targets()[0].innerText);
+                                        this.targets()[0].innerText = value;
+                                    }
+                                })
+
+                                .to('.ln-wrap', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "+=0.1")
+                                .to('.star-name-div', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "<")
+                                .to(next.container, {
+                                    y: '0%',
+                                    width: '100%',
+                                    overflow: 'visible',
+                                    scale: 1,
+                                    duration: 1.4,
+                                    ease: 'expo.out'
+                                }, '-=0.7')
+                                .to('.g-nav-wrapper', {
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: 1,
+                                    ease: 'power2.out'
+                                }, '-=1')
+                                .to(next.container,{
+                                    position: 'relative',
+                                    top: '0',
+                                })
+                            }
+                            // Handle about page
+                            else if (next.namespace === 'about') {
+                                // Initial states
+                                gsap.set('.ab-p-wrap', { opacity: 0 });
+                                
+                                const tl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.to('.ab-p-wrap', {
+                                            opacity: 1,
+                                            duration: 0,
+                                            ease: 'expo.out',
+                                            onComplete: () => {
+                                                aboutLoadAnimation();
+                                                resolve();
+                                            }
+                                        });
+                                    }
+                                });
+                            
+                                // Initial states
+                                gsap.set(next.container, {
+                                    position: 'fixed',
+                                    y: '110%',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    scale: 0.2,
+                                    transformOrigin: 'center center'
+                                });
+                                gsap.set('.load-nmb-wrap', { display: 'flex' });
+                                gsap.set('.star-name-load', { display: 'flex' });
+                                gsap.set('.g-nav-wrapper', {
+                                    opacity: 0,
+                                    filter: 'blur(30px)'
+                                });
+                                gsap.set('.numb-load', { innerText: '0' });
+
+
+                                tl.to('.numb-load', {
+                                    innerText: 100,
+                                    duration: 2,
+                                    ease: customEase,
+                                    snap: { innerText: 1 },
+                                    onUpdate: function() {
+                                        const value = Math.round(this.targets()[0].innerText);
+                                        this.targets()[0].innerText = value;
+                                    }
+                                })
+
+                                .to('.ln-wrap', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "+=0.1")
+                                .to('.star-name-div', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "<")
+                                .to(next.container, {
+                                    y: '0%',
+                                    width: '100%',
+                                    overflow: 'visible',
+                                    scale: 1,
+                                    duration: 1.4,
+                                    ease: 'expo.out'
+                                }, '-=0.7')
+                                .to('.g-nav-wrapper', {
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: 1,
+                                    ease: 'power2.out'
+                                }, '-=1')
+                                .to(next.container,{
+                                    position: 'relative',
+                                    top: '0',
+                                })
+                            }
+                            // Handle launchpad page
+                            else if (next.namespace === 'launchpad') {
+                                // Initial states
+                                gsap.set('.main-c-holder', { opacity: 0 });
+                                
+                                const tl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.to('.main-c-holder', {
+                                            opacity: 1,
+                                            duration: 0,
+                                            ease: 'expo.out',
+                                            onComplete: () => {
+                                                launchpadLoadAnimation();
+                                                resolve();
+                                            }
+                                        });
+                                    }
+                                });
+
+                                // Initial states - matching other pages
+                                gsap.set(next.container, {
+                                    position: 'fixed',
+                                    y: '110%',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    scale: 0.2,
+                                    transformOrigin: 'center center'
+                                });
+                                gsap.set('.load-nmb-wrap', { display: 'flex' });
+                                gsap.set('.star-name-load', { display: 'flex' });
+                                gsap.set('.g-nav-wrapper', {
+                                    opacity: 0,
+                                    filter: 'blur(30px)'
+                                });
+                                gsap.set('.numb-load', { innerText: '0' });
+
+                                tl.to('.numb-load', {
+                                    innerText: 100,
+                                    duration: 2,
+                                    ease: customEase,
+                                    snap: { innerText: 1 },
+                                    onUpdate: function() {
+                                        const value = Math.round(this.targets()[0].innerText);
+                                        this.targets()[0].innerText = value;
+                                    }
+                                })
+                                .to('.ln-wrap', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "+=0.1")
+                                .to('.star-name-div', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "<")
+                                .to(next.container, {
+                                    y: '0%',
+                                    width: '100%',
+                                    overflow: 'visible',
+                                    scale: 1,
+                                    duration: 1.4,
+                                    ease: 'expo.out'
+                                }, '-=0.7')
+                                .to('.g-nav-wrapper', {
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: 1,
+                                    ease: 'power2.out'
+                                }, '-=1')
+                                .to(next.container,{
+                                    position: 'relative',
+                                    top: '0',
                                 });
                             }
+                            // Handle portfolio page
+                            else if (next.namespace === 'portfolio') {
+                                // Initial states
+                                gsap.set('.page-wrap', { opacity: 0 });
+                                
+                                const tl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.to('.page-wrap', {
+                                            opacity: 1,
+                                            duration: 0,
+                                            ease: 'expo.out',
+                                            onComplete: () => {
+                                                portfolioLoadAnimation();
+                                                resolve();
+                                            }
+                                        });
+                                    }
+                                });
+
+                                // Initial states
+                                gsap.set(next.container, {
+                                    position: 'fixed',
+                                    y: '110%',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    scale: 0.2,
+                                    transformOrigin: 'center center'
+                                });
+                                gsap.set('.load-nmb-wrap', { display: 'flex' });
+                                gsap.set('.star-name-load', { display: 'flex' });
+                                gsap.set('.g-nav-wrapper', {
+                                    opacity: 0,
+                                    filter: 'blur(30px)'
+                                });
+                                gsap.set('.numb-load', { innerText: '0' });
+
+
+                                tl.to('.numb-load', {
+                                    innerText: 100,
+                                    duration: 2,
+                                    ease: customEase,
+                                    snap: { innerText: 1 },
+                                    onUpdate: function() {
+                                        const value = Math.round(this.targets()[0].innerText);
+                                        this.targets()[0].innerText = value;
+                                    }
+                                })
+
+                                .to('.ln-wrap', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "+=0.1")
+                                .to('.star-name-div', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "<")
+                                .to(next.container, {
+                                    y: '0%',
+                                    width: '100%',
+                                    overflow: 'visible',
+                                    scale: 1,
+                                    duration: 1.4,
+                                    ease: 'expo.out'
+                                }, '-=0.7')
+                                .to('.g-nav-wrapper', {
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: 1,
+                                    ease: 'power2.out'
+                                }, '-=1')
+                                .to(next.container,{
+                                    position: 'relative',
+                                    top: '0',
+                                })
+                            }
+                            // Handle contact page
+                            else if (next.namespace === 'contact') {
+                                // Initial states
+                                gsap.set('.contact-form-wrap', { opacity: 0 });
+                                
+                                const tl = gsap.timeline({
+                                    onComplete: () => {
+                                        gsap.to('.contact-form-wrap', {
+                                            opacity: 1,
+                                            duration: 0,
+                                            ease: 'expo.out',
+                                            onComplete: () => {
+                                                contactLoadAnimation();
+                                                resolve();
+                                            }
+                                        });
+                                    }
+                                });
+
+                                // Initial states
+                                gsap.set(next.container, {
+                                    position: 'fixed',
+                                    y: '110%',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    scale: 0.2,
+                                    transformOrigin: 'center center'
+                                });
+                                gsap.set('.load-nmb-wrap', { display: 'flex' });
+                                gsap.set('.star-name-load', { display: 'flex' });
+                                gsap.set('.g-nav-wrapper', {
+                                    opacity: 0,
+                                    filter: 'blur(30px)'
+                                });
+                                gsap.set('.numb-load', { innerText: '0' });
+
+
+                                tl.to('.numb-load', {
+                                    innerText: 100,
+                                    duration: 2,
+                                    ease: customEase,
+                                    snap: { innerText: 1 },
+                                    onUpdate: function() {
+                                        const value = Math.round(this.targets()[0].innerText);
+                                        this.targets()[0].innerText = value;
+                                    }
+                                })
+
+                                .to('.ln-wrap', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "+=0.1")
+                                .to('.star-name-div', {
+                                    y: '-120%',
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, "<")
+                                .to(next.container, {
+                                    y: '0%',
+                                    width: '100%',
+                                    overflow: 'visible',
+                                    scale: 1,
+                                    duration: 1.4,
+                                    ease: 'expo.out'
+                                }, '-=0.7')
+                                .to('.g-nav-wrapper', {
+                                    opacity: 1,
+                                    filter: 'blur(0px)',
+                                    duration: 1,
+                                    ease: 'power2.out'
+                                }, '-=1')
+                                .to(next.container,{
+                                    position: 'relative',
+                                    top: '0',
+                                })
+                            }
+                            // Default animation for any other pages
+                            else {
+                                const tl = gsap.timeline({
+                                    onComplete: resolve
+                                });
+                                // Basic default animation
+                                // ... will add default animation later ...
+                            }
                         });
-
-                        loadingTimeline
-                            // Animate counter from 0 to 100
-                            .to(counter, {
-                                value: 100,
-                                duration: 1,
-                                ease: 'power1.inOut',
-                                onUpdate: () => {
-                                    document.querySelector('.numb-load').textContent = Math.round(counter.value);
-                                }
-                            })
-                            // Move loading wrapper up
-                            .to('.ln-wrap', {
-                                y: '-110%',
-                                duration: 1,
-                                ease: 'expo.out'
-                            })
-                            // Move container into view with scale and opacity
-                            .to(next.container, {
-                                y: '0%',
-                                scale: 1,
-                                duration: 1.4,
-                                ease: 'expo.out'
-                            }, '-=0.7')
-                            // Add nav wrapper animation
-                            .to('.g-nav-wrapper', {
-                                opacity: 1,
-                                filter: 'blur(0px)',
-                                duration: 1,
-                                ease: 'power2.out'
-                            }, '-=1'); // Start slightly before the container animation finishes
-
-                        return loadingTimeline;
                     },
                     async leave({ current }) {
 
                         const isMobile = window.innerWidth <= 478;
     
                         if (isMobile) {
-                            // Always run close animation on mobile during transition
                             const closeTimeline = gsap.timeline({
                                 onComplete: () => {
                                     lenis.start();
@@ -237,7 +664,6 @@ export default class Transition {
                                     duration: 0.1
                                 });
                     
-                            // Wait for menu close animation to complete
                             await closeTimeline;
                         }
 
@@ -247,7 +673,6 @@ export default class Transition {
 
                         disableScroll();
     
-                        // Set current container to absolute with z-index and reduced opacity
                         gsap.set(currentContainer, {
                             position: 'absolute',
                             top: '0',
@@ -257,7 +682,6 @@ export default class Transition {
                             opacity: 0.6,
                         });
     
-                        // Animate the opacity fade out for a smoother transition
                         return gsap.to(currentContainer, {
                             opacity: 0.3,
                             y: '-12%',
@@ -265,19 +689,15 @@ export default class Transition {
                             duration: 2,
                             ease: 'expo.out',
                             onComplete: () => {
-                                // console.log('Leave animation complete');
                             },
                         });
                     },
                     enter({ next }) {
-
                         window.scrollTo(0, 0);
                         lenis.scrollTo(0);
     
                         const nextContainer = next.container;
 
-    
-                        // Set initial position for the next container
                         gsap.set(nextContainer, {
                             position: 'fixed',
                             top: '120%',
@@ -285,18 +705,15 @@ export default class Transition {
                             width: '100%',
                         });
     
-                        // Animate the next container to slide into view
                         return gsap.to(nextContainer, {
                             top: '0%',
                             duration: 1.4,
                             ease: 'expo.out',
                             onComplete: () => {
-                                // Reset next container to static after animation
                                 gsap.set(nextContainer, {
                                     position: 'relative',
                                     top: '0',
                                 });
-
                             },
                         });
                     },
@@ -313,18 +730,11 @@ export default class Transition {
             initFooterAnimation();
             initializeMenuAnimations();
             console.log('button animations initialized');
-            // console.log('restarting webflow', restartWebflow, lenis);
-          });
+        });
 
         barba.hooks.leave((data) => {
-            // console.log('global hook leaving', lenis);
-          });
+        });
     }
-
-
-
-    
-    
 }
 
 
