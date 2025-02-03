@@ -28,7 +28,7 @@ export function startAboutAnimations() {
     contentChildren.forEach((content, index) => {
       ScrollTrigger.create({
         trigger: content,
-        start: "top 65%",
+        start: "top 50%",
         end: "bottom top",
         onEnter: () => activateImage(index),
         onLeaveBack: () => activateImage(index - 1),
@@ -82,16 +82,13 @@ export function startAboutAnimations() {
         trigger: storyGridWrap,
         start: "top top",
         end: "bottom top",
-        scrub: true,
+        scrub: 0.5,
       }
     })
-    // .to(launchImgWrap, {
-    //   y: '144vw',
-    // }, 0.018)
     .to(svgPath, {
       strokeDashoffset: 0,
+      duration: 0.5
     }, 0)
-
 
     // Initialize venture animations
     const timeline = gsap.timeline({
