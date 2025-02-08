@@ -19,6 +19,7 @@ import { aboutLoadAnimation } from './animations/aboutTeamAnime.js';
 import { portfolioLoadAnimation } from './animations/portfolioAnime.js';
 import { contactLoadAnimation } from './animations/contactAnime.js';
 import { homeLoadAnimation } from './animations/homeAnime.js';
+import { initMobileMenu } from './menuMobile.js';
 
 export default class Transition {
     constructor(options) {
@@ -57,6 +58,8 @@ export default class Transition {
         const enableScroll = this.enableScroll;
         const lenis = this.lenis;
 
+        let mobileMenuInstance;
+
         if (!barba || typeof barba.init !== 'function') {
             console.error('Barba.js not properly initialized');
             return;
@@ -73,8 +76,11 @@ export default class Transition {
                         }
                         initializeAllAnimations();
                     },
+                    afterEnter(data){
+                        // initMobileMenu()
+                    },
                     beforeLeave(data) {
-                        // stopAllAnimations();
+
                     }
                 },
                 {
@@ -86,8 +92,8 @@ export default class Transition {
                         
                     },
                     afterEnter(data) {
-
                         startAboutAnimations();
+                        // initMobileMenu();
                     },
                     beforeLeave(data) {
                         stopAboutAnimations();
@@ -102,6 +108,7 @@ export default class Transition {
                     },
                     afterEnter(data) {
                         startTeamAnimations();
+                        // initMobileMenu();
                     },
                     beforeLeave(data) {
                         stopTeamAnimations();
@@ -117,6 +124,7 @@ export default class Transition {
                     },
                     afterEnter(data) {
                         startLaunchPageAnimations();
+                        // initMobileMenu();
                     },
                     beforeLeave(data) {
                     }
@@ -129,7 +137,11 @@ export default class Transition {
                         }
                         
                     },
+                    afterEnter(data){
+                        // initMobileMenu();
+                    },
                     beforeLeave(data) {
+                        
                      
                     }
                 },
@@ -141,8 +153,11 @@ export default class Transition {
                         }
                         initializePortfolioCarousels();
                     },
+                    afterEnter(data){
+                        // initMobileMenu()
+                    },
                     beforeLeave(data) {
-                        stopPortfolioCarusel();
+                        // stopPortfolioCarusel();
                     }
                 }
             ],
@@ -729,10 +744,21 @@ export default class Transition {
             initializeButtonAnimations();
             initFooterAnimation();
             initializeMenuAnimations();
+            // initMobileMenu();
             console.log('button animations initialized');
         });
 
+        barba.hooks.afterEnter((data) => {
+            if (mobileMenuInstance) {
+                mobileMenuInstance.cleanup();
+            }
+            mobileMenuInstance = initMobileMenu();
+        })
+
         barba.hooks.leave((data) => {
+            if (mobileMenuInstance) {
+                mobileMenuInstance.resetStates();
+            }
         });
     }
 }

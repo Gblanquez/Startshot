@@ -6,12 +6,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function initializeMenuAnimations() {
   const menuWraps = document.querySelectorAll('.menu-l-wrap');
-  const bgElements = document.querySelectorAll('.g-n-bg');
+  const linkWraps = document.querySelectorAll('.g-n-links-wrap');
   const splitInstances = [];
   let hoverEnabled = false;
   let scrollTriggerInstance = null;
 
-  if (!menuWraps.length || !bgElements.length) {
+  if (!menuWraps.length || !linkWraps.length) {
     console.warn('Menu elements not found!');
     return;
   }
@@ -21,15 +21,18 @@ export function initializeMenuAnimations() {
     gsap.set(menuWrap, { width: 'auto' });
   });
 
-  bgElements.forEach((bgElement) => {
-    gsap.set(bgElement, { width: '41vw', height: '100%' });
+  linkWraps.forEach((linkWrap) => {
+    gsap.set(linkWrap, { 
+      transformOrigin: 'left',
+      scaleX: 1 
+    });
   });
 
   function resetAnimations(forceOpen = false) {
     // Kill all running animations
     menuWraps.forEach((menuWrap, index) => {
-      const bgElement = bgElements[index];
-      gsap.killTweensOf([menuWrap, bgElement]);
+      const linkWrap = linkWraps[index];
+      gsap.killTweensOf([menuWrap, linkWrap]);
     });
     splitInstances.forEach(instance => {
       if (instance.chars) {
@@ -47,7 +50,7 @@ export function initializeMenuAnimations() {
 
   function cleanup() {
     // Kill all GSAP animations
-    gsap.killTweensOf([...menuWraps, ...bgElements]);
+    gsap.killTweensOf([...menuWraps, ...linkWraps]);
     splitInstances.forEach(instance => {
       if (instance.chars) {
         gsap.killTweensOf(instance.chars);
@@ -71,7 +74,7 @@ export function initializeMenuAnimations() {
   function openAllMenus() {
     hoverEnabled = false;
     menuWraps.forEach((menuWrap, index) => {
-      const bgElement = bgElements[index];
+      const linkWrap = linkWraps[index];
       
       gsap.to(menuWrap, {
         width: 'auto',
@@ -79,34 +82,42 @@ export function initializeMenuAnimations() {
         ease: 'expo.out'
       });
       
-      gsap.to(bgElement, {
-        width: '41vw',
-        duration: 1.2,
-        ease: 'expo.out'
-      });
-
-      animateTextElements(menuWrap, true);
+      gsap.fromTo(linkWrap, 
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 1.2,
+          ease: 'expo.out',
+          onComplete: () => {
+            setTimeout(() => {
+              animateTextElements(menuWrap, true);
+            }, 100);
+          }
+        }
+      );
     });
   }
 
   function closeAllMenus() {
     hoverEnabled = true;
     menuWraps.forEach((menuWrap, index) => {
-      const bgElement = bgElements[index];
+      const linkWrap = linkWraps[index];
       
-      gsap.to(menuWrap, {
-        width: '3.5vw',
-        duration: 1.2,
-        ease: 'expo.out'
-      });
-      
-      gsap.to(bgElement, {
-        width: '0vw',
-        duration: 1.2,
-        ease: 'expo.out'
-      });
-
       animateTextElements(menuWrap, false);
+      
+      setTimeout(() => {
+        gsap.to(menuWrap, {
+          width: '3.5vw',
+          duration: 1.2,
+          ease: 'expo.out'
+        });
+        
+        gsap.to(linkWrap, {
+          scaleX: 0,
+          duration: 1.2,
+          ease: 'expo.out'
+        });
+      }, 200);
     });
   }
 
@@ -130,7 +141,7 @@ export function initializeMenuAnimations() {
 
   function setupHoverEffects() {
     menuWraps.forEach((menuWrap, index) => {
-      const bgElement = bgElements[index];
+      const linkWrap = linkWraps[index];
       const textElements = menuWrap.querySelectorAll('.d-nav');
       
       textElements.forEach((textElement) => {
@@ -143,7 +154,7 @@ export function initializeMenuAnimations() {
       
       menuWrap._mouseenterHandler = () => {
         if (hoverEnabled) {
-          gsap.killTweensOf([menuWrap, bgElement]);
+          gsap.killTweensOf([menuWrap, linkWrap]);
           
           gsap.to(menuWrap, {
             width: 'auto',
@@ -151,33 +162,41 @@ export function initializeMenuAnimations() {
             ease: 'expo.out'
           });
           
-          gsap.to(bgElement, {
-            width: '41vw',
-            duration: 1.2,
-            ease: 'expo.out'
-          });
-
-          animateTextElements(menuWrap, true);
+          gsap.fromTo(linkWrap,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              duration: 1.2,
+              ease: 'expo.out',
+              onComplete: () => {
+                setTimeout(() => {
+                  animateTextElements(menuWrap, true);
+                }, 300);
+              }
+            }
+          );
         }
       };
       
       menuWrap._mouseleaveHandler = () => {
         if (hoverEnabled) {
-          gsap.killTweensOf([menuWrap, bgElement]);
+          gsap.killTweensOf([menuWrap, linkWrap]);
           
-          gsap.to(menuWrap, {
-            width: '3.5vw',
-            duration: 1.2,
-            ease: 'expo.out'
-          });
-          
-          gsap.to(bgElement, {
-            width: '0vw',
-            duration: 1.2,
-            ease: 'expo.out'
-          });
-
           animateTextElements(menuWrap, false);
+          
+          setTimeout(() => {
+            gsap.to(menuWrap, {
+              width: '3.5vw',
+              duration: 1.2,
+              ease: 'expo.out'
+            });
+            
+            gsap.to(linkWrap, {
+              scaleX: 0,
+              duration: 1.2,
+              ease: 'expo.out'
+            });
+          }, 300);
         }
       };
 
@@ -260,18 +279,16 @@ export function initializeMenuAnimations() {
 }
 
 function initializeWhenReady() {
-  // Check if all required elements are present and fully rendered
   const menuWraps = document.querySelectorAll('.menu-l-wrap');
-  const bgElements = document.querySelectorAll('.g-n-bg');
+  const linkWraps = document.querySelectorAll('.g-n-links-wrap');
   const navElements = document.querySelectorAll('.d-nav');
 
-  if (!menuWraps.length || !bgElements.length || !navElements.length) {
+  if (!menuWraps.length || !linkWraps.length || !navElements.length) {
     setTimeout(initializeWhenReady, 300);
     return;
   }
 
-  // Ensure elements have dimensions
-  const allElementsHaveDimensions = [...menuWraps, ...bgElements].every(el => 
+  const allElementsHaveDimensions = [...menuWraps, ...linkWraps].every(el => 
     el.offsetWidth > 0 && el.offsetHeight > 0
   );
 
