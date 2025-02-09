@@ -96,6 +96,10 @@ const setVw = () => {
 
     // Set --mvw to 1% of the current viewport width in pixels for mobile
     document.documentElement.style.setProperty('--sm-vw', `${window.innerWidth / 100}px`);
+    
+
+        // Set --mvw to 1% of the current viewport width in pixels for mobile
+        document.documentElement.style.setProperty('--lg-mvw', `${window.innerWidth / 100}px`);
 };
 
 // Set the initial value of --vw

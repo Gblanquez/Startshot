@@ -65,6 +65,11 @@
   font-size: calc(16 / 1728 * 100 * var(--vw)); /* 16px at 1728px */
 }
 
+.body-s.team{
+  font-size: calc(16 / 1728 * 100 * var(--vw)); /* 16px at 1728px */
+}
+
+
 .caption-n {
   font-size: calc(13 / 1728 * 100 * var(--vw)); /* 13px at 1728px */
 }
@@ -86,74 +91,6 @@
 }
 
 
-/* Tablet Sizes */
-
-@media (max-width: 700px) {
-  :root {
-      --sm-vw: 0.0143vw; /* 1% of 700px is approximately 0.0143vw */
-  }
-
-  .h-xxl {
-      font-size: calc(64 / 700 * 100 * var(--sm-vw)); /* 64px at 700px */
-  }
-
-  .h-xl {
-      font-size: calc(26 / 700 * 100 * var(--sm-vw)); /* 32px at 700px */
-  }
-
-  .h-xl.opacity-reduce.about {
-    font-size: calc(16 / 700 * 100 * var(--sm-vw)); /* 16px at 700px */
-  }
-
-  .h-l {
-      font-size: calc(14 / 700 * 100 * var(--sm-vw)); /* 14px at 700px */
-  }
-
-  .body-m {
-      font-size: calc(18/ 700 * 100 * var(--sm-vw)); /* 16px at 700px */
-  }
-
-  .body-s {
-      font-size: calc(12 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
-  }
-
-  .caption-n {
-      font-size: calc(10 / 700 * 100 * var(--sm-vw)); /* 11px at 700px */
-  }
-
-  .caption-w {
-      font-size: calc(10 / 700 * 100 * var(--sm-vw)); /* 9px at 700px */
-  }
-
-  .d-cta {
-      font-size: calc( 12 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
-  }
-
-  .body-s.launchdpad {
-    font-size: calc(10 / 700 * 100 * var(--sm-vw)); /* 10px at 700px */
-  }
-
-  .d-nav {
-      font-size: calc(14 / 700 * 100 * var(--sm-vw)); /* 15px at 700px */
-  }
-
-  .f-nav {
-      font-size: calc(14 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
-  }
-
-  .f-label {
-    font-size: calc(12 / 700 * 100 * var(--sm-vw)); /* 11px at 700px */
-  }
-
-  .c-label {
-    font-size: calc(12 / 700 * 100 * var(--sm-vw)); /* 12px at 700px */
-  }
-
-  .h-xl.portfolio-text {
-    font-size: calc(16 / 700 * 100 * var(--sm-vw)); /* 16px at 700px */
-  }
-}
-
 [data-a="hero-txt"] {
   overflow: hidden;
 }
@@ -167,6 +104,228 @@
 }
 
 
+
+/* Tablet Sizes */
+
+@media (max-width: 992px) {
+  :root {
+      --sm-vw: 0.0101vw; 
+  }
+
+  .h-xxl {
+      font-size: calc(64 / 992 * 100 * var(--sm-vw));
+  }
+
+
+  .h-xl.portfolio-text {
+    font-size: calc(28 / 992 * 100 * var(--sm-vw)) !important;
+}
+
+  .h-xl.opacity-reduce.about {
+    font-size: calc(16 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .h-l {
+      font-size: calc(14 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .body-m {
+      font-size: calc(18 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .body-s {
+      font-size: calc(12 / 992 * 100 * var(--sm-vw));
+  }
+
+
+  .body-s.team {
+    font-size: calc(14 / 992 * 100 * var(--sm-vw)) !important;
+}
+
+
+  .caption-n {
+      font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .caption-w {
+      font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .d-cta {
+      font-size: calc(12 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .body-s.launchdpad {
+    font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .d-nav {
+      font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .f-nav {
+      font-size: calc(14 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .f-label {
+    font-size: calc(12 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .c-label {
+    font-size: calc(12 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .h-xl.portfolio-text {
+    font-size: calc(16 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .c-t-field {
+    width: calc(208 / 992 * 100 * var(--sm-vw));
+    height: calc(44 / 992 * 100 * var(--sm-vw));
+    font-size: calc(11 / 992 * 100 * var(--sm-vw));
+  }
+
+  .c-t-field.email {
+    width: calc(420 / 992 * 100 * var(--sm-vw));
+    height: calc(44 / 992 * 100 * var(--sm-vw));
+  }
+
+  .c-t-field.message {
+    width: calc(420 / 992 * 100 * var(--sm-vw));
+    height: calc(137 / 992 * 100 * var(--sm-vw));
+    padding-bottom: calc(92 / 992 * 100 * var(--sm-vw));
+  }
+
+  .g-button.form {
+    width: calc(106 / 992 * 100 * var(--sm-vw));
+    height: calc(30 / 992 * 100 * var(--sm-vw));
+  }
+
+  .g-a-wrap.form {
+    width: calc(22 / 992 * 100 * var(--sm-vw));
+    height: calc(22 / 992 * 100 * var(--sm-vw));
+  }
+}
+
+
+
+/* Large Mobile Sizes */
+@media (max-width: 767px) {
+  :root {
+      --lg-mvw: 0.0130vw; /* 1% of 767px is approximately 0.0130vw */
+  }
+
+  .h-xxl {
+      font-size: calc(64 / 767 * 100 * var(--lg-mvw)); /* 64px at 767px */
+  }
+
+
+  .h-xl.opacity-reduce.about {
+    font-size: calc(16 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
+  }
+
+  .h-l {
+      font-size: calc(14 / 767 * 100 * var(--lg-mvw)); /* 14px at 767px */
+  }
+
+  .body-m {
+      font-size: calc(16 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
+  }
+
+  .body-s {
+      font-size: calc(12 / 767 * 100 * var(--lg-mvw)); /* 12px at 767px */
+  }
+
+
+  .body-s.team {
+    font-size: calc(18/ 767 * 100 * var(--lg-mvw)) !important; 
+}
+
+
+
+  .caption-n {
+      font-size: calc(11 / 767 * 100 * var(--lg-mvw)); /* 11px at 767px */
+  }
+
+  .caption-w {
+      font-size: calc(10 / 767 * 100 * var(--lg-mvw)); /* 9px at 767px */
+  }
+
+  .d-cta {
+      font-size: calc(12 / 767 * 100 * var(--lg-mvw)); /* 12px at 767px */
+  }
+
+  .body-s.launchdpad {
+    font-size: calc(10 / 767 * 100 * var(--lg-mvw)); /* 10px at 767px */
+  }
+
+  .d-nav {
+      font-size: calc(10 / 767 * 100 * var(--lg-mvw)); /* 15px at 767px */
+  }
+
+  .f-nav {
+      font-size: calc(12 / 767 * 100 * var(--lg-mvw)); /* 12px at 767px */
+  }
+
+  .f-label {
+    font-size: calc(11 / 767 * 100 * var(--lg-mvw)); /* 11px at 767px */
+  }
+
+  .c-label {
+    font-size: calc(12 / 767 * 100 * var(--lg-mvw)); /* 12px at 767px */
+  }
+
+  .h-xl.portfolio-text {
+    font-size: calc(16 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
+  }
+
+  .logo-wrap {
+    width: calc(137 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .g-button {
+    width: calc(220 / 767 * 100 * var(--lg-mvw));
+    height: calc(40 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .g-a-wrap {
+    width: calc(24 / 767 * 100 * var(--lg-mvw));
+    height: calc(24 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .c-t-field {
+    width: calc(208 / 767 * 100 * var(--lg-mvw));
+    height: calc(44 / 767 * 100 * var(--lg-mvw));
+    font-size: calc(11 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .c-t-field.email {
+    width: calc(420 / 767 * 100 * var(--lg-mvw));
+    height: calc(44 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .c-t-field.message {
+    width: calc(420 / 767 * 100 * var(--lg-mvw));
+    height: calc(137 / 767 * 100 * var(--lg-mvw));
+    padding-bottom: calc(92 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .g-button.form {
+    width: calc(106 / 767 * 100 * var(--lg-mvw));
+    height: calc(30 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .g-a-wrap.form {
+    width: calc(22 / 767 * 100 * var(--lg-mvw));
+    height: calc(22 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .h-l-wrap.max-logo-w {
+    width: calc(254 / 767 * 100 * var(--lg-mvw));
+    height: calc(22 / 767 * 100 * var(--lg-mvw));
+    max-width: calc(254 / 767 * 100 * var(--lg-mvw));
+  }
+}
 
 
 
