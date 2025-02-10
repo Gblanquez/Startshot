@@ -78,6 +78,10 @@
   font-size: calc(13 / 1728 * 100 * var(--vw)); /* 13px at 1728px */
 }
 
+.caption-w.launchdpad {
+  font-size: calc(13 / 1728 * 100 * var(--vw)); /* 13px at 1728px */
+}
+
 .d-cta {
   font-size: calc(12 / 1728 * 100 * var(--vw)); /* 12px at 1728px */
 }
@@ -115,6 +119,10 @@
   .h-xxl {
       font-size: calc(64 / 992 * 100 * var(--sm-vw));
   }
+/* 
+  .h-xl {
+    font-size: calc(34 / 992 * 100 * var(--sm-vw)); 
+  } */
 
 
   .h-xl.portfolio-text {
@@ -122,12 +130,20 @@
 }
 
   .h-xl.opacity-reduce.about {
-    font-size: calc(16 / 992 * 100 * var(--sm-vw)); 
+    font-size: calc(32 / 992 * 100 * var(--sm-vw)); 
   }
 
   .h-l {
       font-size: calc(14 / 992 * 100 * var(--sm-vw)); 
   }
+
+
+
+  .h-l.innovator-t {
+    font-size: calc(18 / 992 * 100 * var(--sm-vw)) !important; 
+}
+
+
 
   .body-m {
       font-size: calc(18 / 992 * 100 * var(--sm-vw)); 
@@ -151,16 +167,25 @@
       font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
   }
 
+  .caption-w.launchpad {
+    font-size: calc(8 / 992 * 100 * var(--sm-vw)) !important; 
+}
+
   .d-cta {
       font-size: calc(12 / 992 * 100 * var(--sm-vw)); 
   }
 
   .body-s.launchdpad {
-    font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
+    font-size: calc(12 / 992 * 100 * var(--sm-vw)) !important; 
   }
 
   .d-nav {
       font-size: calc(10 / 992 * 100 * var(--sm-vw)); 
+  }
+
+  .g-button {
+    width: calc(220 / 992 * 100 * var(--sm-vw));
+    height: calc(40 / 992 * 100 * var(--sm-vw));
   }
 
   .f-nav {
@@ -201,6 +226,11 @@
     height: calc(30 / 992 * 100 * var(--sm-vw));
   }
 
+  .g-a-wrap {
+    width: calc(22 / 992 * 100 * var(--sm-vw));
+    height: calc(22 / 992 * 100 * var(--sm-vw));
+  }
+
   .g-a-wrap.form {
     width: calc(22 / 992 * 100 * var(--sm-vw));
     height: calc(22 / 992 * 100 * var(--sm-vw));
@@ -219,14 +249,24 @@
       font-size: calc(64 / 767 * 100 * var(--lg-mvw)); /* 64px at 767px */
   }
 
+  .h-xl {
+    font-size: calc(32 / 767 * 100 * var(--lg-mvw)); 
+  }
+
 
   .h-xl.opacity-reduce.about {
-    font-size: calc(16 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
+    font-size: calc(26 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
   }
 
   .h-l {
       font-size: calc(14 / 767 * 100 * var(--lg-mvw)); /* 14px at 767px */
   }
+
+  .h-l.innovator-t {
+    font-size: calc(16 / 767 * 100 * var(--lg-mvw)) !important;
+}
+
+
 
   .body-m {
       font-size: calc(16 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
@@ -283,8 +323,12 @@
     width: calc(137 / 767 * 100 * var(--lg-mvw));
   }
 
+  .about-div.max-w-small{
+    max-width: 42% !important;
+  }
+
   .g-button {
-    width: calc(220 / 767 * 100 * var(--lg-mvw));
+    width: calc(180 / 767 * 100 * var(--lg-mvw));
     height: calc(40 / 767 * 100 * var(--lg-mvw));
   }
 
@@ -311,13 +355,18 @@
   }
 
   .g-button.form {
-    width: calc(106 / 767 * 100 * var(--lg-mvw));
+    width: calc(112 / 767 * 100 * var(--lg-mvw));
     height: calc(30 / 767 * 100 * var(--lg-mvw));
   }
 
   .g-a-wrap.form {
-    width: calc(22 / 767 * 100 * var(--lg-mvw));
-    height: calc(22 / 767 * 100 * var(--lg-mvw));
+    width: calc(12 / 767 * 100 * var(--lg-mvw));
+    height: calc(12 / 767 * 100 * var(--lg-mvw));
+  }
+
+  .g-a-wrap.rotate-form {
+    width: calc(20 / 767 * 100 * var(--lg-mvw)) !important;
+    height: calc(20 / 767 * 100 * var(--lg-mvw))!important;
   }
 
   .h-l-wrap.max-logo-w {
@@ -353,6 +402,10 @@
       font-size: calc(14 / 479 * 100 * var(--mvw)); /* 14px at 479px */
   }
 
+  .h-l.innovator-t {
+    font-size: calc(20 / 479 * 100 * var(--mvw)) !important; 
+}
+
   .body-m {
       font-size: calc(16 / 479 * 100 * var(--mvw)); /* 16px at 479px */
   }
@@ -369,12 +422,16 @@
       font-size: calc(9 / 479 * 100 * var(--mvw)); /* 9px at 479px */
   }
 
+  .caption-w.launchdpad {
+    font-size: calc(10 / 479 * 100 * var(--mvw));
+}
+
   .d-cta {
       font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
 
   .body-s.launchdpad {
-    font-size: calc(10 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+    font-size: calc(16 / 479 * 100 * var(--mvw)) !important; 
 }
 
   .d-nav {
@@ -409,6 +466,15 @@
   .g-a-wrap{
     width: calc(24 / 479 * 100 * var(--mvw));
     height: calc(24 / 479 * 100 * var(--mvw));
+  }
+
+  .g-a-wrap.rotate-form{
+    width: calc(20 / 479 * 100 * var(--mvw)) !important;
+    height: calc(20 / 479 * 100 * var(--mvw)) !important;
+  }
+
+  .about-div.max-w-small{
+    max-width: 82% !important;
   }
 
 
@@ -454,7 +520,7 @@
 
 
 .body-s.launchdpad {
-  position: relative; /* For absolute positioning context */
+  position: relative; 
 }
 
 .split-line {

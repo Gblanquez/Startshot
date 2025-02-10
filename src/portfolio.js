@@ -36,10 +36,119 @@ export function initializePortfolioCarousels() {
     function setupCarousel({ wrapper, list, nextButton, prevButton }) {
         if (wrapper && list && nextButton && prevButton) {
             let currentIndex = 0;
-            const slides = Array.from(list.children);
+            let slides = Array.from(list.children);
             let slideWidth = slides[0].offsetWidth;
-            const visibleSlides = 4;
-            const maxIndex = Math.max(0, slides.length - visibleSlides); // Stop at last 4 items
+            let visibleSlides = 4;
+            let maxIndex = Math.max(0, slides.length - visibleSlides);
+
+            // Add filter functionality
+            const categoryLinks = document.querySelectorAll('.dp-link');
+            let activeCategory = null;
+
+            function updateArrowsVisibility(visibleSlidesCount) {
+                const parentContainer = list.closest('.p-item-container');
+                if (parentContainer) {
+                    // First check if we should show arrows at all
+                    if (visibleSlidesCount <= 4) {
+                        prevButton.style.opacity = '0';
+                        nextButton.style.opacity = '0';
+                        return;
+                    }
+
+                    // Then handle position-based visibility
+                    prevButton.style.opacity = currentIndex === 0 ? '0' : '1';
+                    nextButton.style.opacity = currentIndex >= maxIndex ? '0' : '1';
+                }
+            }
+
+            // Initialize arrow visibility immediately
+            prevButton.style.opacity = '0'; // Always hide backward arrow initially
+            nextButton.style.opacity = slides.length <= 4 ? '0' : '1'; // Show forward arrow only if needed
+
+            function filterSlides(category) {
+                // First, reset ALL slides to visible state
+                slides = Array.from(list.children);
+                slides.forEach(slide => {
+                    slide.style.display = 'block';
+                    slide.style.opacity = '1';
+                });
+
+                const parentContainer = list.closest('.p-item-container');
+                
+                // Update active category
+                activeCategory = category;
+
+                if (category) {
+                    let hasVisibleSlides = false;
+                    let visibleSlidesCount = 0;
+                    
+                    slides.forEach(slide => {
+                        const categoryText = slide.querySelector('.ct-txt')?.textContent.trim();
+                        if (categoryText !== category) {
+                            slide.style.display = 'none';
+                            slide.style.opacity = '0';
+                        } else {
+                            hasVisibleSlides = true;
+                            visibleSlidesCount++;
+                        }
+                    });
+
+                    // Hide parent container if no visible slides
+                    if (parentContainer) {
+                        if (!hasVisibleSlides) {
+                            parentContainer.style.display = 'none';
+                            parentContainer.style.opacity = '0';
+                        } else {
+                            parentContainer.style.display = 'flex';
+                            parentContainer.style.opacity = '1';
+                            updateArrowsVisibility(visibleSlidesCount);
+                        }
+                    }
+
+                    // Update slides array to only include visible slides
+                    slides = Array.from(list.children).filter(slide => slide.style.display !== 'none');
+                    maxIndex = Math.max(0, slides.length - visibleSlides);
+                } else {
+                    // Show parent container when showing all slides
+                    if (parentContainer) {
+                        parentContainer.style.display = 'flex';
+                        parentContainer.style.opacity = '1';
+                        updateArrowsVisibility(slides.length);
+                    }
+                    
+                    // Reset to original slides array when showing all
+                    slides = Array.from(list.children);
+                    maxIndex = Math.max(0, slides.length - visibleSlides);
+                }
+
+                // Reset position and update carousel
+                currentIndex = 0;
+                goToSlide(0);
+            }
+
+            // Initial arrow visibility check after everything is set up
+            updateArrowsVisibility(slides.length);
+
+            // Add click listeners to category links
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const category = link.textContent.trim();
+                    
+                    // Remove active class from all links
+                    categoryLinks.forEach(l => l.classList.remove('active'));
+
+                    // If clicking the same category again, show all
+                    if (category === activeCategory) {
+                        activeCategory = null;
+                        filterSlides(null);
+                    } else {
+                        // Add active class to clicked link
+                        link.classList.add('active');
+                        filterSlides(category);
+                    }
+                });
+            });
 
             function goToSlide(index) {
                 // Ensure index stays within bounds
@@ -48,7 +157,11 @@ export function initializePortfolioCarousels() {
                 gsap.to(list, {
                     x: -slideWidth * currentIndex,
                     duration: 0.8,
-                    ease: 'expo.out'
+                    ease: 'expo.out',
+                    onComplete: () => {
+                        // Update arrows visibility after animation
+                        updateArrowsVisibility(slides.length);
+                    }
                 });
             }
 
