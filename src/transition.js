@@ -79,7 +79,9 @@ export default class Transition {
                         initializeAllAnimations();
                     },
                     afterEnter(data){
+                        restartWebflow();
                         initializeArrowAnimations()
+                        
                     },
                     beforeLeave(data) {
 
@@ -140,6 +142,7 @@ export default class Transition {
                         
                     },
                     afterEnter(data){
+                        restartWebflow();
                         // initMobileMenu();
                     },
                     beforeLeave(data) {
@@ -750,7 +753,7 @@ export default class Transition {
         });
 
         barba.hooks.afterEnter((data) => {
-            restartWebflow();
+            // restartWebflow();
             if (mobileMenuInstance) {
                 mobileMenuInstance.cleanup();
             }
