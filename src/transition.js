@@ -743,6 +743,7 @@ export default class Transition {
 
         barba.hooks.enter((data) => {
             // restartWebflow();
+            resetWebflow()
             initializeButtonAnimations();
             initFooterAnimation();
             initializeMenuAnimations();
@@ -750,7 +751,6 @@ export default class Transition {
         });
 
         barba.hooks.afterEnter((data) => {
-            resetWebflow()
             if (mobileMenuInstance) {
                 mobileMenuInstance.cleanup();
             }
