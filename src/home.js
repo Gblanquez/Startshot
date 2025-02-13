@@ -241,6 +241,7 @@ export function initializeAllAnimations() {
     paginationDots.forEach((dot, index) => {
       dot.classList.toggle('active', index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex));
     });
+    updateArrowVisibility();
   }
   
   // Move to the next slide (Desktop)
@@ -249,6 +250,7 @@ export function initializeAllAnimations() {
       currentIndex++;
       updatePosition();
     }
+    updateArrowVisibility();
   }
   
   // Move to the previous slide (Desktop)
@@ -257,6 +259,7 @@ export function initializeAllAnimations() {
       currentIndex--;
       updatePosition();
     }
+    updateArrowVisibility();
   }
   
   // Move to the next slide (Mobile)
@@ -382,6 +385,15 @@ export function initializeAllAnimations() {
   // Initialize the sliders
   initializeCarousel();
   initializeInvestSlider();
+
+  // Update arrow visibility based on current index
+  function updateArrowVisibility() {
+    arrowForward.style.opacity = currentIndex === slides.length - 1 ? '0' : '1';
+    arrowForward.style.pointerEvents = currentIndex === slides.length - 1 ? 'none' : 'auto';
+    
+    arrowBackward.style.opacity = currentIndex === 0 ? '0' : '1';
+    arrowBackward.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+  }
 }
 
 export function stopAllAnimations() {

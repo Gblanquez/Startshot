@@ -20,6 +20,8 @@ import { portfolioLoadAnimation } from './animations/portfolioAnime.js';
 import { contactLoadAnimation } from './animations/contactAnime.js';
 import { homeLoadAnimation } from './animations/homeAnime.js';
 import { initMobileMenu } from './menuMobile.js';
+import { initializeArrowAnimations } from './arrowButton.js';
+
 
 export default class Transition {
     constructor(options) {
@@ -77,7 +79,7 @@ export default class Transition {
                         initializeAllAnimations();
                     },
                     afterEnter(data){
-                        // initMobileMenu()
+                        initializeArrowAnimations()
                     },
                     beforeLeave(data) {
 
@@ -124,7 +126,7 @@ export default class Transition {
                     },
                     afterEnter(data) {
                         startLaunchPageAnimations();
-                        // initMobileMenu();
+                        initializeArrowAnimations()
                     },
                     beforeLeave(data) {
                     }
@@ -154,7 +156,7 @@ export default class Transition {
                         initializePortfolioCarousels();
                     },
                     afterEnter(data){
-                        // initMobileMenu()
+                        initializeArrowAnimations()
                     },
                     beforeLeave(data) {
                         // stopPortfolioCarusel();
@@ -745,7 +747,6 @@ export default class Transition {
             initFooterAnimation();
             initializeMenuAnimations();
             // initMobileMenu();
-            console.log('button animations initialized');
         });
 
         barba.hooks.afterEnter((data) => {

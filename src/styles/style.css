@@ -17,22 +17,7 @@
     pointer-events: none;
   }
 
-  html.lenis,
-  html.lenis body {
-  height: auto;
-    }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-    }
-
-.lenis.lenis-stopped {
-  overflow: clip;
-    }
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
-    }
 
   *{
     -webkit-font-smoothing: antialiased;
@@ -58,6 +43,8 @@
 
 
 
+
+
  :root {
   --vw: 0.01vw; /* 1% of the viewport width */
 }
@@ -70,11 +57,19 @@
   font-size: calc(56 / 1728 * 100 * var(--vw)); /* 56px at 1728px */
 }
 
+.h-xl.team{
+  font-size: calc(40 / 1728 * 100 * var(--vw)); /* 56px at 1728px */
+}
+
 .h-l {
   font-size: calc(20 / 1728 * 100 * var(--vw)); /* 20px at 1728px */
 }
 
 .body-m {
+  font-size: calc(24 / 1728 * 100 * var(--vw)); /* 24px at 1728px */
+}
+
+.body-m.team {
   font-size: calc(24 / 1728 * 100 * var(--vw)); /* 24px at 1728px */
 }
 
@@ -288,6 +283,10 @@
   .body-m {
       font-size: calc(16 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
   }
+
+  .body-m.team {
+    font-size: calc(12 / 767 * 100 * var(--lg-mvw)); /* 16px at 767px */
+}
 
   .body-s {
       font-size: calc(12 / 767 * 100 * var(--lg-mvw)); /* 12px at 767px */

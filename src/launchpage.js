@@ -72,7 +72,26 @@ export function startLaunchPageAnimations() {
             "+=0.05"
         );
 
-   
+    // New animation for contact elements
+    const contactElement = document.querySelector('.body-m.contact');
+    const contactDivCenter = document.querySelector('.contact-div.center');
+
+    if (contactElement) {
+        const splitContact = new SplitType(contactElement, { types: 'words, chars' });
+        teamTimeline.fromTo(splitContact.chars, 
+            { opacity: 0, filter: 'blur(5px)' }, 
+            { opacity: 1, filter: 'blur(0px)', duration: 1, stagger: 0.05, ease: 'expo.out' },
+            "+=0.05" // Start after team animations
+        );
+    }
+
+    if (contactDivCenter) {
+        teamTimeline.fromTo(contactDivCenter, 
+            { opacity: 0, y: "50%" }, 
+            { opacity: 1, y: "0%", duration: 1, ease: 'expo.out' },
+            "+=0.05" // Start after contact element animation
+        );
+    }
 
 }
 

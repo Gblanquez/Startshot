@@ -31,7 +31,15 @@ export function initializePortfolioCarousels() {
         }
     };
 
-    console.log('Found elements:', elements);
+    // console.log('Found elements:', elements);
+
+    // Add reference to the "View All" link
+    const viewAllLink = document.querySelector('.dp-link.viewall');
+    
+    // Initially hide the "View All" link
+    if (viewAllLink) {
+        viewAllLink.style.display = 'none';
+    }
 
     function setupCarousel({ wrapper, list, nextButton, prevButton }) {
         if (wrapper && list && nextButton && prevButton) {
@@ -108,7 +116,24 @@ export function initializePortfolioCarousels() {
                     // Update slides array to only include visible slides
                     slides = Array.from(list.children).filter(slide => slide.style.display !== 'none');
                     maxIndex = Math.max(0, slides.length - visibleSlides);
+
+                    // Show "View All" link when a category is selected
+                    if (viewAllLink) {
+                        viewAllLink.style.display = 'block';
+                    }
+
+                    // Set opacity of all category links to 0.5
+                    categoryLinks.forEach(link => {
+                        if (link.textContent.trim() !== category) {
+                            link.style.opacity = '0.5';
+                        }
+                    });
                 } else {
+                    // Reset opacity of all category links to 1
+                    categoryLinks.forEach(link => {
+                        link.style.opacity = '1';
+                    });
+
                     // Show parent container when showing all slides
                     if (parentContainer) {
                         parentContainer.style.display = 'flex';
@@ -119,6 +144,11 @@ export function initializePortfolioCarousels() {
                     // Reset to original slides array when showing all
                     slides = Array.from(list.children);
                     maxIndex = Math.max(0, slides.length - visibleSlides);
+                    
+                    // Hide "View All" link when showing all categories
+                    if (viewAllLink) {
+                        viewAllLink.style.display = 'none';
+                    }
                 }
 
                 // Reset position and update carousel
@@ -135,20 +165,34 @@ export function initializePortfolioCarousels() {
                     e.preventDefault();
                     const category = link.textContent.trim();
                     
-                    // Remove active class from all links
-                    categoryLinks.forEach(l => l.classList.remove('active'));
+                    // Remove active class from all links and reset opacity
+                    categoryLinks.forEach(l => {
+                        l.classList.remove('active');
+                        l.style.opacity = '0.5'; // Set all to 0.5
+                    });
 
                     // If clicking the same category again, show all
                     if (category === activeCategory) {
                         activeCategory = null;
                         filterSlides(null);
                     } else {
-                        // Add active class to clicked link
+                        // Add active class to clicked link and set its opacity to 1
                         link.classList.add('active');
+                        link.style.opacity = '1'; // Set selected category to 1
+                        activeCategory = category;
                         filterSlides(category);
                     }
                 });
             });
+
+            // Add click listener for "View All" link
+            if (viewAllLink) {
+                viewAllLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Hide "View All" link and show all categories
+                    filterSlides(null);
+                });
+            }
 
             function goToSlide(index) {
                 // Ensure index stays within bounds

@@ -240,6 +240,8 @@ export function initializeLaunchpadCarousel() {
       currentIndex++;
       updatePosition();
     }
+    // Update arrow visibility
+    updateArrowVisibility();
   }
 
   function previousSlide() {
@@ -247,6 +249,19 @@ export function initializeLaunchpadCarousel() {
       currentIndex--;
       updatePosition();
     }
+    // Update arrow visibility
+    updateArrowVisibility();
+  }
+
+  function updateArrowVisibility() {
+    const isForwardVisible = currentIndex < slides.length - 1;
+    const isBackwardVisible = currentIndex > 0;
+
+    arrowForward.style.opacity = isForwardVisible ? '1' : '0';
+    arrowForward.style.pointerEvents = isForwardVisible ? 'auto' : 'none';
+
+    arrowBackward.style.opacity = isBackwardVisible ? '1' : '0';
+    arrowBackward.style.pointerEvents = isBackwardVisible ? 'auto' : 'none';
   }
 
   function nextMobileSlide() {
