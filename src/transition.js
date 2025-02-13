@@ -21,7 +21,7 @@ import { contactLoadAnimation } from './animations/contactAnime.js';
 import { homeLoadAnimation } from './animations/homeAnime.js';
 import { initMobileMenu } from './menuMobile.js';
 import { initializeArrowAnimations } from './arrowButton.js';
-
+import { resetWebflow } from './resetWebflow.js';
 
 export default class Transition {
     constructor(options) {
@@ -750,7 +750,7 @@ export default class Transition {
         });
 
         barba.hooks.afterEnter((data) => {
-            restartWebflow();
+            resetWebflow()
             if (mobileMenuInstance) {
                 mobileMenuInstance.cleanup();
             }
