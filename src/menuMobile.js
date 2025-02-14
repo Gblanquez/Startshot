@@ -144,14 +144,22 @@ export function initMobileMenu() {
   }
 
   function closeMobileMenu(event) {
+    console.log('closeMobileMenu triggered!'); // Debugging
+
     if (isOpen) {
         openTimeline.pause();
         closeTimeline.play(0);
 
-        // Only scroll to top if the click came from a mobile link
-        if (event && event.target.classList.contains('mobile_link')) {
-            smoothScroll.scrollTo(0, { immediate: true }); 
-        }
+        // Get all mobile links
+        const allMobileLinks = document.querySelectorAll('.mobile_link');
+
+        // Loop through each and check if the clicked element matches any of them
+        allMobileLinks.forEach(link => {
+            if (event.target === link || link.contains(event.target)) {
+                console.log('Scrolling to top!'); // Debugging
+                smoothScroll.scrollTo(0, { immediate: true });
+            }
+        });
 
         isOpen = false;
     }
