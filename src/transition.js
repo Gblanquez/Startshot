@@ -123,6 +123,7 @@ export default class Transition {
                         initializeLaunchpadCarousel();
                     },
                     afterEnter(data) {
+
                         startLaunchPageAnimations();
                         initializeArrowAnimations()
                     },

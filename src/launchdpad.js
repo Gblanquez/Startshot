@@ -126,69 +126,49 @@ export function initializeLaunchpadCarousel() {
       if (contentWrapper) {
         const isActive = index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex);
         contentWrapper.classList.toggle('is-active', isActive);
-        
+  
         if (window.matchMedia("(max-width: 479px)").matches) {
           contentWrapper.style.width = `${mobileSlideWidthVW}vw`;
           contentWrapper.style.height = `${mobileSlideHeightVW}vw`;
           contentWrapper.style.margin = '0';
         } else {
           const timeline = gsap.timeline();
-          
+  
           if (isActive) {
-            timeline
-              .to(contentWrapper, {
-                width: `${activeWidthVW}vw`,
-                height: '40vw',
-                margin: `0 ${activeMarginVW}vw`,
-                duration: 1.4,
-                ease: 'expo.out'
-              });
+            timeline.to(contentWrapper, {
+              width: `${activeWidthVW}vw`,
+              height: '40vw',
+              margin: `0 ${activeMarginVW}vw`,
+              duration: 1.4,
+              ease: 'expo.out'
+            });
           } else {
-            timeline
-              .to(contentWrapper, {
-                width: `${inactiveWidthVW}vw`,
-                height: '19vw',
-                margin: 0,
-                duration: 1.4,
-                ease: 'expo.out'
-              });
+            timeline.to(contentWrapper, {
+              width: `${inactiveWidthVW}vw`,
+              height: '19vw',
+              margin: 0,
+              duration: 1.4,
+              ease: 'expo.out'
+            });
           }
         }
       }
     });
-
+  
     descriptions.forEach((description, index) => {
       const isActive = index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex);
       description.classList.toggle('is-active', isActive);
-      
+  
       const captions = description.querySelectorAll('.caption-w.launchdpad');
       const bodyText = description.querySelectorAll('.body-s.launchdpad');
       const buttons = description.querySelectorAll('.cl-d-div.bttn');
-      
+  
       if (isActive) {
+        // **RESET & REAPPLY SplitType for mobile**
         bodyText.forEach(text => {
           SplitType.revert(text);
-        });
-
-        gsap.fromTo(captions, 
-          { y: '120%', opacity: 0 },
-          {
-            y: '0%',
-            opacity: 1,
-            duration: 1.6,
-            stagger: 0.1,
-            ease: 'expo.out',
-            delay: 0.2
-          }
-        );
-
-        bodyText.forEach(text => {
-          const split = new SplitType(text, {
-            types: 'lines',
-            lineClass: 'split-line',
-            absolute: true
-          });
-
+          const split = new SplitType(text, { types: 'lines', lineClass: 'split-line', absolute: true });
+  
           gsap.fromTo(split.lines,
             { y: '120%', opacity: 0 },
             {
@@ -201,7 +181,19 @@ export function initializeLaunchpadCarousel() {
             }
           );
         });
-
+  
+        gsap.fromTo(captions, 
+          { y: '120%', opacity: 0 },
+          {
+            y: '0%',
+            opacity: 1,
+            duration: 1.6,
+            stagger: 0.1,
+            ease: 'expo.out',
+            delay: 0.2
+          }
+        );
+  
         gsap.fromTo(buttons,
           { y: '120%', opacity: 0 },
           {
@@ -214,22 +206,20 @@ export function initializeLaunchpadCarousel() {
           }
         );
       } else {
-        bodyText.forEach(text => {
-          SplitType.revert(text);
-        });
-        
+        // Reset everything when not active
         gsap.set(captions, { y: '120%', opacity: 0 });
         gsap.set(bodyText, { opacity: 1 });
         gsap.set(buttons, { y: '120%', opacity: 0 });
       }
-      
+  
+      // Ensure correct pointer events
       const parentItem = description.closest('.launchdpad-cl-item');
       if (parentItem) {
         parentItem.style.pointerEvents = isActive ? 'auto' : 'none';
         parentItem.style.zIndex = isActive ? '2' : '1';
       }
     });
-
+  
     paginationDots.forEach((dot, index) => {
       dot.classList.toggle('active', index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex));
     });
@@ -254,14 +244,8 @@ export function initializeLaunchpadCarousel() {
   }
 
   function updateArrowVisibility() {
-    const isForwardVisible = currentIndex < slides.length - 1;
-    const isBackwardVisible = currentIndex > 0;
-
-    arrowForward.style.opacity = isForwardVisible ? '1' : '0';
-    arrowForward.style.pointerEvents = isForwardVisible ? 'auto' : 'none';
-
-    arrowBackward.style.opacity = isBackwardVisible ? '1' : '0';
-    arrowBackward.style.pointerEvents = isBackwardVisible ? 'auto' : 'none';
+    arrowForward.style.opacity = currentIndex === slides.length - 1 ? '0' : '1';
+    arrowBackward.style.opacity = currentIndex === 0 ? '0' : '1';
   }
 
   function nextMobileSlide() {
@@ -295,38 +279,78 @@ export function initializeLaunchpadCarousel() {
     });
   }
 
-  // Initialize desktop functionality immediately
+// Initialize carousel immediately
+if (slider && slides.length && sliderWrapper) {
+  const isMobile = window.matchMedia("(max-width: 479px)").matches;
+
+  if (isMobile) {
+    initializeMobileCarousel();
+  } else {
+    initializeDesktopCarousel();
+  }
+}
+
+// Mobile initialization on DOMContentLoaded (extra safeguard)
+document.addEventListener('DOMContentLoaded', () => {
   if (slider && slides.length && sliderWrapper) {
-    if (!window.matchMedia("(max-width: 479px)").matches) {
-      initializeDesktopCarousel();
+    const isMobile = window.matchMedia("(max-width: 479px)").matches;
+
+    if (isMobile) {
+      // Ensure any old split animations are reset
+      const allBodyText = document.querySelectorAll('.body-s.launchdpad');
+      allBodyText.forEach(text => {
+        SplitType.revert(text);
+      });
+
+      initializeMobileCarousel();
     }
   }
+});
 
-  // Mobile initialization on DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', () => {
-    if (slider && slides.length && sliderWrapper) {
-      if (window.matchMedia("(max-width: 479px)").matches) {
-        // Reset any existing splits first
-        const allBodyText = document.querySelectorAll('.body-s.launchdpad');
-        allBodyText.forEach(text => {
-          SplitType.revert(text);
-        });
+  let resizeTimeout; 
 
-        initializeMobileCarousel();
-      }
-    } else {
-      console.warn('Required elements for Launchpad carousel not found');
-    }
-  });
-
-  // Handle resize events
+  // Handle resize events with a debounce effect
   window.addEventListener('resize', () => {
-    if (slider && slides.length && sliderWrapper) {
-      if (window.matchMedia("(max-width: 479px)").matches) {
-        initializeMobileCarousel();
-      } else {
-        initializeDesktopCarousel();
+    clearTimeout(resizeTimeout); // 
+  
+    resizeTimeout = setTimeout(() => {
+      if (slider && slides.length && sliderWrapper) {
+        const isMobile = window.matchMedia("(max-width: 479px)").matches;
+  
+        if (isMobile) {
+ 
+          mobileCurrentIndex = currentIndex; 
+  
+
+          setMobileSlideSizes();
+          updateMobilePosition(); // Move slides correctly
+          setActiveSlide(); // Ensure the correct active slide is set
+  
+
+          paginationDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === mobileCurrentIndex);
+            dot.addEventListener('click', () => {
+              animateToMobileSlide(index);
+            });
+          });
+  
+        } else {
+
+          currentIndex = mobileCurrentIndex;
+  
+          // Ensure desktop slide sizes and positions update
+          setSlideSizes();
+          updatePosition();
+          setActiveSlide(); // Ensure correct active state
+
+          paginationDots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+            dot.addEventListener('click', () => {
+              animateToSlide(index);
+            });
+          });
+        }
       }
-    }
+    }, 200); 
   });
 }
