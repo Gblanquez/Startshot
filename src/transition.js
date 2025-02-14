@@ -1,8 +1,6 @@
 import barba from '@barba/core/dist/barba.umd.js';
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import Lenis from 'lenis'
-import 'lenis/dist/lenis.css'
 import { restartWebflow } from '@finsweet/ts-utils';
 import { initializeAllAnimations, stopAllAnimations } from './home.js';
 import { startAboutAnimations, stopAboutAnimations } from './about.js';
@@ -22,43 +20,40 @@ import { homeLoadAnimation } from './animations/homeAnime.js';
 import { initMobileMenu } from './menuMobile.js';
 import { initializeArrowAnimations } from './arrowButton.js';
 import { reenableWebflowForms } from './resetWebflow.js';
+import smoothScroll, { stopScroll, startScroll } from './scroll.js';
 
 export default class Transition {
     constructor(options) {
-
-        this.lenis = new Lenis()
-
-        this.disableScroll = () =>{
-            this.lenis.stop()
-        }
-
-        this.enableScroll = () =>{
-            this.lenis.start()
-        }
-
-        this.initLenis();
+        this.disableScroll = stopScroll;
+        this.enableScroll = startScroll;
+    
+        this.init();
         this.barba();
-    }
+      }
+    
+      init() {
+        console.log("Smooth scrolling initialized:", smoothScroll);
+      }
 
-    initLenis() {
-        this.lenis = new Lenis({
-            autoRaf: false,
-        });
+    // initLenis() {
+    //     this.lenis = new Lenis({
+    //         autoRaf: false,
+    //     });
 
-        this.lenis.on('scroll', ScrollTrigger.update);
+    //     this.lenis.on('scroll', ScrollTrigger.update);
 
-        gsap.ticker.add((time) => {
-            this.lenis.raf(time * 1000);
-        });
+    //     gsap.ticker.add((time) => {
+    //         this.lenis.raf(time * 1000);
+    //     });
 
-        gsap.ticker.lagSmoothing(0);
-    }
+    //     gsap.ticker.lagSmoothing(0);
+    // }
 
     barba() {
 
-        const disableScroll = this.disableScroll;
-        const enableScroll = this.enableScroll;
-        const lenis = this.lenis;
+        // const disableScroll = this.disableScroll;
+        // const enableScroll = this.enableScroll;
+        // const lenis = this.lenis;
 
         let mobileMenuInstance;
 
@@ -650,51 +645,51 @@ export default class Transition {
                     },
                     async leave({ current }) {
 
-                        const isMobile = window.innerWidth <= 478;
+                        // const isMobile = window.innerWidth <= 478;
     
-                        if (isMobile) {
-                            const closeTimeline = gsap.timeline({
-                                onComplete: () => {
-                                    lenis.start();
-                                }
-                            });
+                        // if (isMobile) {
+                        //     const closeTimeline = gsap.timeline({
+                        //         onComplete: () => {
+                        //             lenis.start();
+                        //         }
+                        //     });
                             
-                            closeTimeline
-                                .to('.mobile_text .char', {
-                                    opacity: 0,
-                                    duration: 0.2,
-                                    stagger: {
-                                        each: 0.01,
-                                        from: "random"
-                                    },
-                                    ease: "expo.out"
-                                })
-                                .to(['.mobile_links_list_wrap', '.mobile_logo_wrap'], {
-                                    opacity: 0,
-                                    y: '1vw',
-                                    duration: 0.2,
-                                    ease: 'expo.out'
-                                }, '-=0.2')
-                                .to('.mobile_menu_bg', {
-                                    width: '18vw',
-                                    height: '12vw',
-                                    borderRadius: '100rem',
-                                    duration: 0.2,
-                                    ease: 'expo.out'
-                                }, '-=0.1')
-                                .to('.mobile_navbar', {
-                                    height: 'auto',
-                                    duration: 0.1
-                                });
+                        //     closeTimeline
+                        //         .to('.mobile_text .char', {
+                        //             opacity: 0,
+                        //             duration: 0.2,
+                        //             stagger: {
+                        //                 each: 0.01,
+                        //                 from: "random"
+                        //             },
+                        //             ease: "expo.out"
+                        //         })
+                        //         .to(['.mobile_links_list_wrap', '.mobile_logo_wrap'], {
+                        //             opacity: 0,
+                        //             y: '1vw',
+                        //             duration: 0.2,
+                        //             ease: 'expo.out'
+                        //         }, '-=0.2')
+                        //         .to('.mobile_menu_bg', {
+                        //             width: '18vw',
+                        //             height: '12vw',
+                        //             borderRadius: '100rem',
+                        //             duration: 0.2,
+                        //             ease: 'expo.out'
+                        //         }, '-=0.1')
+                        //         .to('.mobile_navbar', {
+                        //             height: 'auto',
+                        //             duration: 0.1
+                        //         });
                     
-                            await closeTimeline;
-                        }
+                        //     await closeTimeline;
+                        // }
 
     
                         const currentContainer = current.container;
                         
 
-                        disableScroll();
+                    stopScroll()
     
                         gsap.set(currentContainer, {
                             position: 'absolute',
@@ -717,7 +712,7 @@ export default class Transition {
                     },
                     enter({ next }) {
                         window.scrollTo(0, 0);
-                        lenis.scrollTo(0);
+                        smoothScroll.scrollTo(0);
     
                         const nextContainer = next.container;
 
@@ -741,7 +736,7 @@ export default class Transition {
                         });
                     },
                     afterEnter(data) {
-                        enableScroll();
+                        startScroll()
                         restartWebflow()
                         reenableWebflowForms()
   

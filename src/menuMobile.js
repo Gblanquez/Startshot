@@ -1,12 +1,9 @@
 import gsap from 'gsap';
 import SplitType from 'split-type';
-import Lenis from 'lenis'
-
+import smoothScroll from './scroll.js'; // 
 
 export function initMobileMenu() {
   const isMobile = () => window.innerWidth <= 478;
-
-
 
   // Select elements
   const mobileIcon = document.querySelector('.mobile_icon');
@@ -15,8 +12,7 @@ export function initMobileMenu() {
   const linksList = document.querySelector('.mobile_links_list_wrap');
   const logoWrap = document.querySelector('.mobile_logo_wrap');
   const mobileTexts = document.querySelectorAll('.mobile_text');
-  
-  const lenis = new Lenis()
+  const mobileLinks = document.querySelectorAll('.mobile_link');
 
   let splitTexts = [];
   let openTimeline, closeTimeline;
@@ -65,19 +61,20 @@ export function initMobileMenu() {
 
     setupAnimations();
     mobileIcon.addEventListener('click', toggleMobileMenu);
+    mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu)); // ✅ Close on link click
   }
 
   function setupAnimations() {
     // Open animation
     openTimeline = gsap.timeline({ 
       paused: true,
-      onStart: () => lenis.stop()
+      onStart: () => smoothScroll.stop() // ✅ Use global Lenis
     });
 
     closeTimeline = gsap.timeline({ 
       paused: true,
       onComplete: () => {
-        lenis.start();
+        smoothScroll.start(); // ✅ Use global Lenis
         gsap.set([linksList, logoWrap], { display: 'none' });
       }
     });
@@ -146,12 +143,20 @@ export function initMobileMenu() {
     isOpen = !isOpen;
   }
 
+  function closeMobileMenu() {
+    if (isOpen) {
+      openTimeline.pause();
+      closeTimeline.play(0);
+      isOpen = false;
+    }
+  }
+
   function cleanup() {
     if (mobileIcon) {
       mobileIcon.removeEventListener('click', toggleMobileMenu);
     }
+    mobileLinks.forEach(link => link.removeEventListener('click', closeMobileMenu)); // ✅ Remove event listener
     resetStates();
-    lenis.destroy();
   }
 
   // Initialize and setup resize handler
@@ -163,7 +168,6 @@ export function initMobileMenu() {
     }
   });
 
-  // Return both cleanup and reset functions for external use
   return {
     cleanup,
     resetStates
