@@ -22,6 +22,7 @@ import { initializeArrowAnimations } from './arrowButton.js';
 import { reenableWebflowForms } from './resetWebflow.js';
 import smoothScroll, { stopScroll, startScroll } from './scroll.js';
 
+
 export default class Transition {
     constructor(options) {
         this.disableScroll = stopScroll;
@@ -71,12 +72,11 @@ export default class Transition {
                         if (!data.next.html.includes('data-barba-once')) {
                             homeLoadAnimation();
                         }
-                        // initializeAllAnimations();
+                        initializeAllAnimations();
                     },
                     afterEnter(data){
                         // restartWebflow()
                         // console.log('checking restar', restartWebflow);
-                        initializeAllAnimations();
                         initializeArrowAnimations()
                         
                     },
@@ -129,6 +129,7 @@ export default class Transition {
                         initializeArrowAnimations()
                     },
                     beforeLeave(data) {
+
                     }
                 },
                 {

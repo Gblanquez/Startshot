@@ -20,7 +20,7 @@ export function startAboutAnimations() {
     }
 
     // Initialize scroll animations
-    gsap.set(launchImages, { opacity: 1, zIndex: -1, filter: 'blur(40px)' });
+    gsap.set(launchImages, { opacity: 1, zIndex: -1, filter: 'blur(10px)' });
     launchImages[0].classList.add('active');
     contentChildren[0].classList.add('active');
     gsap.set(launchImages[0], { opacity: 1, zIndex: 1, filter: 'blur(0px)' });
@@ -50,7 +50,7 @@ export function startAboutAnimations() {
           gsap.to(img, {
             opacity: 1,
             zIndex: -1,
-            filter: 'blur(40px)',
+            filter: 'blur(10px)',
             duration: 1.4,
             ease: 'expo.out',
           });
@@ -63,7 +63,7 @@ export function startAboutAnimations() {
       gsap.to(launchImages[index], {
         opacity: 0,
         zIndex: -1,
-        filter: 'blur(40px)',
+        filter: 'blur(10px)',
         duration: 1.4,
         ease: 'expo.out',
       });
