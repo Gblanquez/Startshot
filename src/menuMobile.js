@@ -68,13 +68,13 @@ export function initMobileMenu() {
     // Open animation
     openTimeline = gsap.timeline({ 
       paused: true,
-      onStart: () => smoothScroll.stop() // ✅ Use global Lenis
+      onStart: () => smoothScroll.stop() 
     });
 
     closeTimeline = gsap.timeline({ 
       paused: true,
       onComplete: () => {
-        smoothScroll.start(); // ✅ Use global Lenis
+        smoothScroll.start();
         gsap.set([linksList, logoWrap], { display: 'none' });
       }
     });
@@ -143,13 +143,19 @@ export function initMobileMenu() {
     isOpen = !isOpen;
   }
 
-  function closeMobileMenu() {
+  function closeMobileMenu(event) {
     if (isOpen) {
-      openTimeline.pause();
-      closeTimeline.play(0);
-      isOpen = false;
+        openTimeline.pause();
+        closeTimeline.play(0);
+
+        // Only scroll to top if the click came from a mobile link
+        if (event && event.target.classList.contains('mobile_link')) {
+            smoothScroll.scrollTo(0, { immediate: true }); 
+        }
+
+        isOpen = false;
     }
-  }
+}
 
   function cleanup() {
     if (mobileIcon) {
