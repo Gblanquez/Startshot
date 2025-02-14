@@ -410,6 +410,11 @@
       font-size: calc(32 / 479 * 100 * var(--mvw)); /* 32px at 479px */
   }
 
+
+  .h-xl.team {
+    font-size: calc(20 / 479 * 100 * var(--mvw)) !important;
+}
+
   .h-xl.opacity-reduce.about {
     font-size: calc(16 / 479 * 100 * var(--mvw)); /* 32px at 479px */
 }
