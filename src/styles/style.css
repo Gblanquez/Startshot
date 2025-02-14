@@ -78,7 +78,7 @@
 }
 
 .body-s.team{
-  font-size: calc(16 / 1728 * 100 * var(--vw)); /* 16px at 1728px */
+  font-size: calc(14 / 1728 * 100 * var(--vw)); /* 16px at 1728px */
 }
 
 
@@ -434,6 +434,7 @@
   .body-s {
       font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
+
 
   .caption-n {
       font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
