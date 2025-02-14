@@ -156,7 +156,6 @@ export function initMobileMenu() {
         isOpen = false;
     }
 }
-}
 
   function cleanup() {
     if (mobileIcon) {
