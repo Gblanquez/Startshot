@@ -71,11 +71,12 @@ export default class Transition {
                         if (!data.next.html.includes('data-barba-once')) {
                             homeLoadAnimation();
                         }
-                        initializeAllAnimations();
+                        // initializeAllAnimations();
                     },
                     afterEnter(data){
                         // restartWebflow()
                         // console.log('checking restar', restartWebflow);
+                        initializeAllAnimations();
                         initializeArrowAnimations()
                         
                     },
