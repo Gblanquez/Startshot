@@ -6,8 +6,7 @@ import Lenis from 'lenis'
 export function initMobileMenu() {
   const isMobile = () => window.innerWidth <= 478;
 
-  console.log('mobiles');
-  
+
 
   // Select elements
   const mobileIcon = document.querySelector('.mobile_icon');

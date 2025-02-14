@@ -21,7 +21,7 @@ import { contactLoadAnimation } from './animations/contactAnime.js';
 import { homeLoadAnimation } from './animations/homeAnime.js';
 import { initMobileMenu } from './menuMobile.js';
 import { initializeArrowAnimations } from './arrowButton.js';
-import { resetWebflow } from './resetWebflow.js';
+import { reenableWebflowForms } from './resetWebflow.js';
 
 export default class Transition {
     constructor(options) {
@@ -79,7 +79,8 @@ export default class Transition {
                         initializeAllAnimations();
                     },
                     afterEnter(data){
-                        restartWebflow();
+                        // restartWebflow()
+                        // console.log('checking restar', restartWebflow);
                         initializeArrowAnimations()
                         
                     },
@@ -142,7 +143,9 @@ export default class Transition {
                         
                     },
                     afterEnter(data){
-                        restartWebflow();
+                        // restartWebflow()
+                        // console.log('checking restar', restartWebflow);
+                        
                         // initMobileMenu();
                     },
                     beforeLeave(data) {
@@ -739,21 +742,25 @@ export default class Transition {
                     },
                     afterEnter(data) {
                         enableScroll();
+                        restartWebflow()
+                        reenableWebflowForms()
+  
                     }
                 },
             ],
         });
 
         barba.hooks.enter((data) => {
-            // restartWebflow();
+
             initializeButtonAnimations();
             initFooterAnimation();
             initializeMenuAnimations();
-            // initMobileMenu();
+
         });
 
         barba.hooks.afterEnter((data) => {
-            // restartWebflow();
+
+
             if (mobileMenuInstance) {
                 mobileMenuInstance.cleanup();
             }
