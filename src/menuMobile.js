@@ -144,25 +144,18 @@ export function initMobileMenu() {
   }
 
   function closeMobileMenu(event) {
-    console.log('closeMobileMenu triggered!'); // Debugging
-
     if (isOpen) {
         openTimeline.pause();
         closeTimeline.play(0);
 
-        // Get all mobile links
-        const allMobileLinks = document.querySelectorAll('.mobile_link');
-
-        // Loop through each and check if the clicked element matches any of them
-        allMobileLinks.forEach(link => {
-            if (event.target === link || link.contains(event.target)) {
-                console.log('Scrolling to top!'); // Debugging
-                smoothScroll.scrollTo(0, { immediate: true });
-            }
-        });
+        // Check if the click was on a .mobile_link
+        if (event.target.closest('.mobile_link')) {
+            console.log('Clicked mobile link, letting Barba handle scroll...');
+        }
 
         isOpen = false;
     }
+}
 }
 
   function cleanup() {
