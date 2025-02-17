@@ -17,7 +17,7 @@ export function contactLoadAnimation() {
         x: '120%',
         y: '120%',
         opacity: 0,
-        filter: 'blur(30px)'
+        filter: 'blur(10px)'
     });
     
     gsap.set('[data-a="small-txt"]', {

@@ -19,6 +19,12 @@
 
 
 
+.load-bg{
+  pointer-events: none;
+}
+
+
+
   *{
     -webkit-font-smoothing: antialiased;
     text-rendering: geometricPrecision;

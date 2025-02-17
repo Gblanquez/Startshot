@@ -73,7 +73,6 @@ export function startAboutAnimations() {
     gsap.set(svgPath, {
       strokeDasharray: svgPath.getTotalLength(),
       strokeDashoffset: svgPath.getTotalLength(),
-      filter: 'blur(0px)'
     });
 
     // Create a timeline for synchronized animations

@@ -16,14 +16,14 @@ export function teamLoadAnimation() {
     gsap.set('[data-a="team"]', {
         y: '120%',
         opacity: 0,
-        filter: 'blur(30px)'
+        filter: 'blur(10px)'
     });
     
     gsap.set('[data-a="hero-txt"] .char', {
         x: '120%',
         y: '120%',
         opacity: 0,
-        filter: 'blur(30px)'
+        filter: 'blur(10px)'
     });
     
     gsap.set('[data-a="small-txt"]', {

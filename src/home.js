@@ -6,9 +6,9 @@ export function initializeAllAnimations() {
   const slider = document.querySelector('.swiper.hero-launchdpad');
   const slides = document.querySelectorAll('.swiper-slide.hero-launchdpad');
   const sliderWrapper = document.querySelector('.swiper-wrapper.hero-launchdpad');
-  const arrowForward = document.querySelector('.arrow-forward');
-  const arrowBackward = document.querySelector('.arrow-backward');
-  const paginationDots = document.querySelectorAll('.pag-dot');
+  const arrowForward = document.querySelector('.arrow-forward.hero-launchdpad');
+  const arrowBackward = document.querySelector('.arrow-backward.hero-launchdpad');
+  const paginationDots = document.querySelectorAll('.pag-dot.hero-launchdpad');
   
   const slidesInvest = document.querySelectorAll('.swiper-slide.is-invest');
   const dotsInvest = document.querySelectorAll('.invest-swiper-dot');

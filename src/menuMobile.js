@@ -68,13 +68,13 @@ export function initMobileMenu() {
     // Open animation
     openTimeline = gsap.timeline({ 
       paused: true,
-      onStart: () => smoothScroll.stop() 
+      // onStart: () => smoothScroll.stop() 
     });
 
     closeTimeline = gsap.timeline({ 
       paused: true,
       onComplete: () => {
-        smoothScroll.start();
+        // smoothScroll.start();
         gsap.set([linksList, logoWrap], { display: 'none' });
       }
     });

@@ -178,9 +178,10 @@ export default class Transition {
                         return new Promise((resolve) => {
                             // Handle team page specific animation
                             if (next.namespace === 'team') {
-                                // Existing team page animation code
+                                // Initial states
                                 gsap.set('.team-wrap', { opacity: 0 });
-                                
+                                gsap.set('.load-bg', { opacity: 1 });  // Set initial opacity of load-bg
+                            
                                 const tl = gsap.timeline({
                                     onComplete: () => {
                                         gsap.to('.team-wrap', {
@@ -194,8 +195,8 @@ export default class Transition {
                                         });
                                     }
                                 });
-
-                                // Initial states
+                            
+                                // Initial states - matching other pages
                                 gsap.set(next.container, {
                                     position: 'fixed',
                                     y: '110%',
@@ -208,11 +209,10 @@ export default class Transition {
                                 gsap.set('.star-name-load', { display: 'flex' });
                                 gsap.set('.g-nav-wrapper', {
                                     opacity: 0,
-                                    filter: 'blur(30px)'
+                                    filter: 'blur(10px)'
                                 });
                                 gsap.set('.numb-load', { innerText: '0' });
-
-
+                            
                                 tl.to('.numb-load', {
                                     innerText: 100,
                                     duration: 2,
@@ -223,7 +223,6 @@ export default class Transition {
                                         this.targets()[0].innerText = value;
                                     }
                                 })
-
                                 .to('.ln-wrap', {
                                     y: '-120%',
                                     duration: 1,
@@ -234,6 +233,7 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'expo.out'
                                 }, "<")
+                                .to('.load-bg', { opacity: 0, duration: 0.3 })
                                 .to(next.container, {
                                     y: '0%',
                                     width: '100%',
@@ -248,11 +248,11 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'power2.out'
                                 }, '-=1')
-                                .to(next.container,{
+                                .to(next.container, {
                                     position: 'relative',
                                     top: '0',
-                                })
-                            } 
+                                });
+                            }
                             // Handle home page
                             else if (next.namespace === 'home') {
                                 // Initial states
@@ -271,7 +271,7 @@ export default class Transition {
                                         });
                                     }
                                 });
-
+                            
                                 // Initial states
                                 gsap.set(next.container, {
                                     position: 'fixed',
@@ -285,11 +285,11 @@ export default class Transition {
                                 gsap.set('.star-name-load', { display: 'flex' });
                                 gsap.set('.g-nav-wrapper', {
                                     opacity: 0,
-                                    filter: 'blur(30px)'
+                                    filter: 'blur(10px)'
                                 });
                                 gsap.set('.numb-load', { innerText: '0' });
-
-
+                            
+                                // GSAP timeline for the home page load animation
                                 tl.to('.numb-load', {
                                     innerText: 100,
                                     duration: 2,
@@ -300,7 +300,8 @@ export default class Transition {
                                         this.targets()[0].innerText = value;
                                     }
                                 })
-
+                            
+                                // Simultaneously move the container to y: 0 and fade out the .load-bg
                                 .to('.ln-wrap', {
                                     y: '-120%',
                                     duration: 1,
@@ -319,21 +320,27 @@ export default class Transition {
                                     duration: 1.4,
                                     ease: 'expo.out'
                                 }, '-=0.7')
+                                .to('.load-bg', {   // Fade out the background
+                                    opacity: 0,
+                                    duration: 1,
+                                    ease: 'expo.out'
+                                }, '-=1.4')  // Align the fade-out of .load-bg with the container movement
                                 .to('.g-nav-wrapper', {
                                     opacity: 1,
                                     filter: 'blur(0px)',
                                     duration: 1,
                                     ease: 'power2.out'
                                 }, '-=1')
-                                .to(next.container,{
+                                .to(next.container, {
                                     position: 'relative',
                                     top: '0',
-                                })
+                                });
                             }
                             // Handle about page
                             else if (next.namespace === 'about') {
                                 // Initial states
                                 gsap.set('.ab-p-wrap', { opacity: 0 });
+                                gsap.set('.load-bg', { opacity: 1 });  // Set initial opacity of load-bg
                                 
                                 const tl = gsap.timeline({
                                     onComplete: () => {
@@ -362,11 +369,10 @@ export default class Transition {
                                 gsap.set('.star-name-load', { display: 'flex' });
                                 gsap.set('.g-nav-wrapper', {
                                     opacity: 0,
-                                    filter: 'blur(30px)'
+                                    filter: 'blur(10px)'
                                 });
                                 gsap.set('.numb-load', { innerText: '0' });
-
-
+                            
                                 tl.to('.numb-load', {
                                     innerText: 100,
                                     duration: 2,
@@ -377,7 +383,7 @@ export default class Transition {
                                         this.targets()[0].innerText = value;
                                     }
                                 })
-
+                            
                                 .to('.ln-wrap', {
                                     y: '-120%',
                                     duration: 1,
@@ -388,6 +394,7 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'expo.out'
                                 }, "<")
+                                .to('.load-bg', { opacity: 0, duration: 0.3 }) 
                                 .to(next.container, {
                                     y: '0%',
                                     width: '100%',
@@ -402,15 +409,16 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'power2.out'
                                 }, '-=1')
-                                .to(next.container,{
+                                .to(next.container, {
                                     position: 'relative',
                                     top: '0',
-                                })
+                                });
                             }
                             // Handle launchpad page
                             else if (next.namespace === 'launchpad') {
                                 // Initial states
                                 gsap.set('.main-c-holder', { opacity: 0 });
+                                gsap.set('.load-bg', { opacity: 1 });  // Set initial opacity of load-bg
                                 
                                 const tl = gsap.timeline({
                                     onComplete: () => {
@@ -425,7 +433,7 @@ export default class Transition {
                                         });
                                     }
                                 });
-
+                            
                                 // Initial states - matching other pages
                                 gsap.set(next.container, {
                                     position: 'fixed',
@@ -439,10 +447,10 @@ export default class Transition {
                                 gsap.set('.star-name-load', { display: 'flex' });
                                 gsap.set('.g-nav-wrapper', {
                                     opacity: 0,
-                                    filter: 'blur(30px)'
+                                    filter: 'blur(10px)'
                                 });
                                 gsap.set('.numb-load', { innerText: '0' });
-
+                            
                                 tl.to('.numb-load', {
                                     innerText: 100,
                                     duration: 2,
@@ -463,6 +471,7 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'expo.out'
                                 }, "<")
+                                .to('.load-bg', { opacity: 0, duration: 0.3 }) 
                                 .to(next.container, {
                                     y: '0%',
                                     width: '100%',
@@ -476,8 +485,8 @@ export default class Transition {
                                     filter: 'blur(0px)',
                                     duration: 1,
                                     ease: 'power2.out'
-                                }, '-=1')
-                                .to(next.container,{
+                                }, '-=1') 
+                                .to(next.container, {
                                     position: 'relative',
                                     top: '0',
                                 });
@@ -486,6 +495,7 @@ export default class Transition {
                             else if (next.namespace === 'portfolio') {
                                 // Initial states
                                 gsap.set('.page-wrap', { opacity: 0 });
+                                gsap.set('.load-bg', { opacity: 1 });  // Set initial opacity of load-bg
                                 
                                 const tl = gsap.timeline({
                                     onComplete: () => {
@@ -500,8 +510,8 @@ export default class Transition {
                                         });
                                     }
                                 });
-
-                                // Initial states
+                            
+                                // Initial states - matching other pages
                                 gsap.set(next.container, {
                                     position: 'fixed',
                                     y: '110%',
@@ -514,11 +524,10 @@ export default class Transition {
                                 gsap.set('.star-name-load', { display: 'flex' });
                                 gsap.set('.g-nav-wrapper', {
                                     opacity: 0,
-                                    filter: 'blur(30px)'
+                                    filter: 'blur(10px)'
                                 });
                                 gsap.set('.numb-load', { innerText: '0' });
-
-
+                            
                                 tl.to('.numb-load', {
                                     innerText: 100,
                                     duration: 2,
@@ -529,7 +538,6 @@ export default class Transition {
                                         this.targets()[0].innerText = value;
                                     }
                                 })
-
                                 .to('.ln-wrap', {
                                     y: '-120%',
                                     duration: 1,
@@ -540,6 +548,7 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'expo.out'
                                 }, "<")
+                                .to('.load-bg', { opacity: 0, duration: 0.3 })
                                 .to(next.container, {
                                     y: '0%',
                                     width: '100%',
@@ -553,16 +562,17 @@ export default class Transition {
                                     filter: 'blur(0px)',
                                     duration: 1,
                                     ease: 'power2.out'
-                                }, '-=1')
-                                .to(next.container,{
+                                }, '-=1') 
+                                .to(next.container, {
                                     position: 'relative',
                                     top: '0',
-                                })
+                                });
                             }
                             // Handle contact page
                             else if (next.namespace === 'contact') {
                                 // Initial states
                                 gsap.set('.contact-form-wrap', { opacity: 0 });
+                                gsap.set('.load-bg', { opacity: 1 });  // Set initial opacity of load-bg
                                 
                                 const tl = gsap.timeline({
                                     onComplete: () => {
@@ -577,8 +587,8 @@ export default class Transition {
                                         });
                                     }
                                 });
-
-                                // Initial states
+                            
+                                // Initial states - matching other pages
                                 gsap.set(next.container, {
                                     position: 'fixed',
                                     y: '110%',
@@ -591,11 +601,10 @@ export default class Transition {
                                 gsap.set('.star-name-load', { display: 'flex' });
                                 gsap.set('.g-nav-wrapper', {
                                     opacity: 0,
-                                    filter: 'blur(30px)'
+                                    filter: 'blur(10px)'
                                 });
                                 gsap.set('.numb-load', { innerText: '0' });
-
-
+                            
                                 tl.to('.numb-load', {
                                     innerText: 100,
                                     duration: 2,
@@ -606,7 +615,6 @@ export default class Transition {
                                         this.targets()[0].innerText = value;
                                     }
                                 })
-
                                 .to('.ln-wrap', {
                                     y: '-120%',
                                     duration: 1,
@@ -617,6 +625,7 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'expo.out'
                                 }, "<")
+                                .to('.load-bg', { opacity: 0, duration: 0.3 }) 
                                 .to(next.container, {
                                     y: '0%',
                                     width: '100%',
@@ -631,10 +640,10 @@ export default class Transition {
                                     duration: 1,
                                     ease: 'power2.out'
                                 }, '-=1')
-                                .to(next.container,{
+                                .to(next.container, {
                                     position: 'relative',
                                     top: '0',
-                                })
+                                });
                             }
                             // Default animation for any other pages
                             else {
@@ -648,52 +657,10 @@ export default class Transition {
                     },
                     async leave({ current }) {
 
-                        // const isMobile = window.innerWidth <= 478;
-    
-                        // if (isMobile) {
-                        //     const closeTimeline = gsap.timeline({
-                        //         onComplete: () => {
-                        //             lenis.start();
-                        //         }
-                        //     });
-                            
-                        //     closeTimeline
-                        //         .to('.mobile_text .char', {
-                        //             opacity: 0,
-                        //             duration: 0.2,
-                        //             stagger: {
-                        //                 each: 0.01,
-                        //                 from: "random"
-                        //             },
-                        //             ease: "expo.out"
-                        //         })
-                        //         .to(['.mobile_links_list_wrap', '.mobile_logo_wrap'], {
-                        //             opacity: 0,
-                        //             y: '1vw',
-                        //             duration: 0.2,
-                        //             ease: 'expo.out'
-                        //         }, '-=0.2')
-                        //         .to('.mobile_menu_bg', {
-                        //             width: '18vw',
-                        //             height: '12vw',
-                        //             borderRadius: '100rem',
-                        //             duration: 0.2,
-                        //             ease: 'expo.out'
-                        //         }, '-=0.1')
-                        //         .to('.mobile_navbar', {
-                        //             height: 'auto',
-                        //             duration: 0.1
-                        //         });
-                    
-                        //     await closeTimeline;
-                        // }
-
+                        stopScroll();
     
                         const currentContainer = current.container;
                         
-
-                    stopScroll()
-    
                         gsap.set(currentContainer, {
                             position: 'absolute',
                             top: '0',
@@ -714,8 +681,11 @@ export default class Transition {
                         });
                     },
                     enter({ next }) {
+                        
                         window.scrollTo(0, 0);
                         smoothScroll.scrollTo(0);
+
+
     
                         const nextContainer = next.container;
 
@@ -739,7 +709,7 @@ export default class Transition {
                         });
                     },
                     afterEnter(data) {
-                        startScroll()
+                        smoothScroll.start()
                         restartWebflow()
                         reenableWebflowForms()
   
@@ -752,11 +722,12 @@ export default class Transition {
 
             initializeButtonAnimations();
             initFooterAnimation();
-            initializeMenuAnimations();
+
 
         });
 
         barba.hooks.afterEnter((data) => {
+            initializeMenuAnimations();
 
 
             if (mobileMenuInstance) {
@@ -772,6 +743,3 @@ export default class Transition {
         });
     }
 }
-
-
-

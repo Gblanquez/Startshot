@@ -2,6 +2,9 @@ import gsap from 'gsap';
 import SplitType from 'split-type';
 
 export function homeLoadAnimation() {
+
+
+
     // Initial setup for text splitting
     const smallText = document.querySelectorAll('[data-a="small-txt"]');
     
@@ -15,7 +18,7 @@ export function homeLoadAnimation() {
         });
     });
 
-    // Set initial states
+    // Set initial states for text animation
     gsap.set('[data-a="small-txt"] .char', {
         y: '120%',
         opacity: 0
@@ -24,11 +27,18 @@ export function homeLoadAnimation() {
     // Timeline creation
     const tl = gsap.timeline();
 
-    // Both animations starting at the same time
-    tl.fromTo('[data-a="logo"]', 
+    // Animate the home container to appear when the logo starts animating
+    tl.to('[data-a="home"]', {
+        opacity: 1,
+        duration: 0.5,  // Smooth fade-in
+        ease: 'expo.out'
+    }, 0) // Start immediately
+
+    // Animate the logo
+    .fromTo('[data-a="logo"]', 
         {
             opacity: 0,
-            filter: 'blur(50px)'
+            filter: 'blur(10px)'
         },
         {
             opacity: 1,
@@ -38,13 +48,15 @@ export function homeLoadAnimation() {
         },
         0  // Explicit start time
     )
+
+    // Animate small text characters
     .to('[data-a="small-txt"] .char', {
         y: '0%',
         opacity: 1,
         duration: 1.2,
         ease: 'expo.out',
         stagger: 0.02  
-    }, 0);  // Same start time as logo animation
+    }, 0);  // Start at the same time as logo animation
 
     return tl;
 }

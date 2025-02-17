@@ -16,14 +16,14 @@ export function aboutLoadAnimation() {
     gsap.set('[data-b="ab"]', {
         y: '120%',
         opacity: 0,
-        filter: 'blur(30px)'
+        filter: 'blur(10px)'
     });
     
     gsap.set('[data-a="hero-txt"] .char', {
         x: '120%',
         y: '120%',
         opacity: 0,
-        filter: 'blur(30px)'
+        filter: 'blur(10px)'
     });
     
     gsap.set('[data-a="small-txt"]', {

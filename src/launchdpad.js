@@ -105,13 +105,13 @@ export function initializeLaunchpadCarousel() {
       duration: 0.5,
       ease: 'power2.out'
     });
-    
+
     setActiveSlide();
   }
 
   function updateMobilePosition() {
     const offset = -mobileCurrentIndex * window.innerWidth;
-    
+
     gsap.to(sliderWrapper, {
       x: offset,
       duration: 0.5,
@@ -126,14 +126,14 @@ export function initializeLaunchpadCarousel() {
       if (contentWrapper) {
         const isActive = index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex);
         contentWrapper.classList.toggle('is-active', isActive);
-  
+
         if (window.matchMedia("(max-width: 479px)").matches) {
           contentWrapper.style.width = `${mobileSlideWidthVW}vw`;
           contentWrapper.style.height = `${mobileSlideHeightVW}vw`;
           contentWrapper.style.margin = '0';
         } else {
           const timeline = gsap.timeline();
-  
+
           if (isActive) {
             timeline.to(contentWrapper, {
               width: `${activeWidthVW}vw`,
@@ -154,21 +154,21 @@ export function initializeLaunchpadCarousel() {
         }
       }
     });
-  
+
     descriptions.forEach((description, index) => {
       const isActive = index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex);
       description.classList.toggle('is-active', isActive);
-  
+
       const captions = description.querySelectorAll('.caption-w.launchdpad');
       const bodyText = description.querySelectorAll('.body-s.launchdpad');
       const buttons = description.querySelectorAll('.cl-d-div.bttn');
-  
+
       if (isActive) {
         // **RESET & REAPPLY SplitType for mobile**
         bodyText.forEach(text => {
           SplitType.revert(text);
           const split = new SplitType(text, { types: 'lines', lineClass: 'split-line', absolute: true });
-  
+
           gsap.fromTo(split.lines,
             { y: '120%', opacity: 0 },
             {
@@ -181,8 +181,8 @@ export function initializeLaunchpadCarousel() {
             }
           );
         });
-  
-        gsap.fromTo(captions, 
+
+        gsap.fromTo(captions,
           { y: '120%', opacity: 0 },
           {
             y: '0%',
@@ -193,7 +193,7 @@ export function initializeLaunchpadCarousel() {
             delay: 0.2
           }
         );
-  
+
         gsap.fromTo(buttons,
           { y: '120%', opacity: 0 },
           {
@@ -211,7 +211,7 @@ export function initializeLaunchpadCarousel() {
         gsap.set(bodyText, { opacity: 1 });
         gsap.set(buttons, { y: '120%', opacity: 0 });
       }
-  
+
       // Ensure correct pointer events
       const parentItem = description.closest('.launchdpad-cl-item');
       if (parentItem) {
@@ -219,7 +219,7 @@ export function initializeLaunchpadCarousel() {
         parentItem.style.zIndex = isActive ? '2' : '1';
       }
     });
-  
+
     paginationDots.forEach((dot, index) => {
       dot.classList.toggle('active', index === (window.matchMedia("(max-width: 479px)").matches ? mobileCurrentIndex : currentIndex));
     });
@@ -270,7 +270,7 @@ export function initializeLaunchpadCarousel() {
   function animateToMobileSlide(index) {
     mobileCurrentIndex = index;
     const offset = -mobileCurrentIndex * window.innerWidth;
-    
+
     gsap.to(sliderWrapper, {
       x: offset,
       duration: 0.5,
@@ -279,53 +279,50 @@ export function initializeLaunchpadCarousel() {
     });
   }
 
-// Initialize carousel immediately
-if (slider && slides.length && sliderWrapper) {
-  const isMobile = window.matchMedia("(max-width: 479px)").matches;
-
-  if (isMobile) {
-    initializeMobileCarousel();
-  } else {
-    initializeDesktopCarousel();
-  }
-}
-
-// Mobile initialization on DOMContentLoaded (extra safeguard)
-document.addEventListener('DOMContentLoaded', () => {
+  // Initialize carousel immediately
   if (slider && slides.length && sliderWrapper) {
     const isMobile = window.matchMedia("(max-width: 479px)").matches;
 
     if (isMobile) {
-      // Ensure any old split animations are reset
-      const allBodyText = document.querySelectorAll('.body-s.launchdpad');
-      allBodyText.forEach(text => {
-        SplitType.revert(text);
-      });
-
       initializeMobileCarousel();
+    } else {
+      initializeDesktopCarousel();
     }
   }
-});
 
-  let resizeTimeout; 
+  // Mobile initialization on DOMContentLoaded (extra safeguard)
+  document.addEventListener('DOMContentLoaded', () => {
+    if (slider && slides.length && sliderWrapper) {
+      const isMobile = window.matchMedia("(max-width: 479px)").matches;
+
+      if (isMobile) {
+        // Ensure any old split animations are reset
+        const allBodyText = document.querySelectorAll('.body-s.launchdpad');
+        allBodyText.forEach(text => {
+          SplitType.revert(text);
+        });
+
+        initializeMobileCarousel();
+      }
+    }
+  });
+
+  let resizeTimeout;
 
   // Handle resize events with a debounce effect
   window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout); // 
-  
+    clearTimeout(resizeTimeout);
+
     resizeTimeout = setTimeout(() => {
       if (slider && slides.length && sliderWrapper) {
         const isMobile = window.matchMedia("(max-width: 479px)").matches;
-  
+
         if (isMobile) {
- 
-          mobileCurrentIndex = currentIndex; 
-  
+          mobileCurrentIndex = currentIndex;
 
           setMobileSlideSizes();
-          updateMobilePosition(); // Move slides correctly
-          setActiveSlide(); // Ensure the correct active slide is set
-  
+          updateMobilePosition();
+          setActiveSlide();
 
           paginationDots.forEach((dot, index) => {
             dot.classList.toggle('active', index === mobileCurrentIndex);
@@ -333,15 +330,14 @@ document.addEventListener('DOMContentLoaded', () => {
               animateToMobileSlide(index);
             });
           });
-  
-        } else {
 
+        } else {
           currentIndex = mobileCurrentIndex;
-  
+
           // Ensure desktop slide sizes and positions update
           setSlideSizes();
           updatePosition();
-          setActiveSlide(); // Ensure correct active state
+          setActiveSlide();
 
           paginationDots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentIndex);
@@ -351,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       }
-    }, 200); 
+    }, 200);
   });
 }
-
