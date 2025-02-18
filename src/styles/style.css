@@ -416,9 +416,22 @@
       font-size: calc(32 / 479 * 100 * var(--mvw)); /* 32px at 479px */
   }
 
+  .h-xl.hp {
+    font-size: calc(32 / 479 * 100 * var(--mvw)); /* 32px at 479px */
+}
+
+
+  .h-xl.lp {
+    font-size: calc(52 / 479 * 100 * var(--mvw)); /* 32px at 479px */
+}
+
+  .body-m.h-txt{
+    font-size: calc(32 / 479 * 100 * var(--mvw)) !important;
+  }
+
 
   .h-xl.team {
-    font-size: calc(20 / 479 * 100 * var(--mvw)) !important;
+    font-size: calc(24 / 479 * 100 * var(--mvw)) !important;
 }
 
   .h-xl.opacity-reduce.about {
@@ -429,25 +442,54 @@
       font-size: calc(14 / 479 * 100 * var(--mvw)); /* 14px at 479px */
   }
 
+  .h-l.in-f {
+    font-size: calc(18 / 479 * 100 * var(--mvw)); /* 14px at 479px */
+}
+
+  .h-l.team-m {
+    font-size: calc(18 / 479 * 100 * var(--mvw)); /* 14px at 479px */
+}
+
   .h-l.innovator-t {
     font-size: calc(20 / 479 * 100 * var(--mvw)) !important; 
 }
 
   .body-m {
-      font-size: calc(16 / 479 * 100 * var(--mvw)); /* 16px at 479px */
+      font-size: calc(20 / 479 * 100 * var(--mvw)); /* 16px at 479px */
   }
 
+
+  .body-m.team {
+    font-size: calc(14 / 479 * 100 * var(--mvw)) !important; /* 16px at 479px */
+}
+
+  .body-m.tm {
+    font-size: calc(16 / 479 * 100 * var(--mvw)); /* 16px at 479px */
+}
+
   .body-s {
-      font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+      font-size: calc(16 / 479 * 100 * var(--mvw)); /* 12px at 479px */
   }
+
+  .body-s.hp {
+    font-size: calc(16 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+}
+
+  .body-s.m-team {
+    font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+}
 
 
   .caption-n {
       font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
   }
 
+  .caption-n.team-m {
+    font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
+}
+
   .caption-w {
-      font-size: calc(9 / 479 * 100 * var(--mvw)); /* 9px at 479px */
+      font-size: calc(14 / 479 * 100 * var(--mvw)); /* 9px at 479px */
   }
 
   .caption-w.launchdpad {
@@ -467,11 +509,11 @@
   }
 
   .f-nav {
-      font-size: calc(12 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+      font-size: calc(14 / 479 * 100 * var(--mvw)); 
   }
 
   .f-label{
-    font-size: calc(11 / 479 * 100 * var(--mvw)); /* 11px at 479px */
+    font-size: calc(12 / 479 * 100 * var(--mvw)); /* 11px at 479px */
   }
 
   .c-label{
@@ -479,7 +521,7 @@
   }
 
   .h-xl.portfolio-text{
-    font-size: calc(16 / 479 * 100 * var(--mvw)); /* 12px at 479px */
+    font-size: calc(18 / 479 * 100 * var(--mvw)) !important; /* 12px at 479px */
   }
   
   .logo-wrap{
@@ -509,7 +551,7 @@
   .c-t-field{
     width: calc(208 / 479 * 100 * var(--mvw));
     height: calc(44 / 479 * 100 * var(--mvw));
-    font-size: calc(11 / 479 * 100 * var(--mvw));
+    font-size: calc(14 / 479 * 100 * var(--mvw));
   }
 
   .c-t-field.email{

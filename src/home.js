@@ -287,100 +287,113 @@ export function initializeAllAnimations() {
   // Initialize the carousel on page load
   initializeCarousel();
 
+
+
   // Initialize the GSAP autoplay slider
-  function initializeInvestSlider() {
-    slidesInvest.forEach((slide) => {
-      const contentWrapper = slide.querySelector('.invest-img-wrap');
-      if (contentWrapper) {
-        gsap.set(contentWrapper, {
+function initializeInvestSlider() {
+  slidesInvest.forEach((slide) => {
+    const contentWrapper = slide.querySelector('.invest-img-wrap');
+    if (contentWrapper) {
+      gsap.set(contentWrapper, {
+        opacity: 0,
+        filter: 'blur(20px)',
+        zIndex: -1,
+      });
+    }
+  });
+
+  setActiveInvestSlide(); // Set the initial active slide
+  observeInvestSection(); // Start observing visibility
+}
+
+// Animate the active slide and corresponding dot
+function setActiveInvestSlide() {
+  slidesInvest.forEach((slide, index) => {
+    const contentWrapper = slide.querySelector('.invest-img-wrap');
+    if (contentWrapper) {
+      if (index === currentInvestIndex) {
+        gsap.to(contentWrapper, {
+          opacity: 1,
+          filter: 'blur(0px)',
+          zIndex: 1,
+          duration: 2.8,
+          ease: 'expo.out',
+        });
+      } else {
+        gsap.to(contentWrapper, {
           opacity: 0,
-          filter: 'blur(40px)',
+          filter: 'blur(20px)',
           zIndex: -1,
+          duration: 2.8,
+          ease: 'expo.out',
         });
       }
-    });
-
-    setActiveInvestSlide();
-
-    autoplayTimer = setInterval(nextInvestSlide, autoplayInterval);
-  }
-
-  // Animate the active slide and corresponding dot
-  function setActiveInvestSlide() {
-    slidesInvest.forEach((slide, index) => {
-      const contentWrapper = slide.querySelector('.invest-img-wrap');
-      if (contentWrapper) {
-        if (index === currentInvestIndex) {
-          gsap.to(contentWrapper, {
-            opacity: 1,
-            filter: 'blur(0px)',
-            zIndex: 1,
-            duration: 2.8,
-            ease: 'expo.out',
-          });
-        } else {
-          gsap.to(contentWrapper, {
-            opacity: 0,
-            filter: 'blur(40px)',
-            zIndex: -1,
-            duration: 2.8,
-            ease: 'expo.out',
-          });
-        }
-      }
-    });
-
-    dotsInvest.forEach((dot, index) => {
-      const star = dot.querySelector('.star');
-      if (star) {
-        if (index === currentInvestIndex) {
-          gsap.to(star, {
-            opacity: 1,
-            scale: 1.5,
-            duration: 0.8,
-            ease: 'power2.out',
-          });
-          gsap.to(star, {
-            rotation: 360,
-            duration: autoplayInterval / 1000,
-            ease: 'linear',
-            repeat: -1,
-          });
-        } else {
-          gsap.to(star, {
-            opacity: 0,
-            scale: 0,
-            duration: 0.8,
-            ease: 'power2.in',
-          });
-          gsap.killTweensOf(star, 'rotation');
-          gsap.set(star, { rotation: 0 });
-        }
-      }
-    });
-  }
-
-  // Move to the next slide
-  function nextInvestSlide() {
-    currentInvestIndex = (currentInvestIndex + 1) % slidesInvest.length;
-    setActiveInvestSlide();
-  }
-
-  // Stop the slider (Clear Interval)
-  function stopInvestSlider() {
-    clearInterval(autoplayTimer);
-    autoplayTimer = null;
-  }
-
-  // Add event listeners to dots for manual navigation
-  dotsInvest.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      currentInvestIndex = index;
-      setActiveInvestSlide();
-      stopInvestSlider();
-      autoplayTimer = setInterval(nextInvestSlide, autoplayInterval);
-    });
+    }
   });
+
+  dotsInvest.forEach((dot, index) => {
+    const star = dot.querySelector('.star');
+    if (star) {
+      if (index === currentInvestIndex) {
+        gsap.to(star, {
+          opacity: 1,
+          scale: 1.5,
+          duration: 0.8,
+          ease: 'power2.out',
+        });
+        gsap.to(star, {
+          rotation: 360,
+          duration: autoplayInterval / 1000,
+          ease: 'linear',
+          repeat: -1,
+        });
+      } else {
+        gsap.to(star, {
+          opacity: 0,
+          scale: 0,
+          duration: 0.8,
+          ease: 'power2.in',
+        });
+        gsap.killTweensOf(star, 'rotation');
+        gsap.set(star, { rotation: 0 });
+      }
+    }
+  });
+}
+
+// Move to the next slide
+function nextInvestSlide() {
+  currentInvestIndex = (currentInvestIndex + 1) % slidesInvest.length;
+  setActiveInvestSlide();
+}
+
+// Stop the autoplay slider
+function stopInvestSlider() {
+  clearInterval(autoplayTimer);
+  autoplayTimer = null;
+}
+
+// ** NEW: Observe the visibility of the invest section **
+function observeInvestSection() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!autoplayTimer) {
+            autoplayTimer = setInterval(nextInvestSlide, autoplayInterval);
+          }
+        } else {
+          stopInvestSlider();
+        }
+      });
+    },
+    { threshold: 0.3 } 
+  );
+
+  if (investSection) {
+    observer.observe(investSection);
+  }
+}
 
   // Initialize the sliders
   initializeCarousel();
