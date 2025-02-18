@@ -102,7 +102,7 @@ export function initMobileMenu() {
           stagger: { each: 0.01, from: "random" },
           ease: "power2.out"
         },
-        '-=0.5'
+        '<'
       );
 
     // Close animation
