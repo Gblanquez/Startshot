@@ -81,29 +81,32 @@ export function initMobileMenu() {
 
     // Open animation
     openTimeline
-      .set([linksList, logoWrap], { display: 'flex' })
-      .fromTo(mobileNavbar, 
-        { height: 'auto', width: '100%' },
-        { width: '100%', height: 'auto', duration: 0 }
-      )
-      .fromTo(menuBg,
-        { width: '18vw', height: '12vw', borderRadius: '100rem' },
-        { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.6, ease: 'expo.out' }
-      )
-      .fromTo([linksList, logoWrap],
-        { opacity: 0, y: '2vw' },
-        { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'expo.out' }
-      )
-      .fromTo(splitTexts.map(split => split.chars), 
-        { opacity: 0 },
-        { 
-          opacity: 1,
-          duration: 0.5,
-          stagger: { each: 0.01, from: "random" },
-          ease: "power2.out"
-        },
-        '<'
-      );
+    .set([linksList, logoWrap], { display: 'flex' })
+    .fromTo(mobileNavbar, 
+      { height: 'auto', width: '100%' },
+      { width: '100%', height: 'auto', duration: 0 },
+      '<' // Start immediately
+    )
+    .fromTo(menuBg,
+      { width: '18vw', height: '12vw', borderRadius: '100rem' },
+      { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.6, ease: 'expo.out' },
+      '<' // Align start with the previous one
+    )
+    .fromTo([linksList, logoWrap],
+      { opacity: 0, y: '2vw' },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'expo.out' },
+      '<' // Align start
+    )
+    .fromTo(splitTexts.map(split => split.chars), 
+      { opacity: 0 },
+      { 
+        opacity: 1,
+        duration: 0.5,
+        stagger: { each: 0.01, from: "random" },
+        ease: "power2.out"
+      },
+      '<' // Align start
+    );
 
     // Close animation
     closeTimeline
