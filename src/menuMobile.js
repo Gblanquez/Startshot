@@ -61,7 +61,7 @@ export function initMobileMenu() {
 
     setupAnimations();
     mobileIcon.addEventListener('click', toggleMobileMenu);
-    mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu)); // ✅ Close on link click
+    mobileLinks.forEach(link => link.addEventListener('click', closeMobileMenu)); 
   }
 
   function setupAnimations() {
@@ -98,8 +98,8 @@ export function initMobileMenu() {
         { opacity: 0 },
         { 
           opacity: 1,
-          duration: 0.8,
-          stagger: { each: 0.02, from: "random" },
+          duration: 0.5,
+          stagger: { each: 0.01, from: "random" },
           ease: "power2.out"
         },
         '-=0.3'
