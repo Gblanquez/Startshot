@@ -88,7 +88,7 @@ export function initMobileMenu() {
       )
       .fromTo(menuBg,
         { width: '18vw', height: '12vw', borderRadius: '100rem' },
-        { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.8, ease: 'expo.out' }
+        { width: '100%', height: '100%', borderRadius: '2vw', duration: 0.6, ease: 'expo.out' }
       )
       .fromTo([linksList, logoWrap],
         { opacity: 0, y: '2vw' },
@@ -102,7 +102,7 @@ export function initMobileMenu() {
           stagger: { each: 0.01, from: "random" },
           ease: "power2.out"
         },
-        '-=0.3'
+        '-=0.5'
       );
 
     // Close animation
