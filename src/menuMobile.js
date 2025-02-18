@@ -101,8 +101,8 @@ export function initMobileMenu() {
       { opacity: 0 },
       { 
         opacity: 1,
-        duration: 0.5,
-        stagger: { each: 0.01, from: "random" },
+        duration: 0.8,
+        stagger: { each: 0.02, from: "random" },
         ease: "power2.out"
       },
       '<' // Align start
