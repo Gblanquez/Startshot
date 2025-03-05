@@ -33,7 +33,7 @@ export default class Transition {
       }
     
       init() {
-        console.log("Smooth scrolling initialized:", smoothScroll);
+
       }
 
     // initLenis() {
@@ -64,7 +64,7 @@ export default class Transition {
         }
 
             barba.init({
-                debug: true,
+                // debug: true,
                 views: [
                     {
                     namespace: 'home',
@@ -73,6 +73,7 @@ export default class Transition {
                             homeLoadAnimation();
                         }
                         initializeAllAnimations();
+                        reenableWebflowForms();
                     },
                     afterEnter(data){
                         // restartWebflow()
@@ -138,9 +139,9 @@ export default class Transition {
                         if (!data.next.html.includes('data-barba-once')) {
                             contactLoadAnimation();
                         }
-                        
                     },
                     afterEnter(data){
+                        // reenableWebflowForms();
                         // restartWebflow()
                         // console.log('checking restar', restartWebflow);
                         
@@ -172,7 +173,7 @@ export default class Transition {
                     name: 'Starshot Default Transition',
                     sync: true,
                     once({ next }) {
-                        console.log('First load', next.container);
+
                         let customEase = "M0,0,C0,0,0.13,0.34,0.238,0.442,0.305,0.506,0.322,0.514,0.396,0.54,0.478,0.568,0.468,0.56,0.522,0.584,0.572,0.606,0.61,0.719,0.714,0.826,0.798,0.912,1,1,1,1";
                         
                         return new Promise((resolve) => {
@@ -711,7 +712,7 @@ export default class Transition {
                     afterEnter(data) {
                         smoothScroll.start()
                         restartWebflow()
-                        reenableWebflowForms()
+                        reenableWebflowForms();
   
                     }
                 },
@@ -728,6 +729,7 @@ export default class Transition {
 
         barba.hooks.afterEnter((data) => {
             initializeMenuAnimations();
+            // reenableWebflowForms();
 
 
             if (mobileMenuInstance) {
